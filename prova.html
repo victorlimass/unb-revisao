@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Provas Completas UnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: prova completa no formato UnB/Cebraspe. Abas por caderno, folha de respostas fixa embaixo, correção por caderno e disciplina */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea;
+  --ok:#0b7a3e; --bad:#b4442c; --blank:#7a7f7c; --warm:#a06d0c;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328; --ok:#5fd38f; --bad:#f08a72; --blank:#9aa39e; --warm:#e3b350; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328; --ok:#5fd38f; --bad:#f08a72; --blank:#9aa39e; --warm:#e3b350; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-block:20px 130px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:4px 0 10px;text-wrap:balance}
+.intro{color:var(--muted);margin:0 0 6px;max-width:70ch}
+.rules{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+.rules span{font-size:13px;border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:4px 10px}
+.rules b{font-family:var(--mono);font-weight:500}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.pcard h2{font-family:var(--display);font-weight:600;font-size:24px;margin:0 0 2px}
+.pcard .tema{color:var(--accent);font-weight:700;margin:0 0 10px}
+.pcard table{min-width:0}
+.pcard .act{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.pcard .st{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+nav.ctabs{position:sticky;top:49px;z-index:4;background:var(--bg);display:flex;flex-wrap:wrap;gap:4px;margin:16px 0 18px;border-bottom:1px solid var(--line);padding-top:6px}
+nav.ctabs button{font:inherit;font-weight:700;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:9px 12px;cursor:pointer}
+nav.ctabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+nav.ctabs small{font-family:var(--mono);font-weight:500;font-size:11.5px;margin-left:4px}
+.block{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:20px}
+.block h2{font-family:var(--display);font-weight:600;font-size:20px;margin:0 0 4px}
+.disc{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.texto{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:0 6px 6px 0;margin:10px 0 6px;font-size:14.5px}
+.texto p{margin:0 0 6px}
+.texto cite{display:block;font-size:12.5px;color:var(--muted);font-style:normal;margin-top:6px}
+.julgue{font-size:14px;color:var(--muted);margin:12px 0 4px;font-style:italic}
+.item{display:grid;grid-template-columns:38px minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.num{font-family:var(--mono);font-size:14px;color:var(--accent);padding-top:2px}
+.item p{margin:0 0 8px}
+.tipo{font-family:var(--mono);font-size:11px;color:var(--warm);border:1px solid currentColor;border-radius:4px;padding:0 5px;margin-right:6px}
+.opts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.opts label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:4px 12px;cursor:pointer;font-size:14px;font-weight:700;user-select:none}
+.opts input[type=radio]{position:absolute;opacity:0;pointer-events:none}
+.opts label:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opts label.blank-opt{font-weight:400;color:var(--muted)}
+.opts label.blank-opt:has(input:checked){background:var(--line);border-color:var(--line);color:var(--ink)}
+.mc{display:flex;flex-direction:column;gap:6px}
+.mc label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:6px;padding:7px 10px;cursor:pointer;font-size:14.5px}
+.mc label b{font-family:var(--mono);font-weight:500;color:var(--accent)}
+.mc input{position:absolute;opacity:0;pointer-events:none}
+.mc label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.mc label:has(input:focus-visible){outline:2px solid var(--accent)}
+.mc label.blank-opt{color:var(--muted);font-size:13.5px}
+.mc label.right{border-color:var(--ok);box-shadow:inset 3px 0 0 var(--ok)}
+input.numb{font:inherit;font-family:var(--mono);width:90px;border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--ink)}
+.hint{font-size:12.5px;color:var(--muted)}
+textarea.disc-ans{font:inherit;font-size:14.5px;width:100%;min-height:150px;border:1px solid var(--line);border-radius:6px;padding:10px;background:var(--bg);color:var(--ink);line-height:1.5;resize:vertical}
+.feedback{margin-top:8px;font-size:14px;border-radius:6px;padding:8px 10px;background:var(--bg)}
+.feedback .tag{font-weight:700;margin-right:6px}
+.r-ok .tag{color:var(--ok)} .r-bad .tag{color:var(--bad)} .r-blank .tag{color:var(--blank)}
+.item.r-ok{box-shadow:inset 3px 0 0 var(--ok)} .item.r-bad{box-shadow:inset 3px 0 0 var(--bad)} .item.r-blank{box-shadow:inset 3px 0 0 var(--blank)}
+.item.graded{padding-left:8px}
+.model{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 12px;border-radius:0 6px 6px 0;margin-top:10px;font-size:14.5px}
+.model h4{margin:0 0 4px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.model label{display:flex;gap:8px;font-size:14px;margin:4px 0;cursor:pointer}
+.model input{accent-color:var(--accent)}
+.red ul{padding-left:18px;font-size:14.5px}
+.red li{margin-bottom:6px}
+.red .prop{border:1px dashed var(--accent);border-radius:8px;padding:12px 14px;margin:12px 0}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding-block:10px calc(10px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5}
+.bar-in{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.prog{font-family:var(--mono);font-size:13px;color:var(--muted);flex:1;min-width:150px}
+.prog i{display:block;height:4px;background:var(--line);border-radius:2px;margin-top:4px;overflow:hidden}
+.prog i b{display:block;height:100%;background:var(--accent);width:0}
+.timer{font-family:var(--mono);font-size:14px}
+.timer.over{color:var(--bad)}
+button.main,a.main{font:inherit;font-weight:700;background:var(--accent);color:var(--paper);border:0;border-radius:6px;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+button.ghost,a.ghost{font:inherit;font-size:14px;background:none;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.confirm{font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:12px;margin:14px 0}
+.score div{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--bg)}
+.score .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.score .v{font-family:var(--display);font-size:30px;font-weight:800;line-height:1.1}
+.v.ok{color:var(--ok)} .v.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:460px}
+.scroll{overflow-x:auto}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.c{text-align:center;font-family:var(--mono);font-size:13px}
+.grid-ans{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:4px;margin-top:8px}
+.grid-ans a{display:block;text-align:center;font-family:var(--mono);font-size:12px;padding:5px 0;border-radius:4px;text-decoration:none;color:var(--paper)}
+.g-ok{background:var(--ok)} .g-bad{background:var(--bad)} .g-blank{background:var(--blank)} .g-d{background:var(--warm)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.top a{color:var(--accent);font-size:14px}
+@media (prefers-reduced-motion:no-preference){.prog i b{transition:width .2s}}
+.voltar{max-width:1100px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px)) 0;font-size:14px}.voltar a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="home">
+  <div class="eyebrow">Formato UnB · Cebraspe</div>
+  <h1>Provas completas</h1>
+  <p class="intro">Duas provas inteiras, como no dia do vestibular. Cada uma tem um tema transversal que amarra todas as matérias, três cadernos de conhecimentos, itens dos tipos A, B, C e D e uma proposta de redação. Separe 5 horas, desligue o celular e faça de uma vez.</p>
+  <div class="rules">
+    <span>Tipo A (certo/errado): acerto <b>+1</b>, erro <b>−1</b></span>
+    <span>Tipo B (numérico) e tipo C (múltipla escolha): acerto <b>+1</b>, erro <b>0</b></span>
+    <span>Tipo D (discursiva): resposta-modelo para autocorreção</span>
+  </div>
+  <div id="plist"></div>
+  <p class="intro" style="font-size:13px">Neste site, os itens tipo B e C não descontam quando errados. No vestibular, confira no edital a pontuação de cada tipo de item. Textos e itens foram escritos para este site.</p>
+</div>
+
+<div class="wrap" id="exam" hidden>
+  <div class="top"><a href="#" id="back">← Provas</a><span class="eyebrow" id="exTema"></span></div>
+  <h1 id="exTitle"></h1>
+  <nav class="ctabs" id="ctabs" role="tablist"></nav>
+  <form id="quiz" onsubmit="return false"></form>
+  <section id="result" class="block" hidden></section>
+</div>
+
+<div class="bar" id="bar" hidden>
+  <div class="bar-in">
+    <div class="prog"><span id="progTxt"></span><i><b id="progBar"></b></i></div>
+    <span class="timer" id="timer" title="Tempo restante">05:00:00</span>
+    <div id="actions" class="confirm"></div>
+  </div>
+</div>
+
+<script src="assets/site.js"></script>
+<script src="rev-linguagens.js"></script><script src="rev-humanas.js"></script><script src="rev-comunicacao.js"></script><script src="rev-exatas.js"></script>
+<script src="prova1.js"></script>
+<script src="prova2.js"></script>
+<script>
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const DUR=5*3600;
+const hms=s=>{const neg=s<0;s=Math.abs(s);return (neg?"−":"")+[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");};
+const L="ABCD";
+
+/* achata itens de uma prova */
+function flatten(P){const out=[];let n=0;
+  P.cadernos.forEach((c,ci)=>c.blocks.forEach((b,bi)=>b.items.forEach((it,ii)=>{
+    const arr=Array.isArray(it);n++;
+    out.push({n,id:`${ci}-${bi}-${ii}`,cad:ci,cadName:c.name,disc:b.disc,block:b,bi,
+      tipo:arr?"A":it.tipo,q:arr?it[0]:it.q,a:arr?it[1]:it.a,e:arr?it[2]:it.e,opts:it.opts,model:it.model,crit:it.crit});})));
+  return out;}
+
+/* ---------- lista ---------- */
+function renderHome(){
+  const hist=load("prova-hist",{});
+  document.getElementById("plist").innerHTML=PROVAS.map(P=>{const I=flatten(P);
+    const st=load("prova-"+P.id,{});const h=hist[P.id];
+    const rows=P.cadernos.map((c,ci)=>{const its=I.filter(x=>x.cad===ci);const cnt=t=>its.filter(x=>x.tipo===t).length;
+      return `<tr><td><b>${c.name}</b><br><span style="font-size:13px;color:var(--muted)">${c.sub}</span></td><td class="c">${cnt("A")}</td><td class="c">${cnt("B")}</td><td class="c">${cnt("C")}</td><td class="c">${cnt("D")}</td></tr>`}).join("");
+    const going=st.ans&&!st.done&&Object.keys(st.ans).length;
+    return `<article class="pcard"><h2>${P.title}</h2><p class="tema">Tema transversal: ${P.tema}</p>
+     <div class="scroll"><table><thead><tr><th>Caderno</th><th>Tipo A</th><th>Tipo B</th><th>Tipo C</th><th>Tipo D</th></tr></thead><tbody>${rows}
+     <tr><td><b>Redação</b><br><span style="font-size:13px;color:var(--muted)">${P.redacao.titulo}</span></td><td class="c" colspan="4">${P.redacao.genero}</td></tr></tbody></table></div>
+     <div class="act"><button class="main" data-go="${P.id}">${going?"Continuar prova":st.done?"Ver correção":"Começar prova"}</button>
+      ${st.done||going?`<button class="ghost" data-reset="${P.id}">Recomeçar do zero</button>`:""}
+      <span class="st">${I.length} itens${h?` · último saldo ${h.last} · melhor ${h.best}`:""}</span></div></article>`;}).join("");
+}
+document.getElementById("plist").addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){location.hash=g.dataset.go;return;}
+  const r=e.target.closest("[data-reset]");if(r){if(r.dataset.sure){save("prova-"+r.dataset.reset,{});renderHome();}else{r.dataset.sure="1";r.textContent="Clique de novo para apagar as respostas";}}
+});
+
+/* ---------- prova ---------- */
+let P=null,ITEMS=[],state={},cur=0,tick=null;
+function startExam(id){
+  P=PROVAS.find(x=>x.id===id);if(!P){location.hash="";return;}
+  ITEMS=flatten(P);state=load("prova-"+id,{});state.ans=state.ans||{};state.duv=state.duv||{};
+  document.getElementById("home").hidden=true;document.getElementById("exam").hidden=false;document.getElementById("bar").hidden=false;
+  document.getElementById("exTitle").textContent=P.title;document.getElementById("exTema").textContent="Tema: "+P.tema;
+  /* render de todos os cadernos (cada um numa seção) */
+  let html="";
+  P.cadernos.forEach((c,ci)=>{
+    html+=`<section class="cad" data-c="${ci}"><p class="intro" style="margin-bottom:14px"><b>${c.name}</b> · ${c.sub}</p>`;
+    let last="";
+    ITEMS.filter(x=>x.cad===ci).forEach(it=>{
+      const bk=it.bi;if(bk!==last){if(last!=="")html+="</div>";last=bk;
+        html+=`<div class="block"><div class="disc">${it.disc}</div><h2>${it.block.title}</h2>${it.block.texto?`<div class="texto">${it.block.texto}</div><p class="julgue">Com base no texto, julgue os itens a seguir.</p>`:""}`;}
+      html+=itemHTML(it);
+    });
+    html+="</div></section>";
+  });
+  const R=P.redacao;
+  html+=`<section class="cad" data-c="${P.cadernos.length}"><div class="block red"><div class="disc">Prova de redação</div><h2>${R.titulo}</h2>
+    <ul>${R.motivadores.map(m=>`<li>${m}</li>`).join("")}</ul>
+    <div class="prop">${R.proposta}</div>
+    <p style="font-size:14.5px">Escreva à mão, numa folha de 30 linhas, com caneta preta. Depois, gere o prompt de correção e envie a foto ao Claude.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="main" href="redacao.html?tema=${encodeURIComponent(R.proposta.replace(/<[^>]+>/g,""))}&gen=diss#claude">Gerar prompt de correção</a><a class="ghost" href="redacao.html#generos">Ver redações-modelo</a></div></div></section>`;
+  const form=document.getElementById("quiz");form.innerHTML=html;
+  /* restaura */
+  ITEMS.forEach(it=>{const v=state.ans[it.id];if(v==null)return;
+    if(it.tipo==="B"||it.tipo==="D")form.querySelector(`[name="q${it.n}"]`).value=v;
+    else{const el=form.querySelector(`input[name="q${it.n}"][value="${v}"]`);if(el)el.checked=true;}});
+  /* abas */
+  const tabs=[...P.cadernos.map(c=>c.name),"Redação"];
+  document.getElementById("ctabs").innerHTML=tabs.map((t,i)=>`<button role="tab" data-t="${i}" aria-selected="${i===0}">${t}<small id="tc${i}"></small></button>`).join("");
+  showCad(state.cur||0);
+  clearInterval(tick);const start=Date.now()-(state.elapsed||0)*1000;
+  const tm=document.getElementById("timer");
+  tick=setInterval(()=>{if(state.done)return;const s=Math.floor((Date.now()-start)/1000);state.elapsed=s;const left=DUR-s;tm.textContent=hms(left);tm.classList.toggle("over",left<0);tm.title=left<0?"Tempo esgotado":"Tempo restante";if(s%10===0)save("prova-"+P.id,state);},1000);
+  tm.textContent=hms(DUR-(state.elapsed||0));
+  updateProg();
+  if(state.done)grade(true);else setActions("start");
+}
+function itemHTML(it){
+  const n=it.n;let ctrl="";
+  if(it.tipo==="A")ctrl=`<div class="opts" role="radiogroup" aria-label="Item ${n}"><label><input type="radio" name="q${n}" value="C">Certo</label><label><input type="radio" name="q${n}" value="E">Errado</label><label class="blank-opt"><input type="radio" name="q${n}" value="">Em branco</label></div>`;
+  else if(it.tipo==="B")ctrl=`<div class="opts"><input class="numb" type="number" min="0" max="999" step="1" inputmode="numeric" name="q${n}" aria-label="Resposta do item ${n}"><span class="hint">Inteiro de 0 a 999. Vazio = em branco.</span></div>`;
+  else if(it.tipo==="C")ctrl=`<div class="mc" role="radiogroup" aria-label="Item ${n}">${it.opts.map((o,i)=>`<label data-o="${i}"><input type="radio" name="q${n}" value="${i}"><b>${L[i]}</b><span>${o}</span></label>`).join("")}<label class="blank-opt"><input type="radio" name="q${n}" value="">Deixar em branco</label></div>`;
+  else ctrl=`<textarea class="disc-ans" name="q${n}" placeholder="Escreva sua resposta (até 10 linhas)."></textarea>`;
+  const tag=it.tipo==="A"?"":`<span class="tipo">TIPO ${it.tipo}</span>`;
+  const duv=it.tipo==="D"?"":`<button type="button" class="duv" data-duv="${it.id}" aria-pressed="${state.duv&&state.duv[it.id]?"true":"false"}" style="margin-top:6px">Marcar dúvida</button>`;
+  return `<div class="item" id="i${n}"><span class="num">${n}</span><div><p>${tag}${it.q}</p>${ctrl}${duv}<div class="fb"></div></div></div>`;
+}
+function showCad(i){cur=i;state.cur=i;
+  document.querySelectorAll(".cad").forEach(s=>s.hidden=+s.dataset.c!==i);
+  document.querySelectorAll("#ctabs button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.t===i));}
+document.getElementById("ctabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;showCad(+b.dataset.t);window.scrollTo({top:document.getElementById("ctabs").offsetTop-4});});
+function answers(){const o={};const f=document.getElementById("quiz");ITEMS.forEach(it=>{
+  if(it.tipo==="B"||it.tipo==="D"){const v=f.querySelector(`[name="q${it.n}"]`).value;o[it.id]=v.trim()===""?null:v;}
+  else{const c=f.querySelector(`input[name="q${it.n}"]:checked`);o[it.id]=c&&c.value!==""?c.value:null;}});return o;}
+function updateProg(){const a=answers();const done=Object.values(a).filter(v=>v!=null).length;
+  document.getElementById("progTxt").textContent=`${done} de ${ITEMS.length} respondidos`;
+  document.getElementById("progBar").style.width=(done/ITEMS.length*100)+"%";
+  P.cadernos.forEach((c,ci)=>{const its=ITEMS.filter(x=>x.cad===ci);const d=its.filter(x=>a[x.id]!=null).length;const el=document.getElementById("tc"+ci);if(el)el.textContent=`${d}/${its.length}`;});}
+document.getElementById("quiz").addEventListener("click",e=>{const d=e.target.closest("[data-duv]");if(!d||d.disabled)return;const on=d.getAttribute("aria-pressed")!=="true";d.setAttribute("aria-pressed",on);if(on)state.duv[d.dataset.duv]=true;else delete state.duv[d.dataset.duv];save("prova-"+P.id,state);});
+document.getElementById("quiz").addEventListener("input",()=>{if(state.done)return;state.ans=answers();save("prova-"+P.id,state);updateProg();});
+
+const actions=document.getElementById("actions");
+function setActions(s){
+  if(s==="start"){actions.innerHTML=`<button type="button" class="main" id="finish">Entregar prova</button>`;document.getElementById("finish").onclick=()=>setActions("confirm");}
+  else if(s==="confirm"){const a=answers();const blank=Object.values(a).filter(v=>v==null).length;
+    actions.innerHTML=`<span>${blank?`${blank} em branco. `:""}Entregar e corrigir?</span><button type="button" class="main" id="yes">Sim, entregar</button><button type="button" class="ghost" id="no">Voltar</button>`;
+    document.getElementById("yes").onclick=()=>grade(false);document.getElementById("no").onclick=()=>setActions("start");}
+  else{actions.innerHTML=`<button type="button" class="ghost" id="redo">Refazer prova</button><button type="button" class="main" id="toRes">Ver resultado</button>`;
+    document.getElementById("toRes").onclick=()=>{showCad(cur);document.getElementById("result").scrollIntoView();};
+    document.getElementById("redo").onclick=()=>{save("prova-"+P.id,{});startExam(P.id);};}
+}
+function grade(restoring){
+  const a=restoring?state.ans:answers();state.ans=a;
+  const per={},cad=P.cadernos.map(()=>({ok:0,bad:0,blank:0,net:0,tot:0}));
+  let ok=0,bad=0,blank=0,net=0;
+  ITEMS.forEach(it=>{const v=a[it.id];const el=document.getElementById("i"+it.n);const fb=el.querySelector(".fb");
+    el.querySelectorAll("input,textarea,button.duv").forEach(x=>x.disabled=true);
+    if(it.tipo==="D"){it.cls="g-d";fb.innerHTML=`<div class="model"><h4>Resposta-modelo</h4><p style="margin:0 0 8px">${it.model}</p><h4>Confira se a sua resposta</h4>${it.crit.map(c=>`<label><input type="checkbox">${c}</label>`).join("")}</div>`;return;}
+    const c=cad[it.cad];c.tot++;const p=per[it.disc]=per[it.disc]||{ok:0,bad:0,blank:0,net:0,tot:0};p.tot++;
+    let r;if(v==null)r="blank";else if(it.tipo==="A")r=v===it.a?"ok":"bad";else r=Number(v)===Number(it.a)?"ok":"bad";
+    const pts=r==="ok"?1:(r==="bad"&&it.tipo==="A"?-1:0);
+    if(r==="ok"){ok++;c.ok++;p.ok++;}else if(r==="bad"){bad++;c.bad++;p.bad++;}else{blank++;c.blank++;p.blank++;}
+    net+=pts;c.net+=pts;p.net+=pts;
+    el.classList.add("r-"+r,"graded");it.cls="g-"+r;
+    const gab=it.tipo==="A"?(it.a==="C"?"Certo":"Errado"):it.tipo==="B"?it.a:`letra ${L[it.a]}`;
+    if(it.tipo==="C"){const right=el.querySelector(`.mc label[data-o="${it.a}"]`);if(right)right.classList.add("right");}
+    it.r=r;fb.innerHTML=`<div class="feedback r-${r}"><span class="tag">${r==="ok"?"Acertou":r==="bad"?"Errou":"Em branco"} · gabarito: ${gab}.</span>${it.e}<br>${SITE.studyLink(it.disc,it.q+" "+it.e)}</div>`;
+  });
+  const secs=state.elapsed||0;
+  if(!restoring){state.done=true;save("prova-"+P.id,state);const H=load("prova-hist",{});const h=H[P.id]||{tries:0,best:-9999};h.tries++;h.last=net;h.best=Math.max(h.best,net);H[P.id]=h;save("prova-hist",H);}
+  const obj=ITEMS.filter(x=>x.tipo!=="D").length;const pct=Math.round(net/obj*100);
+  const verdict=pct>=60?"Excelente: esse desempenho é competitivo para os cursos mais concorridos.":pct>=40?"Bom resultado. Revise os erros: no tipo A, cada erro custa o ponto de um acerto.":pct>=20?"Resultado razoável. Use a Revisão Completa nas disciplinas com saldo baixo e deixe em branco quando estiver em dúvida.":"Os erros estão anulando os acertos. Leia as explicações, revise o conteúdo e marque só o que tiver segurança.";
+  const dv=ITEMS.filter(it=>it.tipo!=="D"&&state.duv&&state.duv[it.id]&&a[it.id]!=null);let duvHTML="";
+  if(dv.length){const dok=dv.filter(it=>it.r==="ok").length,dbadA=dv.filter(it=>it.r==="bad"&&it.tipo==="A").length,dnet=dok-dbadA;
+    duvHTML=`<div class="duv-box"><b>Itens marcados com dúvida e respondidos: ${dv.length}.</b> Acertou ${dok} e errou ${dv.filter(it=>it.r==="bad").length}. ${dnet>0?`O chute <b>rendeu ${dnet} ponto${dnet>1?"s":""}</b>.`:dnet<0?`O chute <b>custou ${-dnet} ponto${dnet<-1?"s":""}</b>: deixando esses itens em branco, seu saldo seria ${net-dnet} em vez de ${net}.`:"O chute empatou."} <a href="comece.html#chute" style="color:var(--accent)">Quando vale a pena chutar?</a></div>`;}
+  const r=document.getElementById("result");r.hidden=false;
+  r.innerHTML=`<div class="disc">Resultado · ${P.title}</div><h2 style="font-family:var(--display);font-size:26px;margin:0">Saldo de ${net} pontos em ${obj} itens objetivos</h2>
+   <div class="score"><div><div class="k">Acertos</div><div class="v ok">${ok}</div></div><div><div class="k">Erros</div><div class="v bad">${bad}</div></div><div><div class="k">Em branco</div><div class="v">${blank}</div></div><div><div class="k">Saldo</div><div class="v">${net}</div></div><div><div class="k">Aproveitamento</div><div class="v">${pct}%</div></div><div><div class="k">Tempo</div><div class="v" style="font-size:22px">${hms(secs)}</div></div></div>
+   <p style="margin:6px 0 0">${verdict}</p>${duvHTML}
+   <h3 style="font-family:var(--display);font-size:18px;margin:20px 0 6px">Por caderno</h3>
+   <div class="scroll"><table><thead><tr><th>Caderno</th><th>Itens</th><th>Acertos</th><th>Erros</th><th>Branco</th><th>Saldo</th></tr></thead><tbody>
+   ${P.cadernos.map((c,ci)=>{const x=cad[ci];return `<tr><td>${c.name}</td><td class="c">${x.tot}</td><td class="c">${x.ok}</td><td class="c">${x.bad}</td><td class="c">${x.blank}</td><td class="c"><b>${x.net}</b></td></tr>`}).join("")}</tbody></table></div>
+   <h3 style="font-family:var(--display);font-size:18px;margin:20px 0 6px">Por disciplina</h3>
+   <div class="scroll"><table><thead><tr><th>Disciplina</th><th>Itens</th><th>Acertos</th><th>Erros</th><th>Branco</th><th>Saldo</th></tr></thead><tbody>
+   ${Object.entries(per).map(([d,x])=>`<tr><td>${d}</td><td class="c">${x.tot}</td><td class="c">${x.ok}</td><td class="c">${x.bad}</td><td class="c">${x.blank}</td><td class="c"><b>${x.net}</b></td></tr>`).join("")}</tbody></table></div>
+   <h3 style="font-family:var(--display);font-size:18px;margin:20px 0 6px">Mapa dos itens</h3>
+   <p style="font-size:13.5px;color:var(--muted);margin:0">Verde: acerto · vermelho: erro · cinza: em branco · amarelo: discursiva (confira a resposta-modelo). Toque num número para ir ao item.</p>
+   <div class="grid-ans">${ITEMS.map(it=>`<a href="#" class="${it.cls}" data-jump="${it.n}" data-c="${it.cad}">${it.n}</a>`).join("")}</div>
+   <p style="font-size:13.5px;color:var(--muted);margin-top:14px">Falta a redação: escreva o texto da aba <b>Redação</b> e corrija com o Claude. Para revisar o conteúdo, abra a <a href="revisao-completa.html" style="color:var(--accent)">Revisão Completa</a>.</p>`;
+  r.onclick=(e=>{const a=e.target.closest("[data-jump]");if(!a)return;e.preventDefault();showCad(+a.dataset.c);document.getElementById("i"+a.dataset.jump).scrollIntoView({block:"center"});});
+  setActions("done");
+  if(!restoring){showCad(0);r.scrollIntoView();}
+}
+document.getElementById("back").addEventListener("click",e=>{e.preventDefault();location.hash="";});
+
+function route(){const h=location.hash.slice(1);
+  if(!h){if(P&&!state.done){state.ans=answers();save("prova-"+P.id,state);}clearInterval(tick);P=null;document.getElementById("exam").hidden=true;document.getElementById("bar").hidden=true;document.getElementById("home").hidden=false;renderHome();window.scrollTo({top:0});return;}
+  startExam(h);}
+window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>

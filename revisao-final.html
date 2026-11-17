@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Reta Final UnB</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&family=Kalam:wght@400&display=swap">
+<style>
+/* Layout: mesma identidade do Raio-X (caderno Cebraspe). Abas: plano dos últimos dias e dia da prova */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea;
+  --hot:#b4442c; --warm:#a06d0c; --cool:#43648a;
+  --sheet:#fffdf6; --rule:#c9d6e3; --margin:#e3a3a3; --pen:#1d2f6b;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --hand:"Kalam","Segoe Print","Comic Sans MS",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6;
+  --sheet:#1d2420; --rule:#33443d; --margin:#7a3d3d; --pen:#b9c8f5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6;
+  --sheet:#1d2420; --rule:#33443d; --margin:#7a3d3d; --pen:#b9c8f5; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:1000px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:0 0 8px;text-wrap:balance}
+header p{color:var(--muted);max-width:70ch;margin:0}
+.count{display:inline-flex;gap:10px;align-items:baseline;margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 14px}
+.count b{font-family:var(--display);font-size:26px;color:var(--accent)}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:22px 0 18px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:inherit;font-weight:700;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 12px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.card h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 6px}
+h3{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 6px}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 10px}
+.stack{display:flex;flex-direction:column;gap:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+ul.plain{margin:6px 0 0;padding-left:18px} ul.plain li{margin-bottom:6px}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.p-hot{background:color-mix(in srgb,var(--hot) 15%,transparent);color:var(--hot)}
+.p-warm{background:color-mix(in srgb,var(--warm) 17%,transparent);color:var(--warm)}
+.p-cool{background:color-mix(in srgb,var(--cool) 17%,transparent);color:var(--cool)}
+.note{font-size:13px;color:var(--muted);margin-top:16px;max-width:78ch}
+/* plano */
+.day{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;border-top:1px solid var(--line);padding:14px 0}
+.day:first-of-type{border-top:0}
+.day .d{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.day .d b{display:block;font-family:var(--display);font-size:22px;color:var(--ink)}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:4px 0;font-size:14.5px;cursor:pointer}
+.chk input{margin-top:4px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+.chk input:checked + span{color:var(--muted);text-decoration:line-through}
+.voltar{max-width:1100px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px)) 0;font-size:14px}.voltar a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Reta Final UnB</h1>
+  <p>O plano para os últimos dias antes da prova e o que levar e fazer no dia. O conteúdo está na Revisão Completa; os modelos e temas de redação, na página Redação.</p>
+  <div class="count" id="countdown"><b id="days">—</b><span id="daysLbl">dias para a prova (21 e 22 de novembro)</span></div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="plano" aria-selected="true">Plano</button>
+  <button role="tab" data-tab="dia" aria-selected="false">Dia da prova</button>
+</nav>
+
+<!-- PLANO -->
+<section id="v-plano">
+  <div class="card">
+    <h2>Os quatro dias antes da prova</h2>
+    <p class="sub">Marque o que já fez. As marcações ficam salvas neste navegador.</p>
+    <div id="plan"></div>
+  </div>
+  <p class="note">A ideia é revisar o que mais cai, e não aprender matéria nova. Na sexta, só revisão leve e descanso.</p>
+</section>
+
+
+
+
+
+
+
+<!-- DIA -->
+<section id="v-dia" hidden>
+  <div class="grid2">
+    <div class="card">
+      <h2>Leve no dia</h2>
+      <div id="bag"></div>
+      <p class="note" style="margin-top:10px">Confira no cartão de confirmação o seu local e as regras exatas. O edital do Vestibular 2027 proíbe lápis, lapiseira, marca-texto e borracha. As provas começam às 13h (horário de Brasília) e duram cinco horas.</p>
+    </div>
+    <div class="card">
+      <h2>Estratégia de prova</h2>
+      <ul class="plain">
+        <li><b>Leia o texto-base primeiro.</b> Muitos itens se resolvem só com ele.</li>
+        <li><b>Faça duas passadas.</b> Na primeira, marque só o que tiver certeza. Na segunda, volte nos itens em que ficou em dúvida.</li>
+        <li><b>Erro desconta.</b> Em certo/errado, um erro anula um acerto. Chute só quando estiver bem mais inclinado para um lado.</li>
+        <li><b>Tipo B e tipo C:</b> confira no edital como cada um pontua antes de decidir se chuta.</li>
+        <li><b>Reserve tempo para a folha de respostas.</b> Passe o gabarito com pelo menos 30 minutos de folga.</li>
+        <li><b>Redação:</b> faça rascunho, conte as linhas e passe a limpo com letra legível. Não assine nem escreva seu nome no texto.</li>
+        <li><b>Discursiva tipo D:</b> responda direto ao comando ("explique", "discorra") em até 10 linhas, usando o termo técnico certo.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Na véspera</h2>
+      <ul class="plain">
+        <li>Durma cedo nas duas noites. A prova é longa e à tarde.</li>
+        <li>Almoce leve antes de sair e leve água e um lanche em embalagem transparente.</li>
+        <li>Saia com folga para chegar antes de os portões fecharem.</li>
+        <li>Releia apenas a aba de fórmulas do Raio-X e um modelo de redação.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+function load(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+/* contagem */
+(function(){
+  const exam=new Date(2026,10,21);const now=new Date();now.setHours(0,0,0,0);
+  const d=Math.round((exam-now)/86400000);
+  const el=document.getElementById("days"),lb=document.getElementById("daysLbl");
+  if(d>1){el.textContent=d;}
+  else if(d===1){el.textContent="1";lb.textContent="dia para a prova (21 e 22 de novembro)";}
+  else if(d>=-1){el.textContent="Hoje";lb.textContent="é dia de prova. Boa sorte!";}
+  else{el.textContent="✓";lb.textContent="A prova já passou.";}
+})();
+
+/* plano */
+const PLAN=[
+ ["Ter","17/11","Redação e matemática",["Ler na página Redação a aba “Como a UnB corrige” e dois modelos do gênero dissertativo","Escrever uma redação de 30 linhas em 1h, com um tema da aba Temas, e corrigir com o Claude","Revisar Matemática na Revisão Completa: estatística, funções e probabilidade","Fazer o simulado de Matemática e ler as explicações dos erros"]],
+ ["Qua","18/11","Prova completa 1",["Fazer a Prova completa 1 de uma vez, com o cronômetro de 5 horas","Ler a correção caderno por caderno, começando pelos erros","Revisar na Revisão Completa as disciplinas com saldo mais baixo","Escrever a redação da Prova 1 e corrigir com o Claude"]],
+ ["Qui","19/11","Prova completa 2 e humanas",["Fazer a Prova completa 2","Revisar Artes (partitura, teatro, fotografia), Filosofia e Literatura","Escrever um relato em 1ª pessoa de 30 linhas","Usar “Refazer os que errei” nos simulados"]],
+ ["Sex","20/11","Revisão leve",["Reler só a aba Fórmulas do Raio-X e as pegadinhas da Revisão Completa","Separar documento, canetas e o cartão de confirmação","Conferir o local e o trajeto até a prova","Dormir cedo"]]
+];
+const pst=load("rev-plan");
+document.getElementById("plan").innerHTML=PLAN.map(([w,d,t,list],i)=>`<div class="day"><div class="d">${w}<b>${d}</b></div><div><h3>${t}</h3>${list.map((x,j)=>`<label class="chk"><input type="checkbox" id="p${i}_${j}" ${pst["p"+i+"_"+j]?"checked":""}><span>${x}</span></label>`).join("")}</div></div>`).join("");
+document.getElementById("plan").addEventListener("change",e=>{if(e.target.type==="checkbox"){pst[e.target.id]=e.target.checked;save("rev-plan",pst);}});
+
+/* dia */
+const BAG=["Documento oficial original com foto","Caneta esferográfica de tinta preta, em corpo transparente (leve duas)","Água e lanche em embalagem transparente","Cartão de confirmação com o local da prova","Relógio analógico simples, se o edital permitir (o celular fica desligado e guardado)","Agasalho leve"];
+const bst=load("rev-bag");
+document.getElementById("bag").innerHTML=BAG.map((x,i)=>`<label class="chk"><input type="checkbox" id="b${i}" ${bst["b"+i]?"checked":""}><span>${x}</span></label>`).join("");
+document.getElementById("bag").addEventListener("change",e=>{bst[e.target.id]=e.target.checked;save("rev-bag",bst);});
+
+/* abas */
+const V={plano:"v-plano",dia:"v-dia"};
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  Object.entries(V).forEach(([k,id])=>document.getElementById(id).hidden=k!==b.dataset.tab);
+}));
+</script>
+
+</body>
+</html>

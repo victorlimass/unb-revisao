@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Comece Aqui</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: página de entrada para iniciantes. Passos numerados em coluna de leitura, cartões, roteiro gerado e calculadora de chute */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea; --ok:#0b7a3e; --bad:#b4442c; --warm:#a06d0c;
+  --display:"Fraunces",Georgia,serif; --body:"Atkinson Hyperlegible",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111814;--paper:#18211c;--ink:#e6ece8;--muted:#9aaaa1;--line:#2c3a33;--accent:#4fc79a;--accent-soft:#1b3328;--ok:#5fd38f;--bad:#f08a72;--warm:#e3b350;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111814;--paper:#18211c;--ink:#e6ece8;--muted:#9aaaa1;--line:#2c3a33;--accent:#4fc79a;--accent-soft:#1b3328;--ok:#5fd38f;--bad:#f08a72;--warm:#e3b350;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,6vw,46px);line-height:1.08;margin:6px 0 10px;text-wrap:balance}
+.lead{color:var(--muted);font-size:17px;max-width:62ch;margin:0 0 18px}
+.steps-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+.steps-nav a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 6px;font-size:14.5px;font-weight:700}
+.steps-nav a b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--paper);font-family:var(--mono);font-size:13px}
+.steps-nav a:hover{border-color:var(--accent)}
+section.step{margin:0 0 44px;scroll-margin-top:70px}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sh b{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);color:var(--paper);font-family:var(--mono);font-size:18px;flex:none}
+.sh h2{font-family:var(--display);font-weight:700;font-size:clamp(23px,4vw,30px);margin:0;line-height:1.15}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.card h3{font-family:var(--display);font-size:19px;margin:0 0 6px}
+.card p{margin:0 0 8px}
+.card .ic{font-size:26px;line-height:1;margin-bottom:6px}
+.ex{font-size:14.5px;background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:6px}
+.ex .c{color:var(--ok);font-weight:700}.ex .e{color:var(--bad);font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;background:var(--accent);color:var(--paper);border:0;border-radius:10px;padding:11px 18px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.saldo{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:10px 0 4px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:#fff}
+.saldo span{display:grid;place-items:center}
+.form{display:grid;gap:16px}
+.q{display:grid;gap:8px}
+.q>span{font-weight:700}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer;background:var(--paper);font-size:15px}
+.opts input{accent-color:var(--accent)}
+.opts label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+select{font:inherit;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--paper);color:var(--ink)}
+.day{border-left:4px solid var(--accent);background:var(--paper);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:12px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.day.last{border-left-color:var(--warm)}
+.day h3{font-family:var(--display);font-size:19px;margin:0 0 2px}
+.day .d{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.task{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line);font-size:15px}
+.task:first-of-type{border-top:0}
+.task input{margin-top:5px;width:17px;height:17px;accent-color:var(--accent);flex:none}
+.task input:checked+span{color:var(--muted);text-decoration:line-through}
+.task a{color:var(--accent);font-weight:700}
+.task small{display:block;color:var(--muted);font-size:13px}
+.calc{display:grid;gap:12px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.meter{position:relative;height:16px;background:var(--line);border-radius:8px;overflow:hidden}
+.meter i{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--ink);opacity:.5}
+.meter b{position:absolute;top:0;bottom:0}
+.verdict{font-size:17px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.n{font-family:var(--mono);text-align:center}
+td a{color:var(--accent);font-weight:700}
+.scroll{overflow-x:auto}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:4px;padding:2px 8px;text-transform:uppercase;letter-spacing:.04em}
+.e-baixo{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.e-medio{background:color-mix(in srgb,var(--warm) 18%,transparent);color:var(--warm)}
+.note{font-size:13.5px;color:var(--muted);margin-top:10px}
+.weak li{margin-bottom:6px}
+.weak a{color:var(--accent);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Para quem está começando</div>
+  <h1>Comece aqui</h1>
+  <p class="lead">Se você nunca estudou para o vestibular da UnB, siga estes cinco passos. Em 10 minutos você entende a prova, descobre seus pontos fracos e sai com um roteiro dia a dia até a prova.</p>
+  <nav class="steps-nav" aria-label="Passos">
+    <a href="#prova"><b>1</b>Entenda a prova</a>
+    <a href="#diagnostico"><b>2</b>Faça o diagnóstico</a>
+    <a href="#roteiro"><b>3</b>Monte seu roteiro</a>
+    <a href="#chute"><b>4</b>Quando chutar</a>
+    <a href="#rende"><b>5</b>O que rende mais ponto</a>
+  </nav>
+
+  <section class="step" id="prova">
+    <div class="sh"><b>1</b><h2>Entenda a prova em 5 minutos</h2></div>
+    <div class="grid">
+      <div class="card"><div class="ic">📅</div><h3>Quando e como</h3><p>Dias <b>21 e 22 de novembro</b>, a partir das 13h, com cerca de 5 horas por dia. A banca é o <b>Cebraspe</b>. Leve documento original com foto e caneta preta de corpo transparente.</p></div>
+      <div class="card"><div class="ic">📚</div><h3>O que cai</h3><p>Três cadernos de conhecimentos (I: português, literatura e língua estrangeira; II: humanas e artes; III: exatas e biologia) e uma <b>redação</b>. Tudo gira em torno de um <b>tema transversal</b>, um assunto atual que aparece em todas as matérias.</p></div>
+      <div class="card"><div class="ic">✅</div><h3>Certo ou errado</h3><p>A maior parte da prova são afirmações que você julga como <b>certas</b> ou <b>erradas</b>. Também há itens de número (tipo B), de múltipla escolha (tipo C) e de resposta escrita (tipo D).</p>
+        <div class="ex">“A água ferve a 100 °C ao nível do mar.” → <span class="c">Certo</span><br>“A água <u>sempre</u> ferve a 100 °C.” → <span class="e">Errado</span></div></div>
+      <div class="card"><div class="ic">⚖️</div><h3>Errar tira ponto</h3><p>Cada erro <b>anula um acerto</b>. Deixar em branco vale zero. Por isso, chutar sem critério pode baixar sua nota.</p>
+        <div class="saldo" aria-hidden="true"><span style="flex:30;background:var(--ok)">30 acertos</span><span style="flex:20;background:var(--bad)">20 erros</span></div>
+        <p style="font-size:14px;margin:0">Saldo: 30 − 20 = <b>10</b>. Com os 20 em branco, seria <b>30</b>.</p></div>
+      <div class="card"><div class="ic">✍️</div><h3>A redação</h3><p>Um texto de até 30 linhas sobre o tema da prova. O gênero muda: já foi dissertação, artigo de opinião e relato em 1ª pessoa. Erros de português descontam pontos.</p><a class="btn ghost" href="redacao.html">Ver o guia de redação</a></div>
+      <div class="card"><div class="ic">🧭</div><h3>Por onde começar</h3><p>Se você não sabe interpretar um item ou sente que falta o básico, comece pela <b>Base zero</b>: como ler a prova e o mínimo de cada matéria (Português, Matemática, Humanas, Ciências, Inglês, Literatura e Artes).</p><a class="btn ghost" href="revisao-completa.html#leitura">Abrir a Base zero</a></div>
+    </div>
+  </section>
+
+  <section class="step" id="diagnostico">
+    <div class="sh"><b>2</b><h2>Faça o diagnóstico</h2></div>
+    <div class="card">
+      <p>São 30 itens, dois de cada disciplina e um extra de Português e de Comunicação e mídia. Não estude antes: o objetivo é descobrir onde você está. <b>Deixe em branco o que não souber.</b> No fim, o site mostra seus pontos fracos e usa o resultado para montar o roteiro do passo 3.</p>
+      <div id="diagOut"></div>
+      <a class="btn" href="simulados.html#diagnostico" id="diagBtn">Fazer o diagnóstico (cerca de 20 min)</a>
+    </div>
+  </section>
+
+  <section class="step" id="roteiro">
+    <div class="sh"><b>3</b><h2>Monte seu roteiro</h2></div>
+    <div class="card form">
+      <div class="q"><span>Quantos dias faltam para a prova?</span><select id="fDias"></select></div>
+      <div class="q"><span>Como está sua base?</span><div class="opts" id="fNivel">
+        <label><input type="radio" name="nivel" value="zero"> Estou começando do zero</label>
+        <label><input type="radio" name="nivel" value="alguma"> Sei um pouco</label>
+        <label><input type="radio" name="nivel" value="boa"> Já estudei bastante</label></div></div>
+      <div class="q"><span>Quantas horas por dia você consegue estudar?</span><div class="opts" id="fHoras">
+        <label><input type="radio" name="horas" value="2"> Até 2 h</label>
+        <label><input type="radio" name="horas" value="4"> 3 a 4 h</label>
+        <label><input type="radio" name="horas" value="6"> 5 h ou mais</label></div></div>
+      <div class="q"><span>Quais áreas você acha mais difíceis? <small style="font-weight:400;color:var(--muted)">(se fez o diagnóstico, ele já é usado)</small></span><div class="opts" id="fFraco"></div></div>
+      <div><button class="btn" id="gerar">Gerar meu roteiro</button></div>
+    </div>
+    <div id="plan" style="margin-top:18px"></div>
+  </section>
+
+  <section class="step" id="chute">
+    <div class="sh"><b>4</b><h2>Quando vale a pena chutar?</h2></div>
+    <div class="card calc">
+      <p>Num item certo/errado, se você tem uma chance <b>p</b> de acertar, o ponto que espera ganhar é <b>p × 1 − (1 − p) × 1 = 2p − 1</b>. Com 50% de certeza, o ganho médio é zero: chutar não ajuda nem atrapalha, mas aumenta o risco. Abaixo de 50%, você perde pontos em média.</p>
+      <label for="pr"><b>Quanta certeza você tem da resposta?</b> <span id="prv" style="font-family:var(--mono)"></span></label>
+      <input type="range" id="pr" min="0" max="100" step="5" value="65">
+      <div class="meter" aria-hidden="true"><i></i><b id="pm"></b></div>
+      <div class="verdict" id="pv"></div>
+      <ul style="margin:0;padding-left:20px">
+        <li><b>Regra prática:</b> marque quando tiver pelo menos uns <b>70% de certeza</b>. Entre 50% e 70%, só marque se estiver indo bem na prova e quiser arriscar.</li>
+        <li><b>Use o botão “Marcar dúvida”</b> nos simulados e nas provas: no fim, o site mostra se seus chutes renderam ou custaram pontos. Assim você calibra a sua certeza.</li>
+        <li><b>Eliminar já é saber:</b> se você reconhece uma palavra absoluta (“sempre”, “nunca”, “apenas”) ou uma troca de conceito, sua certeza sobe.</li>
+        <li>Neste site, itens tipo B e C não descontam quando errados. No vestibular, <b>confira no edital</b> a pontuação de cada tipo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="step" id="rende">
+    <div class="sh"><b>5</b><h2>O que rende mais ponto com menos estudo</h2></div>
+    <div class="card">
+      <p>Os assuntos abaixo caíram muito nas provas de 2023 a 2025 (dados do <a href="raio-x.html" style="color:var(--accent)">Raio-X</a>) e podem ser aprendidos rápido. Com pouco tempo, comece por eles.</p>
+      <div class="scroll"><table id="rendeT"></table></div>
+      <p class="note">“Esforço” é uma estimativa de quanto tempo leva para aprender o básico do assunto. As contagens somam os itens dos três anos.</p>
+    </div>
+  </section>
+</div>
+
+<script src="assets/site.js"></script>
+<script src="raiox-dados.js"></script>
+<script>
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const DISCS=[["port","portugues","Língua Portuguesa","Linguagens"],["lit","literatura","Literatura","Linguagens"],["ingl","ingles","Língua Inglesa","Linguagens"],["artes","artes","Artes","Linguagens"],["hist","historia","História","Humanas"],["geo","geografia","Geografia","Humanas"],["filo","filosofia","Filosofia","Humanas"],["soc","sociologia","Sociologia","Humanas"],["midia","midia","Comunicação e mídia","Humanas"],["mat","matematica","Matemática","Exatas"],["fis","fisica","Física","Exatas"],["qui","quimica","Química","Exatas"],["bio","biologia","Biologia","Natureza"]];
+/* ordem padrão de rendimento (mais cai / mais fácil primeiro) */
+const YIELD=["artes","port","mat","bio","hist","geo","fis","qui","lit","filo","soc","midia","ingl"];
+const EXAM=new Date(2026,10,21);
+
+/* diagnóstico */
+const dg=load("diag",null);
+if(dg){const rows=Object.entries(dg.per).map(([id,p])=>[id,p,(p.ok-p.bad)/p.tot]).sort((a,b)=>a[2]-b[2]);
+  document.getElementById("diagOut").innerHTML=`<p style="margin:0 0 6px"><b>Seu diagnóstico (${new Date(dg.date).toLocaleDateString("pt-BR")}).</b> Pontos mais fracos:</p><ol class="weak">${rows.slice(0,5).map(([id,p])=>`<li>${p.name}: ${p.ok} de ${p.tot} · <a href="revisao-completa.html#${SITE.REVKEY[id]}">estudar</a></li>`).join("")}</ol>`;
+  document.getElementById("diagBtn").textContent="Refazer o diagnóstico";document.getElementById("diagBtn").classList.add("ghost");}
+
+/* roteiro */
+const today=new Date();today.setHours(0,0,0,0);const left=Math.round((EXAM-today)/86400000);
+const fD=document.getElementById("fDias");for(let d=1;d<=30;d++)fD.innerHTML+=`<option value="${d}">${d} dia${d>1?"s":""}</option>`;
+fD.value=Math.min(30,Math.max(1,left));
+document.getElementById("fFraco").innerHTML=DISCS.map(([r,,n])=>`<label><input type="checkbox" value="${r}"> ${n}</label>`).join("");
+let R=load("roteiro",null);
+if(R){fD.value=R.cfg.dias;const n=document.querySelector(`input[name=nivel][value="${R.cfg.nivel}"]`);if(n)n.checked=true;const h=document.querySelector(`input[name=horas][value="${R.cfg.horas}"]`);if(h)h.checked=true;R.cfg.fraco.forEach(f=>{const c=document.querySelector(`#fFraco input[value="${f}"]`);if(c)c.checked=true;});}
+else{document.querySelector('input[name=nivel][value="zero"]').checked=true;document.querySelector('input[name=horas][value="4"]').checked=true;}
+const D=id=>DISCS.find(x=>x[0]===id);
+function makePlan(cfg){
+  const days=+cfg.dias,lvl=cfg.nivel,h=+cfg.horas;
+  /* ordem de foco: fracos do diagnóstico, depois os marcados, depois rendimento */
+  const order=[];const push=x=>{if(!order.includes(x))order.push(x);};
+  if(dg)Object.entries(dg.per).map(([id,p])=>[SITE.REVKEY[id],(p.ok-p.bad)/p.tot]).filter(x=>x[0]&&x[0]!=="base"&&x[0]!=="esp").sort((a,b)=>a[1]-b[1]).slice(0,4).forEach(x=>push(x[0]));
+  cfg.fraco.forEach(push);YIELD.forEach(push);
+  const perDay=h>=6?3:h>=4?2:1;
+  const plan=[];const study=days>1?days-1:1;let k=0;
+  for(let i=0;i<study;i++){
+    const t=[];
+    if(i===0){t.push(["Ler <a href=\"comece.html#prova\">como funciona a prova</a> e <a href=\"revisao-completa.html#leitura\">Como ler a prova</a> (Base zero)","15 min"]);
+      if(!dg)t.push(["Fazer o <a href=\"simulados.html#diagnostico\">diagnóstico</a>","20 min"]);
+      if(lvl==="zero")t.push(["Estudar a <a href=\"revisao-completa.html#leitura\">Base zero</a> (o básico de cada matéria) e fazer o <a href=\"simulados.html#base\">simulado Base zero</a>","1 h 30"]);}
+    const provaDay=days>=3&&i===Math.floor(study/2);const prova2Day=days>=5&&i===study-1;
+    if(provaDay||prova2Day){const n=provaDay?1:2;
+      t.push([h>=6?`Fazer a <a href="prova.html#prova${n}">Prova completa ${n}</a> inteira, com cronômetro`:`Fazer o Caderno ${lvl==="zero"?"I":"III"} da <a href="prova.html#prova${n}">Prova completa ${n}</a>`,h>=6?"5 h":"2 h"]);
+      t.push(["Ler a correção começando pelos erros e abrir os links “Estudar”","30 min"]);}
+    else{for(let j=0;j<perDay;j++){const id=order[k%order.length];k++;const d=D(id);if(!d)continue;
+      t.push([`Estudar <b>${d[2]}</b> na <a href="revisao-completa.html#${d[0]}">Revisão</a>, começando pelos de prioridade alta e lendo também o “Aprofundando” e os itens comentados`,lvl==="zero"?"50 min":"40 min"]);
+      t.push([`Fazer o <a href="simulados.html#${d[1]}">simulado de ${d[2]}</a> e ler as explicações`,"20 min"]);}}
+    if(i%2===0||days<=7)t.push(["Escrever uma redação de 30 linhas em 1 h e <a href=\"redacao.html#claude\">corrigir com o Claude</a>","1 h 15"]);
+    else t.push(["Ler um <a href=\"redacao.html#generos\">modelo de redação</a> e as notas ao lado","15 min"]);
+    t.push(["15 minutos de <a href=\"cartoes.html\">cartões</a> (fórmulas e glossário)","15 min"]);
+    if(i>0&&!provaDay&&!prova2Day)t.push(["Usar <a href=\"simulados.html#erros\">Refazer os que errei</a>","15 min"]);
+    plan.push({title:i===0?"Primeiro dia":provaDay||prova2Day?"Dia de prova completa":`Dia ${i+1}`,t});
+  }
+  if(days>1)plan.push({title:"Véspera: revisão leve",last:true,t:[["Reler as pegadinhas e a aba <a href=\"raio-x.html\">Fórmulas do Raio-X</a>","40 min"],["Passar os <a href=\"cartoes.html\">cartões</a> que você ainda erra","20 min"],["Separar documento e canetas e conferir o local (<a href=\"revisao-final.html\">Reta final</a>)","15 min"],["Dormir cedo","—"]]});
+  return plan;}
+function renderPlan(){
+  if(!R){document.getElementById("plan").innerHTML="";return;}
+  const start=new Date(R.cfg.start);
+  document.getElementById("plan").innerHTML=`<p style="margin:0 0 10px"><b>Seu roteiro</b> · marque as tarefas conforme fizer. Ele também aparece na página inicial.</p>`+R.plan.map((d,i)=>{const dt=new Date(start);dt.setDate(dt.getDate()+i);
+    return `<div class="day${d.last?" last":""}"><div class="d">${dt.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"})}</div><h3>${d.title}</h3>${d.t.map((t,j)=>`<label class="task"><input type="checkbox" data-k="${i}-${j}" ${R.done[i+"-"+j]?"checked":""}><span>${t[0]}<small>${t[1]}</small></span></label>`).join("")}</div>`;}).join("");}
+document.getElementById("gerar").addEventListener("click",()=>{
+  const cfg={dias:fD.value,nivel:(document.querySelector("input[name=nivel]:checked")||{}).value||"zero",horas:(document.querySelector("input[name=horas]:checked")||{}).value||"4",fraco:[...document.querySelectorAll("#fFraco input:checked")].map(x=>x.value),start:today.getTime()};
+  R={cfg,plan:makePlan(cfg),done:{}};save("roteiro",R);renderPlan();document.getElementById("plan").scrollIntoView({behavior:"smooth"});});
+document.getElementById("plan").addEventListener("click",e=>{if(e.target.closest("a"))e.stopPropagation();});
+document.getElementById("plan").addEventListener("change",e=>{const k=e.target.dataset.k;if(!k)return;R.done[k]=e.target.checked;save("roteiro",R);});
+renderPlan();
+
+/* calculadora de chute */
+const pr=document.getElementById("pr");
+function chute(){const p=pr.value/100,ev=2*p-1;document.getElementById("prv").textContent=pr.value+"%";
+  const m=document.getElementById("pm");m.style.left=ev>=0?"50%":(50+ev*50)+"%";m.style.width=Math.abs(ev)*50+"%";m.style.background=ev>=0?"var(--ok)":"var(--bad)";
+  document.getElementById("pv").textContent=`Ganho médio por item: ${ev>0?"+":""}${ev.toFixed(2).replace(".",",")} ponto. `+(p<.5?"Deixe em branco: você perde pontos em média.":p<.7?"Arriscado: só marque se quiser correr o risco.":"Marque: o ganho esperado compensa.");}
+pr.addEventListener("input",chute);chute();
+
+/* o que rende mais ponto */
+const RENDE=[["Música e partitura","Artes","baixo","artes-0","compasso, figuras, cifras e a conta de duração"],["Artes visuais","Artes","medio","artes-3","vanguardas, Renascimento, arte brasileira"],["Teatro","Artes","baixo","artes-2","tragédia grega, Brecht, Boal"],["Interpretação de texto","Língua portuguesa","baixo","port-0","inferência, pressupostos, ideia central"],["Estatística","Matemática","baixo","mat-1","média, mediana, leitura de gráficos"],["Cinema, arquitetura e design","Artes","baixo","artes-4","planos fotográficos, Brasília modernista"],["Ecologia","Biologia","baixo","bio-4","cadeias alimentares, ciclos, relações"],["Mecânica","Física","medio","fis-0","velocidade, Newton, plano inclinado"],["Gramática e coesão","Língua portuguesa","medio","port-2","pronomes, conectivos, concordância, crase"],["Escolas literárias","Literatura","medio","lit-2","características de cada escola e autores"],["Ácido-base, soluções e estequiometria","Química","medio","qui-2","pH, concentração, mol"],["História do Brasil","História","medio","hist-7","República, Era Vargas, ditadura, Brasília"]];
+const RXT={};Object.values(DATA).flat().forEach(d=>d.topics.forEach(t=>RXT[t[0]]=t[2]));
+const rows=RENDE.map(r=>({r,tot:(RXT[r[0]]||[0,0,0]).reduce((a,b)=>a+b,0)})).sort((a,b)=>b.tot-a.tot);
+document.getElementById("rendeT").innerHTML=`<thead><tr><th>Assunto</th><th>Itens 2023-25</th><th>Esforço</th><th></th></tr></thead><tbody>`+rows.map(({r,tot})=>`<tr><td><b>${r[0]}</b><br><span style="font-size:13.5px;color:var(--muted)">${r[1]} · ${r[4]}</span></td><td class="n">${tot}</td><td><span class="pill e-${r[2]}">${r[2]==="medio"?"médio":"baixo"}</span></td><td><a href="revisao-completa.html#t-${r[3]}">Estudar →</a></td></tr>`).join("")+"</tbody>";
+SITE.glossify(document.querySelectorAll(".card p"),4);
+</script>
+</body>
+</html>

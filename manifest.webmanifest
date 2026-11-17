@@ -1,0 +1,11 @@
+{
+  "name": "Revisão Vestibular UnB",
+  "short_name": "UnB 2027",
+  "description": "Provas completas, simulados, revisão e redação para o Vestibular UnB.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f3f5f1",
+  "theme_color": "#0b6e4f",
+  "lang": "pt-BR",
+  "icons": [{"src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}

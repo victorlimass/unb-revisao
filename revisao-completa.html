@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Revisão Completa UnB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: revisão de todo o conteúdo do edital. Abas por área, disciplinas como cartões, assuntos expansíveis com "saber" e "pegadinhas", marcação de revisado */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea; --hot:#b4442c; --warm:#a06d0c;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328; --hot:#f08a72; --warm:#e3b350; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328; --hot:#f08a72; --warm:#e3b350; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:1000px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:0 0 8px;text-wrap:balance}
+header p{color:var(--muted);max-width:72ch;margin:0}
+.progress{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 14px;max-width:520px}
+.progress .bar{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.progress .bar b{display:block;height:100%;background:var(--accent);width:0}
+.progress span{font-family:var(--mono);font-size:13px;white-space:nowrap}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:22px 0 14px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:inherit;font-weight:700;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 12px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.ctrl input[type=search]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:8px 10px;flex:1;min-width:200px}
+.ctrl button{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:7px 12px;cursor:pointer}
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.jump a{font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 11px;text-decoration:none}
+.jump a:hover{border-color:var(--accent)}
+.disc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:18px;scroll-margin-top:12px}
+.disc-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.disc h2{font-family:var(--display);font-weight:600;font-size:23px;margin:0}
+.disc-h a{font-size:13.5px;color:var(--accent);font-weight:700}
+.disc .sub{color:var(--muted);font-size:13.5px;margin:0 0 8px}
+details.t{border-top:1px solid var(--line)}
+details.t summary{cursor:pointer;list-style:none;padding:11px 0;display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:baseline}
+details.t summary::-webkit-details-marker{display:none}
+details.t summary .ar{color:var(--accent);font-size:13px}
+details.t[open] summary .ar{transform:rotate(90deg);display:inline-block}
+details.t summary b{font-size:15.5px}
+details.t summary .tt{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.rxline{font-size:13.5px;color:var(--muted);margin:0;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.rxline a{color:var(--accent)}
+.trow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+details.t summary small{font-size:12px;color:var(--muted);font-family:var(--mono)}
+details.t.done summary b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--accent)}
+.tb{display:flex;flex-direction:column;gap:14px;padding:0 0 16px 30px;max-width:78ch}
+.exp{font-size:15.5px;line-height:1.65}
+.exp p{margin:0 0 10px}
+.exp ul{margin:0 0 10px;padding-left:20px}
+.exp li{margin-bottom:5px}
+.exp b{color:var(--ink)}
+.traps{border-left:3px solid var(--hot);background:color-mix(in srgb,var(--hot) 7%,transparent);border-radius:0 8px 8px 0;padding:10px 14px}
+@media (max-width:520px){.tb{padding-left:0}}
+.tb h4{margin:0 0 6px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.tb ul{margin:0;padding-left:18px;font-size:14.5px}
+.tb li{margin-bottom:6px}
+.trap li::marker{content:"⚠ ";color:var(--hot)}
+.tb .done-row{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.tb .done-row input{accent-color:var(--accent);width:16px;height:16px}
+mark{background:color-mix(in srgb,var(--warm) 30%,transparent);color:inherit;border-radius:2px}
+code,.f{font-family:var(--mono);font-size:13px}
+details.banca{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-top:18px}
+details.banca summary{cursor:pointer;font-weight:700;color:var(--accent)}
+details.banca ul{margin:10px 0 0;padding-left:20px;font-size:14.5px}
+details.banca li{margin-bottom:5px}
+.note{font-size:13px;color:var(--muted);margin-top:16px;max-width:80ch}
+.voltar{max-width:1100px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px)) 0;font-size:14px}.voltar a{color:var(--accent)}
+/* aprofundamento e itens comentados */
+.mais{font-size:15.5px;line-height:1.65;border-top:1px dashed var(--line);padding-top:12px}
+.mais p{margin:0 0 10px}.mais ul,.mais ol{margin:0 0 10px;padding-left:20px}.mais li{margin-bottom:5px}.mais ul ul{margin:6px 0 0}
+.mais>h4,.itens>h4{color:var(--accent)}
+.itens{display:flex;flex-direction:column;gap:8px}
+.itens details{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:14.5px}
+.tb .itens details summary{cursor:pointer;list-style:none;line-height:1.5;display:block;padding:0}
+.itens summary::-webkit-details-marker{display:none}
+.itens summary::before{content:"Julgue: ";font-weight:700;color:var(--muted)}
+.itens summary::after{content:" · toque para ver o gabarito";font-size:12.5px;color:var(--accent)}
+.itens details[open] summary::after{content:""}
+.itens .gab{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line)}
+.itens .gab b.c{color:var(--ok,#0b7a3e)}.itens .gab b.e{color:var(--hot)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Revisão Completa UnB</h1>
+  <p>O conteúdo de todas as matérias explicado em texto, com ilustrações e as pegadinhas do Cebraspe. Cada assunto mostra quanto caiu nas provas de 2023 a 2025 (dados do Raio-X). Toque nas palavras sublinhadas para ver o significado. Está começando? Abra a aba <b>Base zero</b>.</p>
+  <div class="progress"><div class="bar"><b id="pBar"></b></div><span id="pTxt">0 de 0 assuntos</span></div>
+</header>
+
+<details class="banca"><summary>Como a banca Cebraspe pensa (leia antes de tudo)</summary>
+  <ul>
+    <li><b>Palavras absolutas</b> como “sempre”, “nunca”, “apenas”, “exclusivamente” e “todos” costumam tornar o item errado.</li>
+    <li><b>Meia verdade:</b> a primeira parte do item está certa e a justificativa depois do “pois” ou “porque” está errada.</li>
+    <li><b>Troca de conceito:</b> verso branco por verso livre, utilitarismo atribuído a Kant, mitose por meiose.</li>
+    <li><b>“Infere-se do texto”</b> pede só o que o texto sustenta, e não o que você sabe.</li>
+    <li><b>Conta com unidade:</b> km/h e m/s, mL e L, kJ e J. Confira antes de marcar.</li>
+    <li><b>Inversão de causa:</b> o item diz que A causa B quando é B que causa A.</li>
+  </ul>
+</details>
+<nav class="tabs" role="tablist" id="tabs"></nav>
+<div class="ctrl">
+  <input type="search" id="q" placeholder="Buscar em todas as matérias (ex.: crase, mitose, Revolução Francesa)" aria-label="Buscar assunto">
+  <button id="openAll">Abrir tudo</button>
+  <button id="closeAll">Fechar tudo</button>
+  <button id="hideDone" aria-pressed="false">Esconder revisados</button>
+  <button id="sortPrio" aria-pressed="false">Ordem: do edital</button>
+</div>
+<div class="jump" id="jump"></div>
+<div id="list"></div>
+<p class="note">O conteúdo fica nos arquivos rev-*.js (explicação) e rev-mais-*.js (aprofundamento e itens comentados). Organizado a partir dos objetos de avaliação do Vestibular UnB e dos itens das provas de 2023 a 2025; confira no edital a lista oficial.</p>
+</div>
+
+<script src="assets/site.js"></script>
+<script src="assets/figs.js"></script>
+<script src="raiox-dados.js"></script>
+<script src="rev-linguagens.js"></script>
+<script src="rev-humanas.js"></script><script src="rev-comunicacao.js"></script>
+<script src="rev-exatas.js"></script>
+<script src="rev-base.js"></script>
+<script src="rev-mais-linguagens.js"></script><script src="rev-mais-humanas.js"></script><script src="rev-mais-exatas.js"></script>
+<script>
+/* REV vem de rev-*.js: áreas → disciplinas → assuntos {t, exp (HTML), traps[]}.
+   RX liga cada assunto aos grupos do Raio-X (raiox-dados.js) para mostrar quanto caiu. */
+const RX={
+ port:[["Interpretação de texto"],["Tipologia e gêneros textuais"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Gramática e coesão"],["Interpretação de texto"],["Interpretação de texto"],["Gramática e coesão"]],
+ lit:[["Análise de poema"],["Escolas literárias"],["Escolas literárias"],["Escolas literárias"],["Escolas literárias"],["Escolas literárias"],["Escolas literárias"],["Autores contemporâneos, indígenas e negros"],["Escolas literárias"]],
+ artes:[["Música e partitura"],["Música e partitura"],["Teatro"],["Artes visuais"],["Cinema, arquitetura e design"],["Artes visuais"]],
+ hist:[["História geral"],["História geral"],["História geral"],["História geral"],["História geral"],["História do Brasil"],["História do Brasil"],["História do Brasil"],["História do Brasil"]],
+ geo:[null,["Geografia ambiental e clima"],["Geografia ambiental e clima"],["Geografia ambiental e clima"],["Geografia ambiental e clima"],["População e migrações"],["Geografia econômica e urbana"],["Geografia econômica e urbana"],["População e migrações"]],
+ filo:[["Conhecimento e mente"],["Filosofia política"],["Ética"],["Conhecimento e mente"]],
+ soc:[["Trabalho e tecnologia"],["Cultura e identidade"],["Desigualdade e movimentos sociais"],["Trabalho e tecnologia"]],
+ mat:[["Progressões e porcentagem"],["Estatística"],["Funções"],["Funções"],["Progressões e porcentagem"],["Probabilidade e combinatória"],["Geometria plana e espacial"],["Geometria plana e espacial"],["Geometria analítica","Trigonometria","Sistemas lineares e matrizes"]],
+ fis:[["Mecânica"],["Mecânica"],["Energia e trabalho"],["Fluidos"],["Termodinâmica"],["Ondas e óptica"],["Eletricidade e circuitos","Eletromagnetismo"],["Radioatividade"]],
+ qui:[["Ligações e geometria molecular"],["Ligações e geometria molecular"],["Ácido-base, soluções e estequiometria"],["Ácido-base, soluções e estequiometria"],["Termoquímica"],["Equilíbrio químico"],["Eletroquímica"],["Química orgânica"],null],
+ bio:[["Biologia molecular e celular"],["Biologia molecular e celular"],["Biologia molecular e celular"],["Genética","Zoologia, evolução e classificação"],["Ecologia"],["Zoologia, evolução e classificação","Botânica"],["Fisiologia humana"]]
+};
+const RXT={};Object.values(DATA).flat().forEach(d=>d.topics.forEach(t=>RXT[t[0]]=t[2]));
+function rxInfo(disc,i){const g=RX[disc]&&RX[disc][i];if(!g)return null;
+  const v=[0,1,2].map(k=>g.reduce((a,n)=>a+(RXT[n]?RXT[n][k]:0),0));const tot=v[0]+v[1]+v[2];const pred=.2*v[0]+.3*v[1]+.5*v[2];
+  const tier=pred>=6?["alta","prio-alta"]:pred>=3.5?["média","prio-media"]:["base","prio-base"];
+  return {g,v,tot,pred,tier};}
+const KEY="rev-completa";
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}}
+function save(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}
+let st=load();let area=0;let hideDone=false;let byPrio=false;
+try{byPrio=localStorage.getItem("rev-sort")==="prio"}catch(e){}
+const TOTAL=REV.reduce((a,x)=>a+x.discs.reduce((b,d)=>b+d.topics.length,0),0);
+const norm=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const strip=s=>s.replace(/<[^>]+>/g," ");
+function hl(s,q){if(!q)return s;const ns=norm(s);const i=ns.indexOf(q);if(i<0)return s;return s.slice(0,i)+"<mark>"+s.slice(i,i+q.length)+"</mark>"+s.slice(i+q.length);}
+document.getElementById("tabs").innerHTML=REV.map((a,i)=>`<button role="tab" data-a="${i}" aria-selected="${i===area}">${a.area}</button>`).join("");
+function progress(){const n=Object.values(st).filter(Boolean).length;document.getElementById("pTxt").textContent=`${n} de ${TOTAL} assuntos`;document.getElementById("pBar").style.width=(n/TOTAL*100)+"%";}
+function topicHTML(d,t,ti,q){const id=`${d.id}-${ti}`;const done=!!st[id];const rx=rxInfo(d.id,ti);
+  const M=(window.REV_MAIS||{})[id];
+  const words=strip(t.exp+(M?M.mais:"")).split(/\s+/).length;const figs=(window.FIG_FOR&&FIG_FOR[id])||[];
+  return `<details class="t${done?" done":""}" id="t-${id}" ${q?"open":""}><summary><span class="ar">▸</span><span class="tt"><b>${hl(t.t,q)}</b>${rx?`<span class="prio ${rx.tier[1]}" title="Previsão pela média ponderada dos três anos">prioridade ${rx.tier[0]}</span>`:""}</span><small>${Math.max(1,Math.round(words/200))} min</small></summary>
+   <div class="tb">${rx?`<p class="rxline">📊 No Raio-X, o grupo <b>${rx.g.join(" + ")}</b> teve ${rx.v[0]}, ${rx.v[1]} e ${rx.v[2]} itens em 2023, 2024 e 2025 (${rx.tot} no total). <a href="raio-x.html">Ver no Raio-X</a></p>`:""}
+   ${figs.map(f=>`<figure data-fig="${f}"></figure>`).join("")}<div class="exp">${t.exp}</div>
+   ${M?`<div class="mais exp"><h4>Aprofundando</h4>${M.mais}</div>`:""}
+   ${M&&M.itens&&M.itens.length?`<div class="itens"><h4>Itens comentados no estilo Cebraspe</h4>${M.itens.map(([a,g,j])=>`<details><summary>${a}</summary><p class="gab"><b class="${g==="C"?"c":"e"}">${g==="C"?"Certo.":"Errado."}</b> ${j}</p></details>`).join("")}</div>`:""}
+   <div class="traps"><h4>Pegadinhas da banca</h4><ul class="trap">${t.traps.map(x=>`<li>${hl(x,q)}</li>`).join("")}</ul></div>
+   <div class="trow"><label class="done-row"><input type="checkbox" data-id="${id}" ${done?"checked":""}> Revisei este assunto</label><a class="study-link" href="simulados.html#${d.sim}">✍️ Treinar ${d.name} →</a></div></div></details>`;}
+function render(){
+  const q=norm(document.getElementById("q").value.trim());
+  const areas=q?REV:[REV[area]];
+  let html="",jump=[];
+  areas.forEach(a=>a.discs.forEach(d=>{
+    let list=d.topics.map((t,ti)=>({t,ti,rx:rxInfo(d.id,ti)}));
+    if(byPrio)list.sort((x,y)=>(y.rx?y.rx.pred:-1)-(x.rx?x.rx.pred:-1));
+    const items=list.map(({t,ti})=>{const id=`${d.id}-${ti}`;
+      if(hideDone&&st[id])return "";
+      const M=(window.REV_MAIS||{})[id];
+      if(q&&!norm(t.t+" "+strip(t.exp)+" "+(M?strip(M.mais):"")+" "+t.traps.join(" ")+" "+d.name).includes(q))return "";
+      return topicHTML(d,t,ti,q);}).join("");
+    if(!items)return;
+    const n=d.topics.filter((t,ti)=>st[`${d.id}-${ti}`]).length;
+    jump.push(`<a href="#d-${d.id}">${d.name}</a>`);
+    html+=`<section class="disc" id="d-${d.id}"><div class="disc-h"><h2>${d.name}</h2><a href="simulados.html#${d.sim}">Fazer o simulado →</a></div><p class="sub">${d.note} · ${n} de ${d.topics.length} revisados</p>${items}</section>`;
+  }));
+  document.getElementById("list").innerHTML=html||`<p class="sub">Nada encontrado para essa busca.</p>`;
+  document.getElementById("jump").innerHTML=jump.join("");
+  document.querySelectorAll("details.t[open]").forEach(prep);
+  progress();
+}
+function prep(det){if(det.dataset.prep)return;det.dataset.prep=1;SITE.renderFigs(det);SITE.glossify(det.querySelectorAll(".exp"));}
+document.getElementById("list").addEventListener("toggle",e=>{if(e.target.open)prep(e.target);},true);
+document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;area=+b.dataset.a;document.getElementById("q").value="";document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));render();});
+document.getElementById("q").addEventListener("input",render);
+document.getElementById("list").addEventListener("change",e=>{const id=e.target.dataset.id;if(!id)return;st[id]=e.target.checked;save(st);e.target.closest("details").classList.toggle("done",e.target.checked);progress();});
+document.getElementById("openAll").onclick=()=>document.querySelectorAll("details.t").forEach(d=>d.open=true);
+document.getElementById("closeAll").onclick=()=>document.querySelectorAll("details.t").forEach(d=>d.open=false);
+document.getElementById("hideDone").onclick=e=>{hideDone=!hideDone;e.target.setAttribute("aria-pressed",hideDone);e.target.textContent=hideDone?"Mostrar revisados":"Esconder revisados";render();};
+const sb=document.getElementById("sortPrio");
+function sortLbl(){sb.setAttribute("aria-pressed",byPrio);sb.textContent=byPrio?"Ordem: mais cai primeiro":"Ordem: do edital";}
+sb.onclick=()=>{byPrio=!byPrio;try{localStorage.setItem("rev-sort",byPrio?"prio":"edital")}catch(e){}sortLbl();render();};sortLbl();
+/* links diretos: #port (disciplina) ou #t-port-3 (assunto) */
+function go(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
+  const tid=h.startsWith("t-")?h.slice(2):null;const disc=tid?tid.replace(/-\d+$/,""):h.replace(/^d-/,"");
+  const ai=REV.findIndex(a=>a.discs.some(d=>d.id===disc));
+  if(ai>=0&&ai!==area&&!document.getElementById("q").value){area=ai;document.querySelectorAll("#tabs button").forEach((x,i)=>x.setAttribute("aria-selected",i===ai));render();}
+  const el=document.getElementById(tid?"t-"+tid:"d-"+disc);if(!el)return;
+  if(tid){el.open=true;prep(el);}
+  setTimeout(()=>el.scrollIntoView({block:"start"}),30);}
+render();go();window.addEventListener("hashchange",go);
+</script>
+</body>
+</html>

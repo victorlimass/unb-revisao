@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Raio-X UnB</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: caderno de prova Cebraspe. Abas por área; cada assunto abre e mostra o que já caiu e o que estudar; abas de previsão e fórmulas */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea;
+  --y1:#9fb8ad; --y2:#4f8f75; --y3:#0b6e4f;
+  --up:#0b7a3e; --down:#b4442c; --flat:#7a6f2b;
+  --hot:#b4442c; --warm:#a06d0c; --cool:#43648a;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --y1:#3d5a4d; --y2:#3e9273; --y3:#4fc79a;
+  --up:#5fd38f; --down:#f08a72; --flat:#d6c46a;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --y1:#3d5a4d; --y2:#3e9273; --y3:#4fc79a;
+  --up:#5fd38f; --down:#f08a72; --flat:#d6c46a;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1100px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:0 0 8px;text-wrap:balance}
+header p{color:var(--muted);max-width:70ch;margin:0}
+h3{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 6px}
+.themes{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.chip{font-size:13px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+.chip b{font-family:var(--mono);font-weight:500;color:var(--accent);margin-right:6px}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:24px 0 18px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:inherit;font-weight:700;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 12px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;font-size:14px;color:var(--muted)}
+.ctrl button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:5px 10px;cursor:pointer}
+.ctrl button[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:2px;display:inline-block}
+.stack{display:flex;flex-direction:column;gap:18px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.card h2{font-family:var(--display);font-weight:600;font-size:23px;margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card h2 small{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:500}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 10px}
+details.topic{border-top:1px solid var(--line)}
+details.topic summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) repeat(3,38px) 58px 92px;align-items:center;gap:6px;padding:10px 4px}
+details.topic summary::-webkit-details-marker{display:none}
+details.topic summary:hover{background:var(--accent-soft)}
+.tname{font-weight:700;font-size:14.5px;display:flex;gap:8px;align-items:baseline}
+.tname::before{content:"▸";color:var(--accent);font-size:12px;transition:transform .15s;display:inline-block}
+details[open] .tname::before{transform:rotate(90deg)}
+.n{font-family:var(--mono);font-size:13px;text-align:center;font-variant-numeric:tabular-nums}
+.thead{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,38px) 58px 92px;gap:6px;padding:4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.bars i{display:block;width:13px;border-radius:2px 2px 0 0}
+.trend{font-family:var(--mono);font-size:12px;white-space:nowrap}
+.t-up{color:var(--up)} .t-down{color:var(--down)} .t-flat{color:var(--flat)}
+.detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;padding:4px 4px 16px 22px}
+.detail h4{margin:0 0 6px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.detail ul{margin:0;padding-left:18px}
+.detail li{margin-bottom:5px;font-size:14px}
+.detail .study li::marker{color:var(--accent)}
+.detail .past{border-left:2px solid var(--line);padding-left:12px}
+.detail .past li{color:var(--muted)}
+.detail .past li b{color:var(--ink);font-weight:700}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.p-hot{background:color-mix(in srgb,var(--hot) 15%,transparent);color:var(--hot)}
+.p-warm{background:color-mix(in srgb,var(--warm) 17%,transparent);color:var(--warm)}
+.p-cool{background:color-mix(in srgb,var(--cool) 17%,transparent);color:var(--cool)}
+.note{font-size:13px;color:var(--muted);margin-top:18px;max-width:78ch}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+.card ul.plain{margin:8px 0 0;padding-left:18px}
+.card ul.plain li{margin-bottom:6px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:460px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.num{font-family:var(--mono);font-size:13px;text-align:center;white-space:nowrap}
+select{font:inherit;font-size:13px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 8px}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.yr{font-family:var(--mono);color:var(--accent);font-size:13px}
+.quote{font-size:13.5px;border-left:3px solid var(--accent);padding:6px 10px;margin:8px 0;background:var(--accent-soft);border-radius:0 6px 6px 0}
+.theme-card{display:flex;flex-direction:column;gap:8px}
+.theme-card .meta{display:flex;gap:6px;flex-wrap:wrap}
+.theme-card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13.5px}
+.theme-card dt{font-weight:700;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+.theme-card dd{margin:0}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-top:8px}
+.fx{display:flex;flex-direction:column;gap:4px;background:var(--accent-soft);border-radius:8px;padding:12px;min-width:0}
+.fx span{font-size:13px;color:var(--muted)}
+code{font-family:var(--mono);font-size:13.5px;color:var(--ink);overflow-wrap:anywhere}
+.flist{display:flex;flex-direction:column}
+.frow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:baseline}
+.frow b{font-size:14.5px}
+.fw{font-size:13px;color:var(--muted)}
+@media (max-width:720px){.frow{grid-template-columns:1fr;gap:4px}}
+@media (max-width:620px){
+  details.topic summary,.thead{grid-template-columns:minmax(0,1fr) repeat(3,30px) 70px}
+  details.topic summary .bars,.thead .hb{display:none}
+  .detail{padding-left:4px}
+}
+@media (prefers-reduced-motion:reduce){.tname::before{transition:none}}
+.voltar{max-width:1100px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px)) 0;font-size:14px}.voltar a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Raio-X do Vestibular UnB</h1>
+  <p>Quantos itens caíram de cada assunto nas provas de 2023, 2024 e 2025, quais situações a banca usou e o que estudar dentro de cada assunto para a prova de 21 e 22 de novembro de 2026. Toque em um assunto para abrir o detalhe.</p>
+  <div class="themes">
+    <span class="chip"><b>2023</b>Crise climática</span>
+    <span class="chip"><b>2024</b>Inteligência artificial</span>
+    <span class="chip"><b>2025</b>Migrações e deslocamentos</span>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="exatas" aria-selected="true">Exatas</button>
+  <button role="tab" data-tab="biologicas" aria-selected="false">Biológicas</button>
+  <button role="tab" data-tab="humanas" aria-selected="false">Humanas e linguagens</button>
+  <button role="tab" data-tab="previsao" aria-selected="false">Previsão</button>
+  <button role="tab" data-tab="formulas" aria-selected="false">Fórmulas</button>
+</nav>
+
+<!-- ÁREAS -->
+<section id="view-area">
+  <div class="ctrl">
+    <span>Ordenar:</span>
+    <button data-sort="total" aria-pressed="true">Total</button>
+    <button data-sort="last" aria-pressed="false">Último ano</button>
+    <button data-sort="trend" aria-pressed="false">Tendência</button>
+    <button id="expandAll" aria-pressed="false">Abrir todos</button>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--y1)"></i>2023</span>
+      <span><i class="sw" style="background:var(--y2)"></i>2024</span>
+      <span><i class="sw" style="background:var(--y3)"></i>2025</span>
+    </div>
+  </div>
+  <div class="stack" id="cards"></div>
+  <p class="note">A contagem é aproximada (±2 por assunto), porque muitos itens misturam disciplinas e cada um foi contado pelo assunto principal. Em 2025, Conhecimentos III caiu de 150 para 120 itens. Os exemplos em "Já caiu" são de itens reais das provas, com o enunciado resumido.</p>
+</section>
+
+<!-- PREVISÃO -->
+<section id="view-pred" hidden>
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card">
+      <h2>Formato esperado</h2>
+      <ul class="plain">
+        <li><b>Itens certo/errado (tipo A)</b> na maior parte da prova. Normalmente um erro anula um acerto, então só marque o que você sabe.</li>
+        <li><b>Tipo B</b> (resposta numérica de 000 a 999) em exatas: 3 a 5 itens do tipo "calcule a mediana", "calcule em kN", "determine em km".</li>
+        <li><b>Tipo C</b> (múltipla escolha) espalhados, sempre com quatro opções.</li>
+        <li><b>Tipo D</b> (discursiva de até 10 linhas): uma em cada caderno. Em 2024 caíram "Discorra sobre uma questão ética que o uso da IA pode envolver no conhecimento histórico" e "Explique por que o ligante amônia influencia a geometria do [Co(NH₃)₆]²⁺".</li>
+        <li><b>Conhecimentos III:</b> cerca de 120 itens, como em 2025.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Tema transversal provável</h2>
+      <p class="sub">É um palpite. A UnB não divulga o tema, mas sempre escolhe uma grande questão do momento e amarra todas as matérias a ela.</p>
+      <ul class="plain">
+        <li><span class="pill p-warm">plausível</span> Energia, COP30 e justiça climática</li>
+        <li><span class="pill p-warm">plausível</span> Água, Cerrado e segurança hídrica</li>
+        <li><span class="pill p-warm">plausível</span> Desinformação, redes e democracia</li>
+        <li><span class="pill p-warm">plausível</span> Saúde, corpo e longevidade</li>
+        <li><span class="pill p-cool">possível</span> Fome e sistemas alimentares</li>
+        <li><span class="pill p-cool">possível</span> Memória, ditadura e direitos humanos</li>
+        <li><span class="pill p-cool">possível</span> Cidades, Brasília e direito à moradia</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ctrl">
+    <label for="predFilter">Mostrar:</label>
+    <select id="predFilter"><option value="all">Todas as disciplinas</option></select>
+    <div class="legend">
+      <span><span class="pill p-hot">certo</span>caiu nos 3 anos com peso alto</span>
+      <span><span class="pill p-warm">provável</span>recorrente</span>
+      <span><span class="pill p-cool">pode cair</span>oscila</span>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Ranking de prioridade <small>itens previstos</small></h2>
+    <div class="scroll"><table id="predTable"></table></div>
+  </div>
+  <p class="note">A previsão é a média ponderada dos três anos (2025 com peso 50%, 2024 com 30% e 2023 com 20%). Use como ordem de prioridade, sem tratar o número como garantia.</p>
+
+  <div class="card" style="margin-top:18px">
+    <h2>O que a banca já repetiu</h2>
+    <ul class="plain">
+      <li>Uma circunferência com estações ou pontos dentro ou fora dela caiu em 2023 e de novo em 2024 (centro, raio e posição de ponto).</li>
+      <li>Monocotiledônea x dicotiledônea caiu em 2023 (cenoura, milho), 2024 (verticilos em múltiplos de 3) e 2025 (milho).</li>
+      <li>DNA mitocondrial e ancestralidade caíram em 2023 (Svante Pääbo), 2024 e 2025 (linhagem materna indígena e africana).</li>
+      <li>Cladograma e árvore filogenética caíram nos 3 anos.</li>
+      <li>Hans Jonas e o imperativo da responsabilidade caíram em 2023 (ética consequencialista x deontológica) e 2025 (Jonas comparado a Kant).</li>
+      <li>Ailton Krenak caiu na redação de 2023 e na prova de 2025.</li>
+      <li>Augusto Boal e o Teatro do Oprimido caíram em 2023 e 2025.</li>
+      <li>Partitura com compasso, cifra, clave e fermata caiu nos 3 anos (Allah-la-ô, partitura com Gm7, Stravinsky).</li>
+      <li>Eletrólise ou célula a combustível do hidrogênio caiu nos 3 anos.</li>
+      <li>Revolução Industrial caiu nos 3 anos.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FÓRMULAS -->
+<section id="view-form" hidden>
+  <div class="card" style="margin-bottom:18px;border-color:var(--accent)">
+    <h2>As 8 que você precisa saber</h2>
+    <p class="sub">Elas aparecem em praticamente toda prova. Se tiver pouco tempo, comece por aqui.</p>
+    <div class="fgrid">
+      <div class="fx"><b>Média e mediana</b><code>x̄ = soma ÷ n</code><span>Mediana: ordene; com n par, faça a média dos dois centrais.</span></div>
+      <div class="fx"><b>Função afim</b><code>y = mx + b · m = Δy/Δx</code><span>m &gt; 0 cresce e m &lt; 0 decresce.</span></div>
+      <div class="fx"><b>Probabilidade com complementar</b><code>P(pelo menos um) = 1 − P(nenhum)</code><span>Chuva 0,3 em 2 dias: 1 − 0,7² = 0,51.</span></div>
+      <div class="fx"><b>Plano inclinado</b><code>F = m·a · Pₓ = P·sen θ</code><span>A normal no plano é N = P·cos θ.</span></div>
+      <div class="fx"><b>Energia e potência</b><code>Ep = mgh · P = E/t</code><span>1.000 kg a 10 m dá 100 kJ; em 50 s, 2 kW.</span></div>
+      <div class="fx"><b>Empuxo</b><code>E = ρₗ·Vₛ·g</code><span>Fração submersa = ρ do corpo ÷ ρ do líquido.</span></div>
+      <div class="fx"><b>Hess e pH</b><code>ΔH = ΣΔHᵢ · pH = −log[H⁺]</code><span>Inverteu a equação, troque o sinal do ΔH.</span></div>
+      <div class="fx"><b>Mendel</b><code>Aa × Aa → 3:1 e 1:2:1</code><span>Filho normal ser portador: 2/3, e não 1/2.</span></div>
+    </div>
+  </div>
+  <div class="ctrl">
+    <span>Mostrar:</span>
+    <button data-ff="all" aria-pressed="true">Todas</button>
+    <button data-ff="Matemática" aria-pressed="false">Matemática</button>
+    <button data-ff="Física" aria-pressed="false">Física</button>
+    <button data-ff="Química" aria-pressed="false">Química</button>
+    <button data-ff="Biologia" aria-pressed="false">Biologia</button>
+    <div class="legend"><span><span class="pill p-hot">todo ano</span></span><span><span class="pill p-warm">frequente</span></span></div>
+  </div>
+  <div class="stack" id="formCards"></div>
+  <p class="note">Lista montada a partir dos itens das provas de ingresso 2024, 2025 e 2026. Entre parênteses está onde cada fórmula caiu, pelo ano do edital.</p>
+</section>
+
+</div>
+
+<script src="assets/site.js"></script>
+<script src="raiox-dados.js"></script>
+<script>
+let area="exatas", sortBy="total", expanded=false;
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const MAXV=11;
+function trend(v){const d=v[2]-(v[0]+v[1])/2;
+  if(d>=1.5)return["↑ subindo","t-up",d]; if(d<=-1.5)return["↓ caindo","t-down",d]; return["→ estável","t-flat",d];}
+function bars(v){const c=["--y1","--y2","--y3"];return `<div class="bars" aria-hidden="true">${v.map((x,i)=>`<i style="height:${Math.max(2,x/MAXV*28)}px;background:var(${c[i]})"></i>`).join("")}</div>`;}
+function renderArea(){
+  document.getElementById("cards").innerHTML=DATA[area].map(d=>{
+    const ts=d.topics.slice().sort((a,b)=>sortBy==="last"?b[2][2]-a[2][2]:sortBy==="trend"?trend(b[2])[2]-trend(a[2])[2]:sum(b[2])-sum(a[2]));
+    const tot=[0,1,2].map(i=>sum(d.topics.map(x=>x[2][i])));
+    const rk={"Matemática":"mat","Física":"fis","Química":"qui","Biologia":"bio","Língua portuguesa":"port","Literatura":"lit","Artes":"artes","História":"hist","Geografia":"geo","Sociologia e antropologia":"soc","Filosofia":"filo"}[d.name];
+    return `<section class="card"><h2>${d.name}<small>${tot[0]} · ${tot[1]} · ${tot[2]} itens</small></h2><p class="sub">${d.note}${rk?` <a href="revisao-completa.html#${rk}" style="color:var(--accent);font-weight:700;white-space:nowrap">📖 Estudar na Revisão →</a>`:""}</p>
+    <div class="thead"><span>Assunto</span><span class="n">23</span><span class="n">24</span><span class="n">25</span><span class="hb"></span><span>Tendência</span></div>
+    ${ts.map(([n,desc,v,past,study])=>{const tr=trend(v);return `<details class="topic"${expanded?" open":""}><summary><span class="tname">${n}</span>${v.map(x=>`<span class="n">${x}</span>`).join("")}${bars(v)}<span class="trend ${tr[1]}">${tr[0]}</span></summary>
+      <div class="detail"><div class="past"><h4>Já caiu</h4><ul>${past.map(p=>`<li>${p}</li>`).join("")}</ul></div>
+      <div class="study"><h4>O que estudar · pode cair</h4><ul>${study.map(s=>`<li>${s}</li>`).join("")}</ul></div></div></details>`}).join("")}
+    </section>`;}).join("");
+}
+const ALL=[];Object.values(DATA).flat().forEach(d=>d.topics.forEach(t=>ALL.push({disc:d.name,n:t[0],v:t[2],study:t[4]})));
+const sel=document.getElementById("predFilter");
+[...new Set(ALL.map(x=>x.disc))].forEach(d=>{const o=document.createElement("option");o.value=d;o.textContent=d;sel.appendChild(o)});
+const pred=v=>0.2*v[0]+0.3*v[1]+0.5*v[2];
+function tier(v){if(v.every(x=>x>=4)&&Math.min(...v)/Math.max(...v)>=0.6)return["certo","p-hot"];if(v.every(x=>x>=2))return["provável","p-warm"];return["pode cair","p-cool"];}
+function renderPred(){
+  const f=sel.value;const rows=ALL.filter(x=>f==="all"||x.disc===f).map(x=>({...x,p:pred(x.v)})).sort((a,b)=>b.p-a.p);
+  document.getElementById("predTable").innerHTML=`<thead><tr><th>#</th><th>Assunto</th><th>Disciplina</th><th>Previsão</th><th>Chance</th><th>Foco principal</th></tr></thead><tbody>`+
+  rows.map((r,i)=>{const t=tier(r.v),lo=Math.max(1,Math.round(r.p)-1),hi=Math.round(r.p)+1;
+   return `<tr><td class="num">${i+1}</td><td><b>${r.n}</b></td><td>${r.disc}</td><td class="num">${lo}–${hi}</td><td><span class="pill ${t[1]}">${t[0]}</span></td><td style="font-size:13px;color:var(--muted)">${r.study.slice(0,2).join("; ")}</td></tr>`}).join("")+`</tbody>`;
+}
+sel.addEventListener("change",renderPred);
+
+
+let ff="all";
+function renderForms(){
+  const lab={hot:["todo ano","p-hot"],warm:["frequente","p-warm"]};
+  document.getElementById("formCards").innerHTML=Object.entries(FORMS).filter(([d])=>ff==="all"||d===ff).map(([d,list])=>`<section class="card"><h2>${d}<small>${list.length} fórmulas</small></h2>
+   <div class="flist">${list.map(([p,n,f,w])=>`<div class="frow"><div><span class="pill ${lab[p][1]}">${lab[p][0]}</span> <b>${n}</b></div><code>${f}</code><div class="fw">${w}</div></div>`).join("")}</div></section>`).join("");
+}
+document.querySelectorAll("[data-ff]").forEach(b=>b.addEventListener("click",()=>{ff=b.dataset.ff;document.querySelectorAll("[data-ff]").forEach(x=>x.setAttribute("aria-pressed",x===b));renderForms();}));
+renderForms();
+const views={area:document.getElementById("view-area"),pred:document.getElementById("view-pred"),form:document.getElementById("view-form")};
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  const t=b.dataset.tab;
+  views.area.hidden=!(t in DATA); views.pred.hidden=t!=="previsao"; views.form.hidden=t!=="formulas";
+  if(t in DATA){area=t;renderArea();}
+}));
+document.querySelectorAll("[data-sort]").forEach(b=>b.addEventListener("click",()=>{sortBy=b.dataset.sort;document.querySelectorAll("[data-sort]").forEach(x=>x.setAttribute("aria-pressed",x===b));renderArea();}));
+document.getElementById("expandAll").addEventListener("click",e=>{expanded=!expanded;e.currentTarget.setAttribute("aria-pressed",expanded);e.currentTarget.textContent=expanded?"Fechar todos":"Abrir todos";renderArea();});
+renderArea();renderPred();
+</script>
+
+</body>
+</html>

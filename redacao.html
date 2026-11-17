@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Redação UnB</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b6e4f">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&family=Kalam:wght@400&display=swap">
+<style>
+/* Layout: mesma identidade do Raio-X. Abas: como a UnB corrige, gêneros com modelos em folha pautada, temas de treino, correção com o Claude */
+:root{
+  --bg:#f3f5f1; --paper:#ffffff; --ink:#18221d; --muted:#5d6b63; --line:#d8ded8;
+  --accent:#0b6e4f; --accent-soft:#e3f1ea;
+  --hot:#b4442c; --warm:#a06d0c; --cool:#43648a;
+  --sheet:#fffdf6; --rule:#c9d6e3; --margin:#e3a3a3; --pen:#1d2f6b;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --hand:"Kalam","Segoe Print","Comic Sans MS",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6;
+  --sheet:#1d2420; --rule:#33443d; --margin:#7a3d3d; --pen:#b9c8f5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111814; --paper:#18211c; --ink:#e6ece8; --muted:#9aaaa1; --line:#2c3a33;
+  --accent:#4fc79a; --accent-soft:#1b3328;
+  --hot:#f08a72; --warm:#e3b350; --cool:#8fb3d6;
+  --sheet:#1d2420; --rule:#33443d; --margin:#7a3d3d; --pen:#b9c8f5; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:0 0 8px;text-wrap:balance}
+header p{color:var(--muted);max-width:72ch;margin:0}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:22px 0 18px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:inherit;font-weight:700;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:10px 12px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.card h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 6px}
+h3{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 6px}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 10px}
+.stack{display:flex;flex-direction:column;gap:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+ul.plain,ol.plain{margin:6px 0 0;padding-left:20px} ul.plain li,ol.plain li{margin-bottom:6px}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.p-hot{background:color-mix(in srgb,var(--hot) 15%,transparent);color:var(--hot)}
+.p-warm{background:color-mix(in srgb,var(--warm) 17%,transparent);color:var(--warm)}
+.p-cool{background:color-mix(in srgb,var(--cool) 17%,transparent);color:var(--cool)}
+.p-acc{background:var(--accent-soft);color:var(--accent)}
+.note{font-size:13px;color:var(--muted);margin-top:16px;max-width:80ch}
+.ponte{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:0 8px 8px 0}
+.formula{font-family:var(--mono);font-size:clamp(17px,3vw,22px);text-align:center;padding:16px;border:1px dashed var(--accent);border-radius:8px;margin:10px 0;overflow-x:auto}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin:8px 0}
+.kv b{font-family:var(--mono);font-weight:500;color:var(--accent)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chips button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:6px 12px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.chips.small button{font-size:13px;padding:4px 10px}
+.model{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:860px){.model{grid-template-columns:1fr}}
+.sheetwrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+.sheet{background:var(--sheet);min-width:680px;padding:18px 18px 22px 0;font-family:var(--hand);color:var(--pen);font-size:16.5px}
+.ln{display:grid;grid-template-columns:44px minmax(0,1fr);height:30px;align-items:end;border-bottom:1px solid var(--rule)}
+.ln .no{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;padding-right:10px;border-right:2px solid var(--margin);height:100%;display:flex;align-items:flex-end;justify-content:flex-end;padding-bottom:4px}
+.ln .tx{padding-left:12px;white-space:nowrap;line-height:1;padding-bottom:5px}
+.ln.title .tx{text-align:center;padding-left:0}
+.ln.empty .tx{color:transparent}
+.ln.over{background:color-mix(in srgb,var(--hot) 10%,transparent)}
+.sheet-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);padding:0 0 10px 56px}
+.why h4{margin:14px 0 4px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.why h4:first-child{margin-top:0}
+.why ul{margin:0;padding-left:18px;font-size:14px}
+.why li{margin-bottom:5px}
+.prompt{font-size:14px;background:var(--accent-soft);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.genre-head{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-bottom:18px}
+.genre-head .card ul{margin:0;padding-left:18px;font-size:14px}
+.genre-head .card li{margin-bottom:4px}
+.genre-head h4{margin:0 0 6px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ex-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.ex-tabs button{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.ex-tabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:700;background:var(--accent-soft)}
+/* temas */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.ctrl select,.ctrl input[type=search]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;padding:7px 10px;min-width:0}
+.ctrl input[type=search]{flex:1;min-width:180px}
+.theme .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.theme p{margin:0 0 8px;font-size:14.5px}
+.theme details{border-top:1px solid var(--line);margin-top:8px;padding-top:6px}
+.theme summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent)}
+.theme dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:13.5px}
+.theme dt{font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+.theme dd{margin:0}
+.theme .mot{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+.theme .mot li{margin-bottom:4px}
+.theme .act{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.main{font:inherit;font-weight:700;background:var(--accent);color:var(--paper);border:0;border-radius:6px;padding:8px 14px;cursor:pointer}
+button.ghost{font:inherit;font-size:14px;background:none;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+/* correção */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-bottom:12px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700;color:var(--muted)}
+label.f select,label.f input,textarea{font:inherit;font-size:14.5px;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+textarea{resize:vertical;min-height:120px;line-height:1.5}
+pre.out{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12.5px;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;max-height:460px;overflow:auto;margin:10px 0}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-size:14.5px}
+.steps li::before{content:counter(s);font-family:var(--mono);background:var(--accent);color:var(--paper);border-radius:50%;width:26px;height:26px;display:grid;place-items:center;font-size:13px}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:5px 0;font-size:14.5px;cursor:pointer}
+.chk input{margin-top:4px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:8px 0 4px}
+.meter b{display:block;height:100%;background:var(--accent);width:0}
+.counter{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.counter.bad{color:var(--hot)}
+.toast{font-size:13px;color:var(--accent);margin-left:8px}
+.voltar{max-width:1100px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px)) 0;font-size:14px}.voltar a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Redação UnB</h1>
+  <p>Como a banca corrige, cada gênero que a UnB já pediu (ou pode pedir) com três redações-modelo, temas para treinar e um prompt pronto para você corrigir a sua redação com o Claude.</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="correcao" aria-selected="true">Como a UnB corrige</button>
+  <button role="tab" data-tab="historico" aria-selected="false">Histórico de temas</button>
+  <button role="tab" data-tab="generos" aria-selected="false">Gêneros e exemplos</button>
+  <button role="tab" data-tab="temas" aria-selected="false">Temas para treinar</button>
+  <button role="tab" data-tab="claude" aria-selected="false">Corrigir com o Claude</button>
+</nav>
+
+<!-- COMO CORRIGE -->
+<section id="v-correcao">
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card">
+      <h2>A conta da nota</h2>
+      <p class="sub" style="margin:0">O Cebraspe dá uma nota de conteúdo e depois desconta os erros de língua, proporcionalmente ao número de linhas escritas.</p>
+      <div class="formula">NR = NC − 2 × NE ÷ TL</div>
+      <div class="kv">
+        <b>NR</b><span>nota da redação</span>
+        <b>NC</b><span>nota de conteúdo (aspectos macroestruturais)</span>
+        <b>NE</b><span>número de erros (aspectos microestruturais)</span>
+        <b>TL</b><span>total de linhas efetivamente escritas</span>
+      </div>
+      <p style="margin:10px 0 0;font-size:14px"><b>Exemplo:</b> NC = 8,0, com 6 erros em 28 linhas. NR = 8,0 − 2 × 6 ÷ 28 = 8,0 − 0,43 = <b>7,57</b>. Com os mesmos 6 erros em 15 linhas, o desconto seria 0,80.</p>
+    </div>
+    <div class="card">
+      <h2>O que isso significa na prática</h2>
+      <ul class="plain">
+        <li><b>Escreva perto das 30 linhas.</b> O mesmo número de erros pesa menos num texto maior, e texto curto quase sempre perde conteúdo.</li>
+        <li><b>Cada erro conta.</b> Acento, vírgula e crase são contados um a um. Em 28 linhas, cada erro tira cerca de 0,07 ponto.</li>
+        <li><b>Conteúdo vale mais.</b> Uma redação com poucos erros e argumentação rasa perde mais do que uma redação forte com alguns erros.</li>
+        <li><b>Gênero errado ou fuga ao tema zeram</b> o conteúdo, e aí não há desconto que importe.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card">
+      <h2>NC: o que a banca avalia</h2>
+      <p class="sub">Os aspectos macroestruturais costumam ser estes (confira os pesos no edital do seu ano):</p>
+      <ol class="plain">
+        <li><b>Apresentação e estrutura textual:</b> legibilidade, margens, parágrafos marcados e organização em introdução, desenvolvimento e conclusão (ou na estrutura do gênero pedido).</li>
+        <li><b>Adequação ao gênero e ao tipo textual:</b> se pediu relato, é relato; se pediu carta, tem vocativo, destinatário e despedida.</li>
+        <li><b>Desenvolvimento do tema:</b> abordar o recorte específico da proposta, e não só o assunto geral.</li>
+        <li><b>Argumentação e repertório:</b> tese clara, argumentos que se sustentam, exemplos e conhecimento de mundo usados a favor da tese.</li>
+        <li><b>Coesão e coerência:</b> conectivos variados, retomadas sem repetição, ideias que não se contradizem.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>NE: o que conta como erro</h2>
+      <div class="scroll"><table style="min-width:0">
+        <thead><tr><th>Tipo</th><th>Exemplos</th></tr></thead>
+        <tbody>
+          <tr><td><b>Grafia e acentuação</b></td><td>"excessão", "previlégio", "ideia" com acento, "por que" x "porque", crase</td></tr>
+          <tr><td><b>Morfossintaxe</b></td><td>concordância ("fazem dois anos"), regência ("assistir o filme"), colocação pronominal, paralelismo</td></tr>
+          <tr><td><b>Propriedade vocabular</b></td><td>"ao invés de" por "em vez de", "onde" sem sentido de lugar, palavra informal ("tipo", "a galera")</td></tr>
+          <tr><td><b>Pontuação</b></td><td>vírgula entre sujeito e verbo, falta de vírgula antes de "mas", aposto sem vírgulas</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card">
+      <h2>O que zera a redação</h2>
+      <ul class="plain">
+        <li>Fuga total ao tema proposto.</li>
+        <li>Não atender ao gênero ou ao tipo textual pedido.</li>
+        <li>Texto identificado: nome, assinatura ou qualquer marca que identifique você. Na carta, assine com um nome fictício só se a proposta mandar, ou use apenas "Um estudante".</li>
+        <li>Texto ilegível, escrito a lápis ou fora do espaço destinado.</li>
+        <li>Cópia dos textos motivadores sem produção própria (as linhas copiadas não contam).</li>
+        <li>Menos linhas do que o mínimo do edital.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Roteiro de 60 minutos na prova</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Tempo</th><th>O que fazer</th></tr></thead>
+      <tbody>
+        <tr><td><b>0–8 min</b></td><td>Ler a proposta duas vezes e sublinhar o <b>recorte</b> e o <b>gênero</b>. Ler os motivadores e anotar uma ideia de cada um.</td></tr>
+        <tr><td><b>8–15 min</b></td><td>Escrever a tese numa frase e montar o esqueleto: um tópico frasal e um repertório por parágrafo. No relato: quem, onde, quando, conflito e virada.</td></tr>
+        <tr><td><b>15–40 min</b></td><td>Rascunho completo. Não pare para polir.</td></tr>
+        <tr><td><b>40–45 min</b></td><td>Revisão: tema, gênero, acentos, crases, vírgulas, concordância. Contar as linhas.</td></tr>
+        <tr><td><b>45–60 min</b></td><td>Passar a limpo com letra legível e parágrafos bem marcados. O que passar da linha 30 não é corrigido.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <p class="note">A fórmula e os critérios seguem o padrão dos editais recentes do Cebraspe para o Vestibular UnB. Pesos e mínimo de linhas podem mudar: confira o edital do seu ano.</p>
+</section>
+
+
+<!-- HISTÓRICO -->
+<section id="v-historico" hidden>
+  <div class="card" style="margin-bottom:18px">
+    <h2>As três últimas propostas</h2>
+    <p class="sub">Os motivadores sempre misturam depoimento ou ensaio, canção brasileira e literatura ou imagem. A proposta conversa com os cadernos de Conhecimentos I e II. Os anos seguem o edital.</p>
+    <div class="scroll"><table><thead><tr><th>Edital · tema transversal</th><th>Proposta</th><th>Gênero</th><th>Motivadores</th></tr></thead><tbody><tr><td><b>2023 · Crise climática</b></td><td>Demarcação de terras indígenas e crise climática</td><td>Dissertativo-argumentativo</td><td>Motivadores: Davi Kopenawa (<i>A queda do céu</i>), Ailton Krenak (<i>A vida não é útil</i>) e uma tirinha de Maurício de Souza.</td></tr><tr><td><b>2024 · Inteligência artificial</b></td><td>Posicionar-se sobre uma fala de Chomsky</td><td>Dissertativo-argumentativo</td><td>Motivadores: o caso do Bing "Sydney", a canção <i>Cérebro eletrônico</i> de Gilberto Gil e a frase de Chomsky de que a IA é "um projeto corporativo".</td></tr><tr><td><b>2025 · Migrações</b></td><td>Remoção violenta do local de habitação</td><td><b>Relato narrativo em 1ª pessoa</b></td><td>Motivadores: Nour Elassy sobre Gaza, <i>O Diário de Anne Frank</i> e <i>Saudosa maloca</i> de Adoniran Barbosa.</td></tr></tbody></table></div>
+  </div>
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card"><h2>O que isso indica</h2><h2>O que isso indica</h2>
+      <ul class="plain">
+        <li>O tema da redação é o tema transversal da prova inteira. Ler bem os textos de Conhecimentos I e II rende repertório.</li>
+        <li>A banca gosta de vozes marginalizadas e de testemunho: indígena, palestina, judia na Segunda Guerra, morador removido.</li>
+        <li>Música popular brasileira aparece sempre (Maurício de Souza é exceção, Gil e Adoniran confirmam). Saber citar uma canção ajuda.</li>
+        <li>O recorte é específico. A banca não pede "meio ambiente", pede "demarcação como resposta à crise climática".</li>
+        <li>A UnB varia o gênero: pediu artigo de opinião em 2017, <b>relato pessoal em 2022</b> e relato narrativo em 2026. Duas das últimas cinco redações foram em 1ª pessoa, então treinar narrativa é obrigatório.</li>
+      </ul>
+    </div>
+    <div class="card"><h2>O que isso sugere para 2026</h2><h2>O que isso sugere para novembro de 2026</h2>
+    <ul class="plain">
+      <li><b>Envelhecimento</b> foi o tema do ENEM 2025 e nunca caiu na UnB. A banca pode pegar o assunto com um recorte filosófico, como tempo, memória, corpo ou cuidado. Ela já fez uma redação sobre o tempo em 2018.</li>
+      <li><b>Saúde mental</b> (ENEM 2020) e <b>trabalho de cuidado</b> (ENEM 2023) também nunca caíram na UnB.</li>
+      <li>Fique de olho no tema do <b>ENEM 2026</b>, que sai perto da prova da UnB. As duas provas já coincidiram no mesmo ciclo em 2022.</li>
+      <li>Indígenas e raça foram muito usados pela UnB nos últimos anos. Devem voltar como repertório, e não como tema central.</li>
+      <li>Treine pelo menos um relato em 1ª pessoa, porque a UnB pediu esse gênero em 2022 e em 2026.</li>
+    </ul>
+  </div>
+  </div>
+  <div class="card">
+    <h2>Dez anos de redação: ENEM x UnB</h2>
+    <p class="sub">Linhas alinhadas pelo ano de aplicação. A UnB é identificada pelo ano de ingresso.</p>
+    <div class="scroll"><table><thead><tr><th>Aplicação</th><th>ENEM</th><th>UnB (ingresso)</th><th>Gênero na UnB</th><th>Eixo comum</th></tr></thead><tbody><tbody>
+        <tr><td class="num">2015</td><td>Persistência da violência contra a mulher</td><td>2016 · Guerras: derrota para a humanidade</td><td>Expositivo-argumentativo</td><td>Violência</td></tr>
+        <tr><td class="num">2016</td><td>Caminhos para combater a intolerância religiosa</td><td>2017 · Entre o futuro imaginário e o passado idealizado, o presente…</td><td>Artigo de opinião</td><td>—</td></tr>
+        <tr><td class="num">2017</td><td>Formação educacional de surdos</td><td>2018 · A pressa nossa de cada dia: o tempo na contemporaneidade</td><td>—</td><td>—</td></tr>
+        <tr><td class="num">2018</td><td>Manipulação do usuário pelo controle de dados na internet</td><td>2019 · Muros: um símbolo do medo</td><td>Expositivo-argumentativo</td><td>Medo do outro (com 2016)</td></tr>
+        <tr><td class="num">2019</td><td>Democratização do acesso ao cinema</td><td>sem vestibular (pandemia)</td><td>—</td><td>—</td></tr>
+        <tr><td class="num">2020</td><td>Estigma associado às doenças mentais</td><td>sem vestibular (pandemia)</td><td>—</td><td>—</td></tr>
+        <tr><td class="num">2021</td><td>Invisibilidade e registro civil</td><td>2022 · A cor da sua pele na construção da sua identidade</td><td><b>Relato pessoal</b></td><td>Invisibilidade e identidade</td></tr>
+        <tr><td class="num">2022</td><td><b>Valorização de comunidades e povos tradicionais</b></td><td><b>2023 · Concepções de mundo dos povos indígenas brasileiros</b></td><td>Dissertativo</td><td><span class="pill p-hot">mesmo ciclo</span></td></tr>
+        <tr><td class="num">2023</td><td>Invisibilidade do trabalho de cuidado feito pela mulher</td><td>2024 · Demarcação de terras indígenas e crise climática</td><td>Dissertativo-argumentativo</td><td>Indígenas (continuação)</td></tr>
+        <tr><td class="num">2024</td><td>Valorização da herança africana</td><td>2025 · Fala de Chomsky sobre a IA</td><td>Dissertativo-argumentativo</td><td>Raça: UnB 2022 → ENEM 2024</td></tr>
+        <tr><td class="num">2025</td><td>Perspectivas sobre o envelhecimento</td><td>2026 · Remoção violenta do local de habitação</td><td><b>Relato narrativo</b></td><td>Apagamento de grupos</td></tr>
+      </tbody></table></div>
+  </div>
+  <p class="note">Fontes: listas de temas da UnB do Estratégia Vestibulares e do Gran, lista de temas do ENEM do Estratégia e a notícia do O Povo sobre o ENEM 2025. Os temas de ingresso 2024 a 2026 foram conferidos nas provas originais. O gênero de 2018 não foi encontrado nas fontes.</p>
+</section>
+
+<!-- GÊNEROS -->
+<section id="v-generos" hidden>
+  <div class="chips" id="gtabs"></div>
+  <div id="gview"></div>
+</section>
+
+<!-- TEMAS -->
+<section id="v-temas" hidden>
+  <div class="card ponte" style="margin-bottom:18px">
+    <h3>Como usar</h3>
+    <p style="margin:0">Escolha um tema, leia a proposta e os motivadores, ligue o cronômetro de 60 minutos e escreva à mão numa folha de 30 linhas. Depois, toque em <b>Corrigir com o Claude</b> para gerar o prompt da correção com esse tema já preenchido.</p>
+  </div>
+  <div class="ctrl">
+    <input type="search" id="tq" placeholder="Buscar tema ou repertório" aria-label="Buscar tema">
+    <select id="tg" aria-label="Filtrar por gênero"></select>
+    <select id="te" aria-label="Filtrar por eixo"></select>
+    <button class="ghost" id="tRand">Sortear um tema</button>
+  </div>
+  <p class="sub" id="tCount"></p>
+  <div class="grid2" id="themes"></div>
+  <p class="note">Os temas são palpites com base no padrão da banca e no noticiário. Os motivadores são resumos escritos para este site; confira o repertório antes de usar.</p>
+</section>
+
+<!-- CLAUDE -->
+<section id="v-claude" hidden>
+  <div class="grid2" style="margin-bottom:18px">
+    <div class="card">
+      <h2>Como corrigir</h2>
+      <ol class="steps">
+        <li>Escreva à mão numa folha de 30 linhas, com caneta preta, como no dia da prova. <button type="button" class="ghost" id="printSheet" style="padding:3px 10px;font-size:13px">Imprimir folha de 30 linhas</button></li>
+        <li>Tire uma foto reta, com boa luz e a folha inteira aparecendo.</li>
+        <li>Escolha abaixo o tema e o gênero e copie o prompt.</li>
+        <li>Abra o <b>claude.ai</b>, anexe a foto e cole o prompt.</li>
+        <li>Reescreva a redação aplicando a correção e mande de novo para comparar.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Cronômetro de treino</h2>
+      <p class="sub">A prova de redação divide o tempo com as objetivas. Treine em 60 minutos.</p>
+      <div style="font-family:var(--mono);font-size:44px;text-align:center;margin:8px 0" id="clock">60:00</div>
+      <div class="meter"><b id="clockBar"></b></div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <button class="main" id="cStart">Iniciar</button>
+        <button class="ghost" id="cReset">Zerar</button>
+      </div>
+      <p class="sub" id="cPhase" style="text-align:center;margin-top:8px">Planejamento até 15:00, rascunho até 40:00, revisão até 45:00 e passar a limpo até 60:00.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <h2>Gerar o prompt de correção</h2>
+    <div class="form-grid">
+      <label class="f">Tema
+        <select id="cTema"></select>
+      </label>
+      <label class="f">Gênero pedido
+        <select id="cGen"></select>
+      </label>
+    </div>
+    <label class="f" id="cFreeWrap" hidden>Tema escrito por você
+      <input id="cFree" type="text" placeholder="Ex.: O cuidado como trabalho invisível">
+    </label>
+    <div class="form-grid" style="margin-top:12px">
+      <label class="f">Nível de exigência
+        <select id="cNivel">
+          <option value="rigoroso">Rigoroso, como um corretor do Cebraspe</option>
+          <option value="didatico">Didático, explicando cada ponto</option>
+        </select>
+      </label>
+      <label class="f">Incluir reescrita
+        <select id="cRees">
+          <option value="sim">Sim, reescrever os trechos fracos</option>
+          <option value="nao">Não, só a correção</option>
+        </select>
+      </label>
+    </div>
+    <pre class="out" id="cOut"></pre>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="main" id="cCopy">Copiar prompt</button>
+      <a class="ghost" href="https://claude.ai/new" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:14px">Abrir o claude.ai ↗</a>
+      <span class="toast" id="cToast" role="status"></span>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Contador de linhas</h2>
+      <p class="sub">Digite ou cole o rascunho para estimar quantas linhas ele ocupa na folha (cerca de 66 caracteres por linha, como letra média).</p>
+      <textarea id="lcText" placeholder="Cole aqui o seu texto. Separe os parágrafos com uma linha em branco."></textarea>
+      <div class="meter"><b id="lcBar"></b></div>
+      <div class="counter" id="lcOut">0 linhas · 0 palavras</div>
+    </div>
+    <div class="card">
+      <h2>Autoavaliação antes de enviar</h2>
+      <p class="sub">Marque o que o seu texto cumpre. Fica salvo neste navegador.</p>
+      <div id="selfChk"></div>
+      <button class="ghost" id="selfReset" style="margin-top:8px">Desmarcar tudo</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ======================= GÊNEROS ======================= */
+/* Cada exemplo: {t: título curto, prompt, title (título na folha, opcional), head[], paras[], tail[], com[] (comentários)} */
+const GENRES=[
+{id:"diss",name:"Dissertativo-argumentativo",when:"Pedido nas provas de ingresso 2023, 2024 e 2025 (concepções indígenas, demarcação e clima, fala de Chomsky sobre a IA). É o gênero mais provável.",
+ what:"Texto impessoal que defende uma tese sobre o tema com argumentos e repertório. Na UnB, não precisa de proposta de intervenção.",
+ estr:["1º parágrafo: contextualização + tese explícita","2º e 3º: um argumento por parágrafo, com tópico frasal, explicação e repertório","4º: conclusão que retoma a tese e fecha o raciocínio (síntese, reflexão ou proposta)"],
+ marcas:["3ª pessoa e registro formal","Conectivos argumentativos: além disso, por outro lado, portanto, nesse sentido","Repertório legitimado: filósofo, lei, dado, fato histórico, obra"],
+ erros:["Tese genérica ('é um problema que deve ser resolvido')","Repertório solto, sem ligar à tese","Conclusão que traz argumento novo","Usar 'eu acho'"],
+ ex:[
+ {t:"IA e poder",prompt:"Tema: <b>A inteligência artificial é ferramenta neutra ou projeto de poder?</b> Redija um texto dissertativo-argumentativo.",
+  paras:[
+  "Quando o linguista Noam Chomsky afirmou que a inteligência artificial é, antes de tudo, um projeto corporativo, ele deslocou o debate da técnica para a política. Não se trata apenas de saber o que as máquinas conseguem fazer, mas de perguntar quem as controla e a quem elas servem. Sob essa perspectiva, a IA não é uma ferramenta neutra: ela concentra poder nas mãos de poucas empresas e reproduz as desigualdades presentes nos dados com que é treinada.",
+  "Em primeiro lugar, o desenvolvimento desses sistemas exige recursos que poucos possuem. Servidores, energia e bilhões de textos coletados na internet estão sob domínio de um grupo restrito de corporações, que decidem o que o modelo aprende e o que ele recusa. Assim, um instrumento apresentado como universal passa a refletir interesses comerciais específicos, sem que a sociedade participe dessas escolhas. Até mesmo os limites sobre o que pode ou não ser dito passam a ser definidos por quem controla o sistema.",
+  "Além disso, algoritmos treinados com dados do passado tendem a repetir seus preconceitos. Sistemas de reconhecimento facial, por exemplo, erram mais com rostos negros, o que já levou a prisões injustas. Como lembrou o sociólogo Pierre Bourdieu, as estruturas de dominação se perpetuam justamente quando parecem naturais, e a aparência técnica da máquina dá ao preconceito um ar de objetividade.",
+  "Portanto, tratar a inteligência artificial como mera ferramenta é ignorar as relações de poder que a sustentam. Regular o uso de dados, exigir transparência dos algoritmos e ampliar a pesquisa pública são caminhos para que essa tecnologia sirva ao interesse comum, e não apenas a quem a produz."],
+  com:["A tese aparece no fim do 1º parágrafo e responde diretamente à pergunta do tema.","Cada argumento tem um eixo: concentração de recursos (econômico) e reprodução de preconceitos (social).","Chomsky vem da proposta real de 2024: usar o motivador é permitido, desde que você o interprete.","A conclusão retoma a tese com outras palavras e aponta caminhos sem virar 'proposta ENEM'."]},
+ {t:"Envelhecer",prompt:"Tema: <b>Envelhecer numa sociedade que tem pressa</b>. Redija um texto dissertativo-argumentativo.",
+  paras:[
+  "O Brasil envelhece mais rápido do que se prepara para isso. Segundo o IBGE, a parcela da população com 60 anos ou mais cresce a cada censo, enquanto a cultura do desempenho e da novidade trata a velhice como fase de perda. Numa sociedade que mede o valor das pessoas pela produtividade, envelhecer torna-se quase uma falha, e essa visão compromete a dignidade de milhões de cidadãos. Mais do que uma questão demográfica, trata-se de uma questão ética: que lugar reservamos a quem já não corresponde ao ideal de juventude e eficiência?",
+  "Em primeiro lugar, a lógica da pressa desvaloriza o tempo lento da experiência. O filósofo Byung-Chul Han descreve a sociedade do cansaço como aquela em que todos devem render sem pausa. Nesse cenário, o idoso, que não acompanha a velocidade das telas e do mercado, é empurrado para a invisibilidade, apesar de guardar uma memória coletiva que nenhuma tecnologia substitui. Serviços que só funcionam por aplicativo reforçam essa exclusão no cotidiano.",
+  "Além disso, o cuidado com quem envelhece recai de forma desigual sobre as famílias, sobretudo sobre as mulheres. Sem uma rede pública de cuidados, filhas e netas abandonam empregos para cuidar de parentes, trabalho essencial que não é remunerado nem reconhecido. O Estatuto da Pessoa Idosa garante direitos, mas sua efetivação depende de serviços que ainda são escassos. Faltam centros-dia, cuidadores formados e atendimento domiciliar, e quem não pode pagar depende apenas da boa vontade da família.",
+  "Dessa forma, envelhecer com dignidade exige mudar a forma como medimos o valor do tempo. Valorizar a memória dos mais velhos e dividir socialmente a tarefa de cuidar são passos para que a longevidade deixe de ser vista como peso e passe a ser entendida como conquista."],
+  com:["Começa com dado (IBGE) e já relaciona com a crítica: a tese é 'a cultura da pressa compromete a dignidade'.","O 2º parágrafo usa filosofia (Han); o 3º usa lei (Estatuto) e a questão de gênero (cuidado feminino).","Faz a ponte com o ENEM 2025 (envelhecimento) num recorte mais filosófico, como a UnB costuma fazer."]},
+ {t:"Água no Cerrado",prompt:"Tema: <b>A água como bem comum no berço das águas</b>. Redija um texto dissertativo-argumentativo.",
+  paras:[
+  "Conhecido como berço das águas, o Cerrado abriga nascentes de bacias que abastecem boa parte do país. Mesmo assim, já perdeu cerca de metade de sua vegetação nativa, e a crise hídrica que atingiu o Distrito Federal em 2017 mostrou que a abundância não é garantida. A água precisa ser tratada como bem comum, e não como mercadoria disponível para quem pode pagar ou explorar mais. Essa escolha define quem terá acesso a um recurso do qual depende a própria vida.",
+  "Em primeiro lugar, o desmatamento rompe o ciclo que mantém os rios vivos. As raízes profundas das plantas do Cerrado ajudam a chuva a infiltrar no solo e a recarregar os aquíferos. Quando a vegetação dá lugar a monoculturas, a água escorre pela superfície, os lençóis baixam e as nascentes secam, afetando cidades que estão a centenas de quilômetros. Além disso, o uso intensivo de agrotóxicos contamina rios e lençóis, comprometendo a qualidade da água que resta.",
+  "Além disso, o acesso à água é distribuído de forma desigual. Grandes empreendimentos obtêm outorgas para irrigação, enquanto comunidades da periferia convivem com rodízio e abastecimento irregular. A ONU reconhece o acesso à água potável como direito humano desde 2010, mas esse direito perde força quando a gestão privilegia o lucro de poucos. Na prática, quem tem dinheiro perfura poços e compra caixas-d'água maiores, enquanto os mais pobres dependem de um serviço público cada vez mais pressionado.",
+  "Assim, proteger o Cerrado é proteger a água de todos. Cumprir o Código Florestal, fiscalizar as outorgas e envolver as comunidades na gestão das bacias são formas de transformar o berço das águas em uma responsabilidade compartilhada. Afinal, nenhuma tecnologia é capaz de fabricar nascentes."],
+  com:["Usa conhecimento de Geografia e Biologia (infiltração, aquíferos) como argumento: a UnB valoriza esse cruzamento.","Fato local (crise hídrica do DF) é ótimo repertório para a UnB.","'Bem comum x mercadoria' dá uma tese clara e polêmica na medida certa."]}
+ ]},
+{id:"expo",name:"Expositivo-argumentativo",when:"Pedido nas provas de ingresso 2016 (guerras) e 2019 (muros). Pode voltar quando a proposta pede para 'discorrer' ou 'explicar'.",
+ what:"Expõe e explica um fenômeno (causas, consequências, contexto) e assume uma posição. Pesa mais a explicação informativa do que a polêmica.",
+ estr:["Introdução: apresenta o fenômeno e o recorte","Desenvolvimento: um aspecto por parágrafo (causa, consequência, exemplo histórico)","Conclusão: síntese crítica com posicionamento"],
+ marcas:["Definições ('trata-se de...'), dados, datas e exemplos","Conectivos de causa e consequência: em razão de, por conseguinte, desse modo","Tom impessoal"],
+ erros:["Virar enciclopédia sem posição","Lista de dados sem explicar a relação entre eles","Responder só uma parte do comando ('discorra sobre causas e consequências')"],
+ ex:[
+ {t:"Muros",prompt:"Tema: <b>Muros: um símbolo do medo</b>. Discorra sobre as causas e os efeitos dos muros no mundo contemporâneo.",
+  paras:[
+  "Trinta anos depois da queda do Muro de Berlim, o mundo tem mais barreiras físicas entre países do que tinha em 1989. Elas aparecem na fronteira entre Estados Unidos e México, em Israel e na Cisjordânia e nas cercas que a Europa ergueu contra refugiados. Esses muros revelam que o medo do outro continua sendo um poderoso instrumento político.",
+  "As causas dessas construções são, em geral, a insegurança diante de crises e a busca de culpados. Em períodos de desemprego ou de violência, governos apresentam o estrangeiro como ameaça e o muro como solução visível e rápida. Trata-se de uma resposta simbólica, que tranquiliza parte do eleitorado sem enfrentar as causas da migração, como guerras, pobreza e mudanças climáticas. O muro funciona, assim, como propaganda: exibe força sem resolver o problema. Por isso, cada nova barreira costuma vir acompanhada de discursos que desumanizam quem está do outro lado.",
+  "Os efeitos, por sua vez, recaem sobre os mais vulneráveis. Barreiras não impedem a migração, apenas a tornam mais perigosa, empurrando pessoas para rotas clandestinas e para redes de tráfico. Além disso, os muros também existem dentro das cidades: condomínios fechados e grades separam ricos e pobres, como mostrou a antropóloga Teresa Caldeira ao estudar a cidade de muros em São Paulo. Nesses casos, a separação não impede a violência, mas aprofunda a desconfiança e o isolamento entre os grupos sociais.",
+  "Dessa forma, o muro é menos uma proteção do que uma confissão de medo. Enquanto as causas da desigualdade e dos deslocamentos não forem enfrentadas, novas barreiras serão erguidas, e com elas se aprofundará a divisão entre os que estão dentro e os que ficam do lado de fora."],
+  com:["O comando pedia causas e efeitos, e o texto dedica um parágrafo a cada um: atender ao comando literal é o critério principal.","Mistura muros entre países e muros urbanos, o que amplia o tema sem fugir dele.","A conclusão assume posição ('confissão de medo'), sem a qual o texto seria só expositivo."]},
+ {t:"Desinformação",prompt:"Tema: <b>A desinformação como risco à saúde pública</b>. Explique como a desinformação se espalha e quais são suas consequências.",
+  paras:[
+  "Em 2016, o Brasil recebeu da Organização Pan-Americana da Saúde o certificado de eliminação do sarampo. Três anos depois, perdeu o título. Entre as causas está a queda da cobertura vacinal, alimentada em parte por boatos que circulam nas redes sociais. A desinformação deixou de ser um problema de comunicação e tornou-se um risco concreto à saúde pública. Em um país cujo programa de vacinação é reconhecido internacionalmente, esse retrocesso exige explicação.",
+  "A propagação de conteúdos falsos é favorecida pela própria lógica das plataformas digitais. Os algoritmos privilegiam o que gera reação, e mensagens alarmistas provocam mais compartilhamentos do que explicações técnicas. Em grupos de mensagens, o conteúdo chega por pessoas de confiança, o que reduz a desconfiança e dificulta a checagem. Além disso, quem produz desinformação muitas vezes lucra com o engajamento, transformando o medo em negócio.",
+  "As consequências aparecem nos postos de saúde e nos hospitais. Doenças controladas voltam a circular, e tratamentos sem eficácia são procurados no lugar dos comprovados, como ocorreu durante a pandemia de covid-19. Além do custo humano, o sistema público arca com internações que poderiam ter sido evitadas por uma simples vacina. Há ainda um efeito menos visível: a desconfiança contamina a relação entre pacientes e profissionais de saúde.",
+  "Portanto, combater a desinformação é também uma política de saúde. A educação midiática nas escolas, a responsabilização das plataformas e a comunicação clara das autoridades sanitárias são instrumentos para que a confiança na ciência volte a proteger a população."],
+  com:["Abre com fato verificável (perda do certificado do sarampo em 2019).","O 2º parágrafo explica o mecanismo (como se espalha); o 3º, as consequências: estrutura espelha o comando.","Relaciona com o tema do ENEM 2026 (SUS) sem fugir do recorte."]},
+ {t:"Calor nas cidades",prompt:"Tema: <b>Cidades em ondas de calor</b>. Discorra sobre por que o calor extremo atinge desigualmente a população urbana.",
+  paras:[
+  "As ondas de calor tornaram-se mais frequentes e intensas no Brasil, e 2024 foi registrado como o ano mais quente da história. Nas cidades, porém, a temperatura não é igual para todos. Bairros arborizados e próximos a parques podem ser vários graus mais frescos do que periferias cobertas de asfalto e telhas de fibrocimento, fenômeno conhecido como ilha de calor.",
+  "Esse contraste resulta da forma como as cidades foram construídas. Áreas centrais e ricas concentram praças, árvores e drenagem, enquanto a expansão das periferias ocorreu sem planejamento, com ruas estreitas, pouca vegetação e casas que acumulam calor. Materiais escuros absorvem a radiação solar e liberam calor durante a noite, impedindo que o corpo descanse. Assim, o mesmo dia quente pode ser apenas desconfortável em um bairro e perigoso em outro.",
+  "As consequências atingem a saúde e o trabalho. Idosos, crianças e pessoas com doenças crônicas sofrem mais com a desidratação e com problemas cardiovasculares, e trabalhadores que atuam ao ar livre, como entregadores e pedreiros, enfrentam jornadas exaustivas sem pausa. Trata-se do que pesquisadores chamam de racismo ambiental, já que essas áreas concentram a população negra e pobre. Além disso, poucas famílias de baixa renda podem pagar por um ar-condicionado ou pela conta de luz que ele gera.",
+  "Desse modo, o calor extremo revela desigualdades já existentes. Arborizar as periferias, adaptar habitações populares e criar protocolos de proteção para os trabalhadores são medidas que tornam a adaptação climática também uma questão de justiça social. Sem isso, cada nova onda de calor aprofundará desigualdades que a cidade já conhece."],
+  com:["Explica um conceito (ilha de calor) com vocabulário técnico, como a UnB pede nos itens de Geografia.","Liga o tema transversal de 2023 (clima) à desigualdade, o recorte que a banca prefere.","'Racismo ambiental' é repertório que já apareceu na prova (2023)."]}
+ ]},
+{id:"artigo",name:"Artigo de opinião",when:"Pedido na prova de ingresso 2017 (o presente entre o futuro imaginário e o passado idealizado). Costuma vir com 'redija um artigo de opinião para um jornal'.",
+ what:"Texto assinado que defende um ponto de vista para os leitores de um veículo. Admite 1ª pessoa, ironia e perguntas retóricas, mas mantém a norma padrão.",
+ estr:["Título (recomendado: ocupa uma linha e chama atenção)","Abertura que fisga: pergunta, cena, dado surpreendente","Desenvolvimento com argumentos e exemplos concretos","Fecho forte: frase de efeito, convite à ação ou retomada da abertura"],
+ marcas:["1ª pessoa permitida ('defendo', 'penso')","Interlocução com o leitor ('você já percebeu...?')","Linguagem formal, mas mais viva que o dissertativo"],
+ erros:["Assinar com o próprio nome (identificação zera)","Tom de conversa de rede social","Esquecer o título quando a proposta pede"],
+ ex:[
+ {t:"Celular na escola",prompt:"Tema: <b>O celular deve sair da sala de aula?</b> Escreva um artigo de opinião para o jornal da sua cidade.",
+  title:"A sala de aula precisa de silêncio",
+  paras:[
+  "Quem já tentou ler um livro com o celular vibrando sobre a mesa sabe o quanto é difícil voltar à página depois de cada notificação. Agora imagine trinta adolescentes tentando entender uma equação nessas condições. Por isso, defendo que a restrição ao celular nas escolas, aprovada em lei federal em 2025, foi uma decisão acertada.",
+  "Não se trata de demonizar a tecnologia. O problema é que os aplicativos foram desenhados para capturar a atenção pelo maior tempo possível, e nenhuma aula, por melhor que seja, compete com um feed infinito. Pesquisas internacionais mostram que estudantes distraídos pelo celular aprendem menos, e professores relatam turmas mais dispersas e ansiosas. A atenção, matéria-prima de qualquer aprendizado, tornou-se o produto mais disputado do mercado digital.",
+  "Há quem diga que proibir é retroceder, já que o mundo é digital. Concordo que a escola deve ensinar a usar a tecnologia, mas ensinar a usar exige, justamente, momentos de uso orientado, e não a presença permanente do aparelho no bolso. A própria lei permite o uso pedagógico com a mediação do professor.",
+  "Também não podemos esquecer o recreio. Quando os celulares saem de cena, voltam as conversas, os jogos e até os conflitos que ensinam a conviver. Uma geração inteira está aprendendo a se relacionar por meio de telas, e a escola pode ser um dos poucos lugares em que ainda se aprende a olhar nos olhos. E isso, convenhamos, também é conteúdo.",
+  "Talvez a aula não fique mais divertida sem o celular. Mas, com certeza, ficará mais nossa."],
+  com:["Título centralizado na 1ª linha: no artigo, ajuda a mostrar domínio do gênero.","Abre com cena cotidiana e usa 1ª pessoa ('defendo', 'concordo').","Antecipa e refuta a objeção (3º parágrafo), uma marca forte do gênero.","Fecho curto e de efeito, típico do artigo e inadequado no dissertativo."]},
+ {t:"Presente e passado",prompt:"Tema: <b>Entre o futuro imaginado e o passado idealizado, como viver o presente?</b> Escreva um artigo de opinião.",
+  title:"A saudade de um tempo que não existiu",
+  paras:[
+  "Toda geração parece convencida de que nasceu tarde demais. Os avós lembram de ruas seguras, os pais lembram de uma infância sem telas e os jovens compartilham vídeos de décadas que nunca viveram, filtrados por uma nostalgia cor de sépia. Enquanto isso, o presente, que é o único tempo em que de fato podemos agir, fica sem ninguém que cuide dele.",
+  "A idealização do passado costuma esquecer quem ficou de fora da festa. Os anos dourados de alguns foram anos de censura, de racismo explícito e de mulheres sem direito a decidir a própria vida. Lembrar com carinho é humano, mas transformar a lembrança em programa político é perigoso, porque a promessa de voltar a um tempo melhor quase sempre esconde a exclusão de alguém. Não por acaso, discursos autoritários costumam prometer a restauração de uma grandeza perdida.",
+  "O futuro, por sua vez, virou uma espécie de aplicativo que ainda vai ser lançado. Esperamos que a tecnologia resolva a crise climática, que a inteligência artificial resolva o trabalho e que alguém, em algum lugar, invente a solução. A esperança é necessária, mas, quando substitui a ação, torna-se só mais uma forma de adiar. Enquanto isso, as decisões que poderiam mudar o rumo do clima, da desigualdade e da própria tecnologia continuam sendo tomadas, ou evitadas, agora.",
+  "Penso que a saída está no verso de Drummond: o tempo presente, os homens presentes, a vida presente. Viver o agora não significa ignorar a história nem desistir dos sonhos, mas assumir que as escolhas de hoje é que constroem o amanhã. O passado ensina e o futuro inspira, mas só o presente pode ser transformado."],
+  com:["Retoma o tema real de 2017, um bom exemplo de proposta filosófica da UnB.","Drummond ('Mãos dadas') é repertório literário clássico e curto de citar.","1ª pessoa aparece com moderação ('Penso que') e o restante mantém registro formal."]},
+ {t:"Trabalho por aplicativo",prompt:"Tema: <b>Liberdade ou precarização: o trabalho por aplicativo</b>. Escreva um artigo de opinião.",
+  title:"Patrão nenhum, direito nenhum",
+  paras:[
+  "A promessa era sedutora: ser dono do próprio tempo, sem chefe e sem horário. Milhões de brasileiros aceitaram o convite dos aplicativos de entrega e de transporte. Hoje, muitos descobriram que o patrão não desapareceu, apenas virou um algoritmo, que não dá bom-dia, mas pune quem recusa corridas. Não há a quem reclamar: as regras mudam por atualização de aplicativo, e o desligamento chega por notificação.",
+  "Defendo que o trabalho por aplicativo, da forma como existe hoje, é precarização com nome moderno. Os entregadores pagam a moto, o combustível e o celular, assumem os riscos do trânsito e, se adoecem, ficam sem renda. A liberdade de escolher o horário é real, mas de pouco adianta quando só jornadas de doze horas garantem o sustento. Muitos dormem pouco, comem mal e pilotam cansados, o que aumenta o risco de acidentes.",
+  "Alguém dirá que ninguém é obrigado a trabalhar para as plataformas. É verdade, mas a escolha é feita num país com milhões de desempregados e informais. O sociólogo Ricardo Antunes chama esse fenômeno de uberização: a transformação do trabalhador em empreendedor de si mesmo, que arca com todos os custos e não tem nenhuma proteção. É um empreendedor que não define o preço do próprio serviço nem escolhe seus clientes. A autonomia prometida, na prática, se resume a escolher a hora de começar a trabalhar.",
+  "Não se trata de proibir os aplicativos, que de fato geram renda e serviços úteis. Trata-se de exigir que as empresas que lucram com essa atividade contribuam para a previdência e garantam um mínimo de segurança. Afinal, tecnologia nova não pode servir de desculpa para relações de trabalho do século dezenove."],
+  com:["Título irônico, que já antecipa a tese.","Usa conceito sociológico (uberização, Ricardo Antunes) com explicação, e não só citação.","Refutação da objeção ('Alguém dirá...') e fechamento com contraste de tempos."]}
+ ]},
+{id:"relato",name:"Relato pessoal / narrativo em 1ª pessoa",when:"Pedido nas provas de ingresso 2022 (a cor da pele na identidade) e 2026 (remoção violenta do local de habitação). Duas das cinco últimas propostas.",
+ what:"Narrativa em 1ª pessoa de uma experiência (vivida ou verossímil) que dá corpo ao tema. Conta uma história com tempo, lugar e conflito e termina com reflexão.",
+ estr:["Situação inicial: quem narra, onde, quando","Conflito: o acontecimento que muda tudo, com detalhes sensoriais","Clímax e desfecho","Reflexão final que conecta a experiência ao tema"],
+ marcas:["1ª pessoa do singular, verbos no pretérito perfeito e imperfeito","Marcadores temporais (naquela manhã, anos depois)","Descrição concreta: cheiros, sons, objetos","Discurso direto com travessão (pouco) ou indireto"],
+ erros:["Virar dissertação em 1ª pessoa, sem história","Contar uma história que não toca o recorte do tema","Final moralista e genérico","Excesso de diálogo, que gasta linhas"],
+ ex:[
+ {t:"Remoção",prompt:"Tema: <b>Remoção violenta do local de habitação</b>. Redija um relato narrativo em 1ª pessoa.",
+  paras:[
+  "Eu tinha onze anos quando as máquinas chegaram à nossa rua. Morávamos numa casa de dois cômodos que meu pai tinha levantado aos poucos, tijolo por tijolo, nos fins de semana. Na parede da cozinha ainda estava a marca da minha altura, riscada a caneta todo aniversário. Era pouco, mas era nosso, e cada canto da casa guardava uma história.",
+  "Na véspera, um homem de colete entregou um papel que minha mãe leu três vezes sem entender. Dizia que a área seria liberada para uma obra e que teríamos dois dias para sair. Lembro do silêncio da janta e do barulho dos vizinhos arrastando móveis pela madrugada. Meu pai passou a noite sentado na porta, olhando a rua escura como quem se despede de alguém.",
+  "Na manhã seguinte, a rua estava cheia de policiais. Meu pai tentou mostrar as contas de luz, prova de que morávamos ali havia quinze anos, mas ninguém quis olhar. Carregamos o que coube numa caminhonete emprestada: o fogão, os colchões, a televisão. A cômoda da minha avó ficou para trás. Quando a máquina derrubou a primeira parede, minha mãe virou meu rosto, mas eu ainda vi a cozinha se desfazer em poeira, com a marca da minha altura junto.",
+  "Fomos morar de favor com uma tia, em outra cidade. Troquei de escola, perdi os amigos e passei meses sem dizer de onde eu vinha. Só muito tempo depois entendi que não tinha perdido apenas uma casa, mas o lugar onde a minha história estava escrita. Por muito tempo, sonhei que voltava e encontrava tudo no lugar, inclusive a marca na parede.",
+  "Hoje, quando vejo notícias de famílias despejadas, reconheço o mesmo olhar perdido. Uma remoção não derruba só paredes: ela apaga memórias, vínculos e o direito de pertencer a algum lugar."],
+  com:["Detalhe concreto e simbólico (a marca da altura na parede) aparece no início e volta no clímax.","Tempo e lugar marcados desde a 1ª frase; conflito claro (o papel, a polícia, a máquina).","O último parágrafo conecta a experiência ao tema sem virar dissertação."]},
+ {t:"Cor da pele",prompt:"Tema: <b>A cor da sua pele na construção da sua identidade</b>. Redija um relato pessoal.",
+  paras:[
+  "Até os nove anos, eu achava que o meu cabelo era um problema a ser resolvido. Toda manhã, minha mãe passava longos minutos puxando os fios com um pente fino, enquanto eu chorava baixinho para não atrasar a escola. Ela dizia que era para eu ficar arrumada, e eu entendia que, do jeito que eu era, não estava. Com o tempo, aprendi a evitar fotografias e a prender o cabelo bem apertado, como se escondê-lo fosse uma forma de proteção.",
+  "Na escola, o apelido veio cedo. Os meninos riam do meu cabelo e as meninas não me escolhiam para ser princesa nas brincadeiras. Nos livros, as pessoas parecidas comigo apareciam quase sempre no capítulo da escravidão. Eu não sabia nomear aquilo, mas sentia que havia um lugar reservado para mim, e não era o centro da história. Em casa, ninguém falava sobre isso, e eu achava que o problema era só meu.",
+  "Tudo mudou no oitavo ano, quando uma professora nova entrou na sala com tranças longas e um livro de Conceição Evaristo nas mãos. Ela nos fez ler um conto em voz alta, e eu, pela primeira vez, ouvi a minha própria história escrita por alguém que se parecia comigo. Naquela tarde, voltei para casa e pedi à minha mãe que não alisasse mais o meu cabelo.",
+  "Não foi uma decisão fácil. Ouvi comentários, enfrentei olhares e tive dias de vontade de voltar atrás. Mas, a cada manhã em frente ao espelho, eu reaprendia a me olhar sem pedir desculpas. Aos poucos, descobri mulheres que se pareciam comigo e falavam com orgulho dos seus cabelos e da sua história.",
+  "Hoje entendo que a minha identidade não foi construída apesar da cor da minha pele, mas a partir dela. Reconhecer-me negra foi o primeiro passo para deixar de pedir licença para existir."],
+  com:["Reconstrói o tema real de 2022 com uma trajetória: rejeição, descoberta, afirmação.","Conceição Evaristo (escrevivência) é repertório literário que cabe com naturalidade no relato.","A frase final é a tese do texto, mas dita a partir da experiência."]},
+ {t:"Posto de saúde",prompt:"Tema: <b>O cuidado que nos sustenta</b>. Redija um relato pessoal sobre uma experiência com o cuidado de alguém.",
+  paras:[
+  "No inverno em que meu avô parou de reconhecer a própria casa, eu tinha dezesseis anos e achava que cuidar de alguém era só lembrar dos remédios. Ele perguntava pela esposa que tinha morrido havia uma década e, às vezes, me chamava pelo nome do meu pai. Ele morava conosco desde a viuvez, numa casa pequena onde cada um tinha suas obrigações.",
+  "Minha mãe trabalhava o dia inteiro, então as tardes ficaram comigo. Aprendi a esconder as chaves do portão, a cortar a comida em pedaços pequenos e a responder com calma à mesma pergunta dez vezes seguidas. Houve dias em que perdi a paciência e chorei no banheiro, com raiva dele e de mim. Na escola, minhas notas caíram, e eu não tinha coragem de explicar aos professores o que acontecia em casa.",
+  "Foi a agente comunitária de saúde que mudou a nossa rotina. Ela passou a visitar a casa toda semana, explicou o que era a doença de Alzheimer e conseguiu uma consulta com o geriatra do posto. Lá, descobrimos que existia um grupo de apoio para cuidadores, e eu, a mais nova da roda, ouvi de outras pessoas exatamente o que eu sentia e não tinha coragem de dizer.",
+  "Meu avô morreu dois anos depois, numa manhã tranquila. Não sei se ele ainda me reconhecia, mas sei que segurou minha mão até o fim. No velório, a agente de saúde estava lá, discreta, no fundo da sala, e eu entendi que ela também tinha cuidado de nós. Ela nunca soube, mas foi a primeira pessoa a quem eu disse, em voz alta, que estava cansada.",
+  "Aquele tempo me ensinou que o cuidado é um trabalho imenso e quase sempre invisível. Ninguém deveria carregá-lo sozinho, e foi uma rede pública, feita de pessoas, que me impediu de desistir. Por isso, sempre que alguém diz que o SUS não funciona, penso naquela agente batendo à nossa porta toda semana."],
+  com:["Junta três temas prováveis: envelhecimento, cuidado e SUS, sem citar números.","Mostra conflito interno (a raiva), o que dá verdade ao relato.","Parágrafo curto de desfecho (morte do avô) muda o ritmo e prepara a reflexão."]}
+ ]},
+{id:"carta",name:"Carta aberta / carta argumentativa",when:"Ainda não caiu na UnB, mas é comum no Cebraspe e no PAS. Treine a estrutura para não perder pontos de gênero.",
+ what:"Texto argumentativo dirigido a um destinatário (autoridade, instituição ou população) e tornado público. Defende uma posição e faz uma reivindicação.",
+ estr:["Local e data (ex.: Brasília, 21 de novembro de 2026.)","Vocativo (ex.: Senhoras e senhores parlamentares,)","Apresentação de quem escreve e do motivo","Argumentos dirigidos ao destinatário","Pedido ou reivindicação explícita","Despedida (Atenciosamente,) e assinatura genérica, sem seu nome"],
+ marcas:["Interlocução: 'Vossas Excelências', 'os senhores'","Verbos no imperativo ou de pedido: solicitamos, reivindicamos","Registro formal"],
+ erros:["Esquecer vocativo ou despedida","Assinar com o próprio nome","Escrever uma dissertação com 'Prezados' no começo"],
+ ex:[
+ {t:"Ao Congresso, sobre cuidado",prompt:"Tema: <b>Quem cuida de quem cuida?</b> Escreva uma carta aberta aos parlamentares do Congresso Nacional.",
+  head:["Brasília, 21 de novembro de 2026."," ","Senhoras e senhores parlamentares,"],
+  paras:[
+  "Escrevo em nome de estudantes que, como eu, dividem o tempo entre os livros e o cuidado de familiares idosos ou doentes. Somos parte de um exército invisível de cuidadores, formado sobretudo por mulheres e jovens, que sustentam um trabalho essencial sem salário, sem descanso e sem reconhecimento.",
+  "O Brasil envelhece rapidamente, e as famílias não têm como absorver sozinhas essa demanda. Muitas mulheres deixam o emprego para cuidar dos pais, perdem renda e chegam à própria velhice sem aposentadoria. Os senhores sabem que a Política Nacional de Cuidados foi aprovada, mas ela só terá efeito se receber orçamento e serviços concretos. Sem isso, continuaremos dependendo do sacrifício silencioso de milhões de famílias. Muitas dessas cuidadoras também envelhecerão sem ninguém que cuide delas.",
+  "Por isso, solicitamos que Vossas Excelências garantam recursos para centros-dia, para o cuidado domiciliar pelo SUS e para a formação de cuidadores profissionais. Pedimos também que o tempo dedicado ao cuidado seja reconhecido na contagem para a aposentadoria. Essas medidas custam menos do que o adoecimento de quem cuida sem apoio.",
+  "Cuidar é o que sustenta todos os outros trabalhos. Esperamos que esta Casa reconheça isso antes que mais famílias adoeçam junto com quem amam."],
+  tail:[" ","Atenciosamente,","Uma estudante cuidadora"],
+  com:["Local, data e vocativo nas três primeiras linhas, e despedida com assinatura genérica.","O 3º parágrafo traz o pedido explícito, que é o coração da carta.","Tratamento formal ('Vossas Excelências') adequado a parlamentares."]},
+ {t:"Às plataformas",prompt:"Tema: <b>Redes sociais e saúde mental dos jovens</b>. Escreva uma carta aberta às empresas de tecnologia.",
+  head:["Brasília, 21 de novembro de 2026."," ","Aos dirigentes das plataformas de redes sociais,"],
+  paras:[
+  "Somos estudantes do ensino médio e passamos, em média, várias horas por dia nos aplicativos que os senhores desenvolvem. Escrevemos esta carta porque sabemos, por experiência própria, o que pesquisas já mostram: o uso compulsivo das redes está associado ao aumento da ansiedade, da insônia e da autoimagem negativa entre jovens.",
+  "Não pedimos o fim das redes, que também nos aproximam de amigos e de causas importantes. Pedimos que elas deixem de ser desenhadas para nos prender. A rolagem infinita, as notificações constantes e os algoritmos que recomendam conteúdos cada vez mais extremos não são acidentes, mas escolhas de negócio. Sabemos que cada minuto a mais de uso significa mais anúncios vendidos, e é justamente por isso que pedimos limites.",
+  "Por isso, reivindicamos que os perfis de menores tenham limites de tempo ativados por padrão, que os algoritmos de recomendação possam ser desligados e que os dados de uso sejam abertos a pesquisadores independentes. Também pedimos transparência sobre como os conteúdos que nos chegam são escolhidos. Por fim, solicitamos canais de denúncia que respondam de fato aos casos de assédio e de exposição de adolescentes.",
+  "Os senhores afirmam que conectam o mundo. Esperamos que se comprometam, também, a não desconectar uma geração de si mesma."],
+  tail:[" ","Atenciosamente,","Estudantes do ensino médio do Distrito Federal"],
+  com:["Destinatário coletivo bem definido no vocativo.","Concessão ('Não pedimos o fim das redes') antes do pedido, que deixa a carta razoável.","Pedidos concretos e verificáveis, e não um genérico 'mudem isso'."]},
+ {t:"À população do DF",prompt:"Tema: <b>A água que nos falta</b>. Escreva uma carta aberta à população do Distrito Federal.",
+  head:["Brasília, 21 de novembro de 2026."," ","Caros moradores do Distrito Federal,"],
+  paras:[
+  "Quem viveu o racionamento de 2017 lembra das torneiras secas, das caixas-d'água vazias e da reserva do Descoberto em níveis alarmantes. Escrevo para lembrar que aquela crise não foi um acidente da natureza, mas um aviso que ainda não aprendemos a ouvir.",
+  "Vivemos no coração do Cerrado, o chamado berço das águas, e mesmo assim desmatamos as áreas de recarga, impermeabilizamos o solo e ocupamos as margens dos córregos. Cada nascente aterrada por um loteamento irregular é água que deixará de chegar às nossas casas daqui a alguns anos. Também desperdiçamos: vazamentos, calçadas lavadas com mangueira e piscinas cheias em plena seca mostram que ainda tratamos a água como infinita.",
+  "Por isso, convido cada um de vocês a assumir uma parte dessa responsabilidade. Denunciem ocupações irregulares em áreas de nascentes, cobrem dos candidatos compromissos com a preservação do Cerrado e participem dos comitês de bacia, que são abertos à comunidade. Em casa, o reúso e o conserto de vazamentos também fazem diferença. Pequenas atitudes, somadas, mudam o futuro de uma cidade inteira. O que está em jogo não é apenas o conforto de hoje, mas a possibilidade de as próximas gerações continuarem vivendo aqui.",
+  "A água do Distrito Federal não é infinita. Protegê-la é proteger a nossa própria permanência neste lugar."],
+  tail:[" ","Atenciosamente,","Um estudante do Distrito Federal"],
+  com:["Carta aberta à população: o tratamento é mais próximo ('caros moradores'), mas formal.","Fato local (crise hídrica de 2017) e conceito de Geografia (áreas de recarga).","Pede ações concretas que estão ao alcance do destinatário."]}
+ ]},
+{id:"cronica",name:"Crônica reflexiva",when:"Não caiu na UnB, mas aparece nos itens de gêneros textuais e é uma variante possível de 'texto narrativo'. Útil para quem for treinar narrativa.",
+ what:"Texto curto que parte de um fato do cotidiano para chegar a uma reflexão mais ampla. Mistura narração, descrição e comentário, com tom leve ou irônico.",
+ estr:["Título","Cena cotidiana observada (ônibus, fila, janela, conversa)","Desenvolvimento que amplia a cena","Desfecho reflexivo ou irônico"],
+ marcas:["1ª ou 3ª pessoa","Linguagem expressiva, figuras de linguagem","Observação do detalhe banal"],
+ erros:["Ficar só na cena e não chegar à reflexão","Usar gírias excessivas","Perder o tema de vista"],
+ ex:[
+ {t:"O ônibus",prompt:"Tema: <b>A pressa nossa de cada dia</b>. Escreva uma crônica.",title:"O passageiro sem fone",
+  paras:[
+  "Às sete da manhã, o ônibus que sai de Ceilândia para o Plano Piloto é um retrato do nosso tempo. Quase todos olham para o celular, com fones nos ouvidos, e cada um viaja num mundo particular. Ninguém conversa, ninguém olha pela janela, e a cidade passa como um vídeo que ninguém assiste. Eu mesmo, naquela manhã, ouvia uma música em que nem prestava atenção, só para não ouvir nada.",
+  "Naquele dia, porém, havia um senhor sem fone. Sentado perto da janela, ele comentava em voz alta cada coisa que via: o ipê que tinha florido fora de época, a obra parada havia meses, a moça que vendia café na parada. Falava sozinho, ou melhor, falava com quem quisesse ouvir. A maioria fingia que não. Uma moça aumentou o volume do fone; um rapaz trocou de lugar. O senhor não se ofendia: continuava narrando a cidade como quem lê um livro em voz alta.",
+  "Eu, que também tinha os fones, tirei um deles. O senhor contou que pegava aquele ônibus havia trinta anos e que, antes, as pessoas dormiam, liam jornal ou brigavam por política. Agora, disse ele, todo mundo está ocupado, mas ninguém está aqui. Riu sozinho da própria frase e voltou a olhar pela janela, satisfeito. Ninguém respondeu, mas desconfio que alguns, como eu, também tinham ouvido.",
+  "Desci na rodoviária pensando na frase. Passei o resto do dia olhando para as pessoas na rua, tentando adivinhar quantas estavam, de fato, onde seus corpos estavam. Corremos para chegar a tempo em todos os lugares e, no caminho, deixamos de estar em algum. A pressa promete ganhar tempo, mas quase sempre nos faz perder o único que temos: o agora, com seus ipês fora de época e seus passageiros sem fone."],
+  com:["Cena concreta e local (ônibus de Ceilândia), observada em detalhe.","O personagem é um contraponto que provoca a reflexão.","O fecho retoma elementos da cena (ipê, passageiro) dentro da reflexão: é a 'amarração' típica da crônica."]},
+ {t:"A fila",prompt:"Tema: <b>Esperar</b>. Escreva uma crônica sobre a experiência da espera.",title:"Senha 147",
+  paras:[
+  "A fila da farmácia popular tem uma ética própria. Ninguém fura, todos vigiam o painel e, quando uma senha é chamada e o dono não aparece, um murmúrio coletivo de esperança percorre as cadeiras de plástico. Era terça-feira, e eu estava com a senha 147. O painel marcava 112, e o ventilador de teto girava devagar, sem convencer ninguém. Do lado de fora, a fila continuava pela calçada, sob um sol que não perdoava.",
+  "Ao meu lado, uma senhora segurava uma sacola com receitas dobradas em quatro. Contou, sem que eu perguntasse, que tomava remédio para pressão e para diabetes, e que sem aquela fila não teria como pagar. Atrás dela, um rapaz de uniforme olhava o relógio a cada minuto, calculando quanto do almoço ainda lhe restava. Mais à frente, uma mãe distraía o filho com um pacote de biscoitos, enquanto um senhor cochilava de boca aberta.",
+  "Pensei que aquela espera era, ao mesmo tempo, um incômodo e uma conquista. Há poucas décadas, muitos daqueles remédios simplesmente não chegariam às mãos de quem estava ali. A fila, com toda a sua lentidão, era a prova de que existia algo do outro lado do balcão. Lembrei da minha avó contando que, na juventude dela, remédio era luxo, e que muita gente morria de doenças que hoje se tratam com comprimidos.",
+  "Quando o painel finalmente mostrou o número 147, a senhora já tinha ido embora com as suas caixas. Saí com a sensação de que a gente reclama da espera porque esquece de olhar para quem espera junto. Há filas que humilham e filas que garantem direitos, e aprender a diferenciá-las também é uma forma de cidadania. Desde então, quando o painel demora, procuro olhar ao redor."],
+  com:["Tema aberto ('Esperar') ganha um recorte concreto: a fila da farmácia popular, que puxa saúde pública.","Ironia leve ('ética própria', 'murmúrio de esperança').","Reflexão final transforma o incômodo em ideia (filas que humilham x filas que garantem)."]},
+ {t:"A mudança",prompt:"Tema: <b>Partir</b>. Escreva uma crônica sobre deslocamentos.",title:"As caixas da mudança",
+  paras:[
+  "Existe um momento, em toda mudança, em que a casa vira um amontoado de caixas de papelão escritas a caneta: cozinha, livros, frágil. Nesse momento, descobrimos que uma vida inteira cabe em menos espaço do que imaginávamos, e que o difícil não é carregar as coisas, mas decidir quais deixar. Cada objeto vira uma pergunta: isto vale o espaço que ocupa? Isto ainda é meu? Livros, roupas e fotografias passam por um julgamento silencioso, e quase sempre perdemos alguma coisa no caminho.",
+  "Minha família se mudou do interior do Maranhão para o Entorno do DF quando eu tinha sete anos. Lembro que minha mãe levou uma panela de barro que nunca mais usou e deixou para trás o pé de acerola que tinha plantado. Anos depois, ela ainda falava mais da acerola do que da panela. Às vezes, eu a pegava olhando para o quintal do vizinho, onde havia uma aceroleira, como quem reconhece um parente distante.",
+  "Penso nisso quando vejo as imagens de refugiados atravessando fronteiras com uma mochila nas costas. Quem foge de guerras ou de enchentes não tem tempo para escrever nas caixas. Leva o que alcança, e o resto fica: a casa, a língua da vizinhança, o túmulo dos avós. Partir, para muitos, não é escolha, é a única forma de continuar vivo. E, ao chegar, essas pessoas ainda precisam ouvir que estão tomando o lugar de alguém, como se tivessem escolhido partir. Quem migra perde a paisagem, os vizinhos e, às vezes, a própria língua, e ainda assim recomeça.",
+  "Talvez por isso todo migrante carregue uma caixa invisível, onde guarda aquilo que não pôde trazer. A minha tem um pé de acerola dentro, e ainda não tive coragem de abrir."],
+  com:["Liga uma lembrança íntima ao tema de 2025 (migrações) sem perder o tom de crônica.","Objeto-símbolo (a acerola) costura o texto do começo ao fim.","Final poético, aceitável na crônica e arriscado no dissertativo."]}
+ ]}
+];
+
+const MAXC=66;
+function wrap(par,indent){
+  const words=par.split(" ");const lines=[];let cur=indent?"   ":"";
+  for(const w of words){const t=(cur.trim()?cur+" ":cur)+w;if(t.length>MAXC&&cur.trim()){lines.push(cur);cur=w;}else cur=t;}
+  if(cur)lines.push(cur);return lines;
+}
+function buildLines(m){
+  let L=[];
+  if(m.title){L.push({t:m.title,cls:"title"});}
+  (m.head||[]).forEach(h=>L.push({t:h}));
+  m.paras.forEach(p=>wrap(p,true).forEach(x=>L.push({t:x})));
+  (m.tail||[]).forEach(t=>L.push({t}));
+  return L;
+}
+function sheetHTML(m){
+  const L=buildLines(m);const used=L.filter(x=>x.t.trim()).length;const n=Math.max(30,L.length);
+  const rows=[];for(let i=0;i<n;i++){const o=L[i];const t=o?o.t:"";const cls=[!t.trim()?"empty":"",o&&o.cls?o.cls:"",i>=30?"over":""].join(" ");
+    rows.push(`<div class="ln ${cls}"><span class="no">${i+1}</span><span class="tx">${t.trim()?esc(t).replace(/^ {3}/,"&emsp;&nbsp;"):"&nbsp;"}</span></div>`);}
+  return `<div class="sheetwrap"><div class="sheet"><div class="sheet-head"><span>FOLHA DE TEXTO DEFINITIVO</span><span>${L.length} de 30 linhas</span></div>${rows.join("")}</div></div>${L.length>30?`<p class="note" style="color:var(--hot)">Com letra média, este texto passaria de 30 linhas. Na prova, corte uma frase.</p>`:""}`;
+}
+let gCur=0,eCur=0;
+const gtabs=document.getElementById("gtabs");
+gtabs.innerHTML=GENRES.map((g,i)=>`<button data-g="${i}" aria-pressed="${i===0}">${g.name}</button>`).join("");
+function renderGenre(){
+  const g=GENRES[gCur];const m=g.ex[eCur];
+  document.getElementById("gview").innerHTML=`
+  <div class="card" style="margin-bottom:14px"><h2>${g.name}</h2><p style="margin:0 0 6px">${g.what}</p><p class="sub" style="margin:0"><b>Na UnB:</b> ${g.when}</p></div>
+  <div class="genre-head">
+    <div class="card"><h4>Estrutura</h4><ul>${g.estr.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    <div class="card"><h4>Marcas do gênero</h4><ul>${g.marcas.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    <div class="card"><h4>Erros que custam pontos</h4><ul>${g.erros.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+  </div>
+  <h3>Exemplos de ${g.name.toLowerCase()}</h3>
+  <div class="ex-tabs" id="extabs">${g.ex.map((x,i)=>`<button data-e="${i}" aria-pressed="${i===eCur}">Exemplo ${i+1}: ${x.t}</button>`).join("")}</div>
+  <div class="model">
+    <div><div class="prompt">${m.prompt}</div>${sheetHTML(m)}</div>
+    <div class="card why"><h4>Por que funciona</h4><ul>${m.com.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h4>Treine</h4><ul><li>Reescreva este mesmo tema com outra tese ou outra história.</li><li>Depois, escreva no mesmo gênero um dos temas da aba <b>Temas para treinar</b>.</li></ul></div>
+  </div>`;
+}
+gtabs.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;gCur=+b.dataset.g;eCur=0;gtabs.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGenre();});
+document.getElementById("gview").addEventListener("click",e=>{const b=e.target.closest("#extabs button");if(!b)return;eCur=+b.dataset.e;renderGenre();});
+renderGenre();
+
+/* ======================= TEMAS ======================= */
+/* {t, eixo, gen (sugestão), prob: hot|warm|cool, prop (comando), mot[] (motivadores resumidos), rec[] (recortes possíveis), rep (repertório)} */
+const THEMES=[
+ {t:"O cuidado como trabalho invisível",eixo:"Saúde e cuidado",gen:"Dissertativo-argumentativo",prob:"hot",
+  prop:"Redija um texto dissertativo-argumentativo sobre o cuidado como trabalho essencial e invisível na sociedade brasileira.",
+  mot:["Dado do IBGE: mulheres dedicam, em média, quase o dobro de horas semanais que os homens a afazeres domésticos e cuidado de pessoas.","Trecho de depoimento de uma filha que deixou o emprego para cuidar da mãe com Alzheimer.","Canção sobre a mãe que trabalha 'de sol a sol' (ex.: tradição do samba e do rap brasileiros)."],
+  rec:["Divisão sexual do trabalho","Política Nacional de Cuidados","Cuidado de idosos e envelhecimento"],rep:"ENEM 2023, Silvia Federici, Lei 15.069/2024 (Política Nacional de Cuidados), Estatuto da Pessoa Idosa"},
+ {t:"Envelhecer com dignidade",eixo:"Saúde e cuidado",gen:"Dissertativo ou relato",prob:"hot",
+  prop:"Discorra sobre os desafios de envelhecer numa sociedade que valoriza a juventude e a produtividade.",
+  mot:["Projeção do IBGE: em 2070, mais de um terço da população terá 60 anos ou mais.","Trecho de Simone de Beauvoir sobre a velhice como 'segredo vergonhoso'.","Fotografia de idosos em fila de banco aprendendo a usar aplicativo."],
+  rec:["Etarismo","Exclusão digital","Memória e transmissão de saberes"],rep:"ENEM 2025, Beauvoir (A velhice), Estatuto da Pessoa Idosa, Ecléa Bosi (Memória e sociedade)"},
+ {t:"O SUS como direito universal",eixo:"Saúde e cuidado",gen:"Dissertativo-argumentativo",prob:"warm",
+  prop:"Redija um texto dissertativo-argumentativo sobre o significado de um sistema de saúde público e universal.",
+  mot:["Art. 196 da Constituição: 'A saúde é direito de todos e dever do Estado'.","Depoimento sobre a vacinação em massa durante a pandemia.","Gráfico da queda da cobertura vacinal infantil entre 2015 e 2021."],
+  rec:["Universalidade x subfinanciamento","Vacinação e desinformação","Saúde como bem comum"],rep:"ENEM 2026, Revolta da Vacina, Reforma Sanitária, Programa Nacional de Imunizações"},
+ {t:"Saúde mental e hiperconexão",eixo:"Tecnologia",gen:"Artigo de opinião",prob:"hot",
+  prop:"Escreva um artigo de opinião sobre os efeitos da hiperconexão na saúde mental dos jovens.",
+  mot:["Pesquisa sobre aumento da ansiedade entre adolescentes desde 2012.","Trecho de Byung-Chul Han sobre a sociedade do cansaço.","Lei 15.100/2025, que restringe celulares nas escolas."],
+  rec:["Redes sociais e autoimagem","Economia da atenção","Celular na escola"],rep:"ENEM 2020 (estigma de doenças mentais), Han, Jonathan Haidt (A geração ansiosa), Bauman"},
+ {t:"Inteligência artificial e trabalho",eixo:"Tecnologia",gen:"Dissertativo-argumentativo",prob:"warm",
+  prop:"Discuta as transformações que a inteligência artificial provoca no mundo do trabalho.",
+  mot:["Estimativa de organismos internacionais sobre empregos expostos à automação.","Canção 'Cérebro eletrônico', de Gilberto Gil.","Relato de um tradutor que perdeu clientes para ferramentas automáticas."],
+  rec:["Automação e desemprego","Uberização","Quem lucra com a produtividade"],rep:"UnB 2024 (Chomsky), Marx (alienação), Ricardo Antunes, Revolução Industrial e ludismo"},
+ {t:"Algoritmos e democracia",eixo:"Tecnologia",gen:"Expositivo-argumentativo",prob:"warm",
+  prop:"Explique de que modo os algoritmos das plataformas digitais influenciam o debate público.",
+  mot:["Conceito de bolha de filtro (Eli Pariser).","Notícia sobre deepfakes em campanhas eleitorais.","Charge com pessoas presas dentro de telas de celular."],
+  rec:["Desinformação","Polarização","Regulação das plataformas"],rep:"ENEM 2018, Habermas (esfera pública), Marco Civil da Internet, LGPD"},
+ {t:"Crise climática e justiça social",eixo:"Ambiente",gen:"Dissertativo-argumentativo",prob:"warm",
+  prop:"Redija um texto dissertativo-argumentativo sobre como a crise climática aprofunda desigualdades.",
+  mot:["Imagens das enchentes no Rio Grande do Sul em 2024.","Trecho de Ailton Krenak (Ideias para adiar o fim do mundo).","Dado sobre emissões per capita de países ricos e pobres."],
+  rec:["Racismo ambiental","Refugiados do clima","COP30 em Belém"],rep:"UnB 2023, Acordo de Paris, COP30 (2025), Krenak, Kopenawa"},
+ {t:"Água: bem comum ou mercadoria?",eixo:"Ambiente",gen:"Dissertativo ou carta aberta",prob:"warm",
+  prop:"Posicione-se sobre a água como bem comum, considerando o contexto do Cerrado.",
+  mot:["Mapa das bacias hidrográficas que nascem no Cerrado.","Notícia do racionamento no DF em 2017.","Resolução da ONU de 2010 sobre o direito humano à água."],
+  rec:["Desmatamento do Cerrado","Agronegócio e outorgas","Saneamento básico"],rep:"Código Florestal, Marco do Saneamento (2020), Lei das Águas (1997)"},
+ {t:"Remoções e direito à moradia",eixo:"Cidade e território",gen:"Relato narrativo",prob:"cool",
+  prop:"Redija um relato em 1ª pessoa sobre a experiência de perder ou deixar a própria casa.",
+  mot:["Canção 'Saudosa maloca', de Adoniran Barbosa.","Dado sobre o déficit habitacional brasileiro.","Depoimento de moradora removida por obra pública."],
+  rec:["Gentrificação","Desastres climáticos","Despejo urbano"],rep:"UnB 2026, art. 6º da Constituição (moradia), Carolina Maria de Jesus (Quarto de despejo)"},
+ {t:"O direito à cidade",eixo:"Cidade e território",gen:"Artigo de opinião",prob:"cool",
+  prop:"Escreva um artigo de opinião sobre quem tem acesso pleno à cidade em que vive.",
+  mot:["Conceito de 'direito à cidade' de Henri Lefebvre.","Mapa do tempo de deslocamento casa-trabalho no DF.","Foto do Eixo Monumental vazio aos domingos x paradas lotadas nas cidades-satélites."],
+  rec:["Segregação socioespacial","Mobilidade","Brasília planejada e periferias"],rep:"Lefebvre, Lúcio Costa, Estatuto da Cidade (2001), candangos"},
+ {t:"Migrações e acolhimento",eixo:"Cidade e território",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discuta o acolhimento de migrantes e refugiados no Brasil.",
+  mot:["Número de venezuelanos que entraram pela Operação Acolhida.","Trecho do Diário de Anne Frank.","Lei de Migração de 2017, que trata o migrante como sujeito de direitos."],
+  rec:["Xenofobia","Refugiados climáticos","Migração interna (nordestinos em Brasília)"],rep:"UnB 2025, Lei 13.445/2017, Bauman (Estranhos à nossa porta)"},
+ {t:"Muros visíveis e invisíveis",eixo:"Cidade e território",gen:"Expositivo-argumentativo",prob:"cool",
+  prop:"Discorra sobre os muros físicos e simbólicos que separam pessoas na sociedade contemporânea.",
+  mot:["Foto do muro na fronteira entre Estados Unidos e México.","Trecho de Teresa Caldeira sobre a 'cidade de muros'.","Poema sobre portões e grades em condomínios."],
+  rec:["Condomínios fechados","Fronteiras","Medo do outro"],rep:"UnB 2019, queda do Muro de Berlim (1989), Bauman"},
+ {t:"Identidade, raça e pertencimento",eixo:"Diversidade",gen:"Relato pessoal",prob:"cool",
+  prop:"Redija um relato pessoal sobre um momento em que você compreendeu algo sobre sua identidade.",
+  mot:["Trecho de Conceição Evaristo sobre escrevivência.","Dado do IBGE: pessoas pretas e pardas são mais da metade da população.","Imagem de uma criança diante do espelho."],
+  rec:["Racismo e autoestima","Cotas na universidade","Identidade regional"],rep:"UnB 2022, Lei de Cotas (2012) e a UnB pioneira (2004), Djamila Ribeiro, Lélia Gonzalez"},
+ {t:"Povos indígenas e futuro",eixo:"Diversidade",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discuta o que as concepções de mundo indígenas podem ensinar à sociedade contemporânea.",
+  mot:["Trecho de Ailton Krenak sobre a 'humanidade' que se separou da Terra.","Mapa de terras indígenas e de desmatamento na Amazônia.","Notícia sobre o marco temporal."],
+  rec:["Marco temporal","Bem viver","Conhecimento tradicional e ciência"],rep:"UnB 2023 e 2024, art. 231, Kopenawa (A queda do céu), Krenak"},
+ {t:"Memória e esquecimento",eixo:"Tempo e memória",gen:"Dissertativo ou crônica",prob:"hot",
+  prop:"Discorra sobre a importância da memória, individual e coletiva, num tempo de excesso de informação.",
+  mot:["Conto 'Funes, o memorioso', de Borges.","Notícia sobre o incêndio do Museu Nacional em 2018.","Fotografia antiga de família."],
+  rec:["Memória da ditadura","Patrimônio","Memória dos idosos"],rep:"Ecléa Bosi, Comissão Nacional da Verdade, Museu Nacional, Proust"},
+ {t:"A pressa e o tempo",eixo:"Tempo e memória",gen:"Crônica ou artigo",prob:"warm",
+  prop:"Escreva um texto sobre a experiência do tempo na vida contemporânea.",
+  mot:["Trecho de Byung-Chul Han sobre o tempo acelerado.","Música 'Oração ao tempo', de Caetano Veloso.","Dado sobre horas diárias gastas diante de telas."],
+  rec:["Produtividade","Ócio e descanso","Escala 6x1"],rep:"UnB 2018, Han, Bergson (tempo vivido), debate sobre a escala 6x1"},
+ {t:"Trabalho, descanso e escala 6x1",eixo:"Trabalho",gen:"Artigo de opinião",prob:"warm",
+  prop:"Escreva um artigo de opinião sobre o direito ao descanso no Brasil contemporâneo.",
+  mot:["Notícia sobre a proposta de fim da escala 6x1.","Trecho da CLT sobre jornada de trabalho.","Charge de um trabalhador dormindo no ônibus."],
+  rec:["Saúde do trabalhador","Produtividade","Tempo livre e cidadania"],rep:"CLT (1943), Paul Lafargue (O direito à preguiça), Marx (mais-valia)"},
+ {t:"Fome num país que produz alimentos",eixo:"Desigualdade",gen:"Dissertativo-argumentativo",prob:"warm",
+  prop:"Discuta o paradoxo de um grande produtor de alimentos conviver com a insegurança alimentar.",
+  mot:["Brasil saiu do Mapa da Fome da ONU em 2014, voltou e saiu novamente em 2025.","Trecho de Josué de Castro (Geografia da fome).","Foto de safra recorde de soja."],
+  rec:["Agronegócio x agricultura familiar","Desperdício","Ultraprocessados"],rep:"Josué de Castro, Carolina Maria de Jesus, Programa Bolsa Família, PNAE"},
+ {t:"Educação como direito",eixo:"Desigualdade",gen:"Carta aberta",prob:"cool",
+  prop:"Escreva uma carta aberta ao Ministério da Educação sobre a permanência de estudantes pobres na escola.",
+  mot:["Dado sobre evasão escolar no ensino médio.","Trecho de Paulo Freire sobre educação libertadora.","Programa Pé-de-Meia (2024)."],
+  rec:["Evasão","Ensino integral","Universidade pública"],rep:"Paulo Freire, Anísio Teixeira, Darcy Ribeiro (fundador da UnB), LDB"},
+ {t:"Violência contra a mulher",eixo:"Diversidade",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discorra sobre as raízes culturais da violência contra a mulher no Brasil.",
+  mot:["Lei Maria da Penha (2006) e Lei do Feminicídio (2015).","Dado do Fórum Brasileiro de Segurança Pública.","Canção que denuncia a violência doméstica (ex.: 'Maria da Vila Matilde', Elza Soares)."],
+  rec:["Patriarcado","Violência digital","Rede de proteção"],rep:"ENEM 2015, Beauvoir, bell hooks, Lei Maria da Penha"},
+ {t:"Arte e periferia",eixo:"Cultura",gen:"Artigo de opinião",prob:"cool",
+  prop:"Escreva um artigo de opinião sobre o papel da arte produzida nas periferias.",
+  mot:["Trecho de 'Racionais MC's' sobre a periferia (Sobrevivendo no inferno).","Notícia sobre saraus e slams nas cidades do DF.","Foto de grafite em Ceilândia."],
+  rec:["Hip-hop","Acesso à cultura","Arte como resistência"],rep:"Racionais, Carolina Maria de Jesus, ENEM 2019 (cinema), Augusto Boal"},
+ {t:"Esporte e cidadania",eixo:"Cultura",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discuta o esporte como direito e como instrumento de inclusão social.",
+  mot:["Trajetória de atletas olímpicas vindas de periferias (ex.: Rebeca Andrade).","Dado sobre falta de quadras em escolas públicas.","Charge sobre bolsa-atleta."],
+  rec:["Esporte na escola","Gênero no esporte","Paradesporto"],rep:"Constituição art. 217, Olimpíadas de Paris 2024, Lei Pelé"},
+ {t:"Ciência e negacionismo",eixo:"Tecnologia",gen:"Expositivo-argumentativo",prob:"warm",
+  prop:"Explique as causas do negacionismo científico e seus efeitos para a sociedade.",
+  mot:["Notícia sobre a volta do sarampo.","Trecho de Carl Sagan (O mundo assombrado pelos demônios).","Gráfico de confiança na ciência por faixa etária."],
+  rec:["Vacinas","Clima","Pós-verdade"],rep:"Sagan, Revolta da Vacina, Galileu, conceito de pós-verdade"},
+ {t:"Guerras e a desumanização do outro",eixo:"Direitos humanos",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discorra sobre como as guerras dependem da desumanização do inimigo.",
+  mot:["Imagem de Gaza destruída (Nour Elassy, motivador UnB 2025).","Trecho de Hannah Arendt sobre a banalidade do mal.","Quadro 'Guernica', de Picasso."],
+  rec:["Refugiados","Discurso de ódio","Direito humanitário"],rep:"UnB 2016, Arendt, Guernica, Declaração Universal dos Direitos Humanos (1948)"},
+ {t:"Consumo e descarte",eixo:"Ambiente",gen:"Crônica ou artigo",prob:"cool",
+  prop:"Escreva um texto sobre a cultura do descarte e seus efeitos.",
+  mot:["Dado sobre lixo eletrônico no Brasil.","Trecho de Bauman sobre a modernidade líquida.","Foto de praia coberta de plástico."],
+  rec:["Obsolescência programada","Moda rápida","Catadores"],rep:"Bauman, Política Nacional de Resíduos Sólidos (2010), economia circular"},
+ {t:"Fronteiras entre humano e máquina",eixo:"Tecnologia",gen:"Relato narrativo",prob:"cool",
+  prop:"Redija um relato em 1ª pessoa em que a relação com uma inteligência artificial mude algo em sua vida.",
+  mot:["Caso do chatbot Sydney (motivador UnB 2024).","Filme 'Ela' (Her), de Spike Jonze.","Notícia sobre pessoas que usam IA como companhia."],
+  rec:["Solidão","Afeto e tecnologia","Ética da IA"],rep:"UnB 2024, Turing, Asimov"},
+ {t:"Brasília e seus candangos",eixo:"Cidade e território",gen:"Relato ou crônica",prob:"cool",
+  prop:"Escreva um texto sobre as histórias de quem construiu e de quem vive Brasília.",
+  mot:["Fotografia dos candangos na construção da cidade (1957-1960).","Trecho de Clarice Lispector ('Brasília').","Mapa da expansão das regiões administrativas."],
+  rec:["Migração nordestina","Patrimônio","Segregação"],rep:"JK e o Plano de Metas, Lúcio Costa, Niemeyer, Clarice"},
+ {t:"O valor do silêncio e da atenção",eixo:"Tempo e memória",gen:"Crônica",prob:"cool",
+  prop:"Escreva uma crônica sobre a atenção num mundo de estímulos permanentes.",
+  mot:["Conceito de economia da atenção.","Poema de Manoel de Barros sobre as coisas pequenas.","Foto de pessoas num show filmando em vez de assistir."],
+  rec:["Leitura","Natureza","Presença"],rep:"Manoel de Barros, Han, Simone Weil (atenção)"},
+ {t:"Juventude e participação política",eixo:"Direitos humanos",gen:"Carta aberta",prob:"cool",
+  prop:"Escreva uma carta aberta aos jovens de 16 e 17 anos sobre o voto facultativo.",
+  mot:["Dado do TSE sobre título de eleitor de jovens.","Trecho do art. 14 da Constituição.","Foto das manifestações estudantis de 1992 (caras-pintadas)."],
+  rec:["Democracia","Desinformação","Movimento estudantil"],rep:"Constituição de 1988, Diretas Já, caras-pintadas"},
+ {t:"Línguas e pertencimento",eixo:"Cultura",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discuta o preconceito linguístico e a diversidade de falares no Brasil.",
+  mot:["Trecho de Marcos Bagno (Preconceito linguístico).","Mapa das línguas indígenas ainda faladas no Brasil.","Tirinha sobre sotaques."],
+  rec:["Variação linguística","Línguas indígenas","Escola e norma padrão"],rep:"Bagno, Década das Línguas Indígenas (UNESCO 2022-2032), Libras (Lei 10.436/2002)"},
+ {t:"Acessibilidade e inclusão",eixo:"Diversidade",gen:"Dissertativo-argumentativo",prob:"cool",
+  prop:"Discorra sobre os obstáculos à plena participação das pessoas com deficiência.",
+  mot:["Lei Brasileira de Inclusão (2015).","Dado do IBGE sobre pessoas com deficiência.","Foto de calçada com degrau e rampa ausente."],
+  rec:["Capacitismo","Escola inclusiva","Mercado de trabalho"],rep:"ENEM 2017 (surdos), LBI, Lei de Cotas no trabalho (8.213/1991)"},
+ {t:"Alimentação, corpo e mercado",eixo:"Saúde e cuidado",gen:"Artigo de opinião",prob:"warm",
+  prop:"Escreva um artigo de opinião sobre o consumo de ultraprocessados e os padrões de corpo.",
+  mot:["Guia Alimentar para a População Brasileira.","Dado sobre obesidade infantil.","Propaganda de canetas emagrecedoras."],
+  rec:["Ultraprocessados","Pressão estética","Publicidade infantil"],rep:"Guia Alimentar (2014), Carlos Monteiro (classificação NOVA), Naomi Wolf (O mito da beleza)"}
+];
+const LAB={hot:["mais provável","p-hot"],warm:["provável","p-warm"],cool:["possível","p-cool"]};
+const tg=document.getElementById("tg"),te=document.getElementById("te"),tq=document.getElementById("tq");
+const genres=["Todos os gêneros",...GENRES.map(g=>g.name)];
+tg.innerHTML=genres.map(g=>`<option>${g}</option>`).join("");
+const eixos=["Todos os eixos",...[...new Set(THEMES.map(t=>t.eixo))]];
+te.innerHTML=eixos.map(g=>`<option>${g}</option>`).join("");
+const gKey=g=>g.toLowerCase().split(/[ /-]/)[0];
+function themeCard(x,i){const l=LAB[x.prob];return `<article class="card theme" id="th${i}">
+  <div class="meta"><span class="pill ${l[1]}">${l[0]}</span><span class="pill p-acc">${x.eixo}</span></div>
+  <h3>${x.t}</h3><p>${x.prop}</p><p class="sub" style="margin:0"><b>Gênero sugerido:</b> ${x.gen}</p>
+  <details><summary>Motivadores e repertório</summary>
+   <ul class="mot">${x.mot.map(m=>`<li>${m}</li>`).join("")}</ul>
+   <dl><dt>Recortes</dt><dd>${x.rec.join(" · ")}</dd><dt>Repertório</dt><dd>${x.rep}</dd></dl>
+  </details>
+  <div class="act"><button class="main" data-fix="${i}">Corrigir com o Claude</button></div></article>`;}
+function renderThemes(){
+  const q=tq.value.trim().toLowerCase(),g=tg.selectedIndex,e=te.value;
+  const list=THEMES.map((x,i)=>[x,i]).filter(([x])=>{
+    if(e!=="Todos os eixos"&&x.eixo!==e)return false;
+    if(g>0){const k=gKey(GENRES[g-1].name);if(!x.gen.toLowerCase().includes(k.slice(0,5)))return false;}
+    if(q&&!(x.t+" "+x.prop+" "+x.rep+" "+x.rec.join(" ")).toLowerCase().includes(q))return false;return true;});
+  document.getElementById("tCount").textContent=`${list.length} de ${THEMES.length} temas`;
+  document.getElementById("themes").innerHTML=list.map(([x,i])=>themeCard(x,i)).join("")||`<p class="sub">Nenhum tema com esse filtro.</p>`;
+}
+[tq,tg,te].forEach(el=>el.addEventListener("input",renderThemes));
+document.getElementById("tRand").addEventListener("click",()=>{tq.value="";tg.selectedIndex=0;te.selectedIndex=0;renderThemes();const i=Math.floor(Math.random()*THEMES.length);const el=document.getElementById("th"+i);el.scrollIntoView({block:"center"});el.style.borderColor="var(--accent)";setTimeout(()=>el.style.borderColor="",2500);});
+document.getElementById("themes").addEventListener("click",e=>{const b=e.target.closest("[data-fix]");if(!b)return;const x=THEMES[+b.dataset.fix];cTema.value=b.dataset.fix;const gi=GENRES.findIndex(g=>x.gen.toLowerCase().includes(gKey(g.name).slice(0,5)));cGen.value=gi>=0?gi:0;buildPrompt();show("claude");});
+renderThemes();
+
+/* ======================= CLAUDE ======================= */
+const cTema=document.getElementById("cTema"),cGen=document.getElementById("cGen"),cFree=document.getElementById("cFree"),cNivel=document.getElementById("cNivel"),cRees=document.getElementById("cRees");
+cTema.innerHTML=`<option value="free">Outro tema (escrever)</option>`+THEMES.map((x,i)=>`<option value="${i}">${x.t}</option>`).join("");
+cGen.innerHTML=GENRES.map((g,i)=>`<option value="${i}">${g.name}</option>`).join("");
+cTema.value="0";
+function buildPrompt(){
+  const free=cTema.value==="free";document.getElementById("cFreeWrap").hidden=!free;
+  const tema=free?(cFree.value.trim()||"[escreva aqui o tema]"):THEMES[+cTema.value].t;
+  const prop=free?"":`\nProposta: ${THEMES[+cTema.value].prop}`;
+  const g=GENRES[+cGen.value];
+  const rig=cNivel.value==="rigoroso";
+  const txt=`Você é um corretor experiente da banca Cebraspe, responsável pela prova de redação do Vestibular da Universidade de Brasília (UnB). Corrija a redação manuscrita da foto anexada.
+
+TEMA: ${tema}${prop}
+GÊNERO PEDIDO: ${g.name}
+LIMITE: folha de 30 linhas (o que passar da linha 30 não é corrigido).
+
+PASSO 1 · TRANSCRIÇÃO
+Transcreva o texto exatamente como está escrito, linha por linha e numerando as linhas, sem corrigir nada. Marque com [?] as palavras ilegíveis. Informe o total de linhas escritas (TL).
+
+PASSO 2 · ZERO
+Diga se há algum motivo para nota zero: fuga total ao tema, gênero não atendido, identificação do candidato (nome ou assinatura), texto ilegível ou cópia dos motivadores. Se houver, explique e pare a correção de conteúdo.
+
+PASSO 3 · NOTA DE CONTEÚDO (NC, de 0 a 10)
+Avalie cada aspecto, com nota e justificativa citando trechos:
+a) Apresentação e estrutura textual (legibilidade, margens, parágrafos, organização).
+b) Adequação ao gênero "${g.name}". Verifique: ${g.estr.join("; ")}.
+c) Desenvolvimento do tema e do recorte específico da proposta (o texto trata do recorte ou só do assunto geral?).
+d) Argumentação e repertório (tese clara, argumentos consistentes, repertório pertinente e bem articulado${g.id==="relato"||g.id==="cronica"?"; no texto narrativo: conflito, detalhes concretos e reflexão final ligada ao tema":""}).
+e) Coesão e coerência (conectivos, retomadas, progressão sem contradição).
+Some e justifique a NC final.
+
+PASSO 4 · ERROS (NE)
+Liste cada erro numa tabela com: linha, trecho, tipo (grafia/acentuação, morfossintaxe, propriedade vocabular, pontuação) e a correção. Conte cada ocorrência separadamente${rig?". Seja rigoroso como o Cebraspe: crase, vírgula entre sujeito e verbo, concordância, regência, colocação pronominal e repetição vocabular inadequada contam":""}.
+
+PASSO 5 · NOTA FINAL
+Calcule NR = NC − 2 × NE ÷ TL e mostre a conta.
+
+PASSO 6 · COMPARAÇÃO COM UMA REDAÇÃO NOTA MÁXIMA DA UnB
+Explique o que separa este texto de uma redação nota máxima no gênero "${g.name}": tese, recorte, repertório, estrutura e linguagem. Dê uma estimativa de quão próximo ele está (em porcentagem) e os 3 ajustes que mais aumentariam a nota.
+${cRees.value==="sim"?`
+PASSO 7 · REESCRITA
+Reescreva o parágrafo mais fraco mostrando como ficaria numa versão nota máxima, mantendo as ideias do autor. Depois, proponha uma introdução alternativa mais forte.
+`:""}
+${rig?"Seja direto e exigente: aponte os problemas sem suavizar e não dê notas altas por cortesia.":"Explique cada ponto de forma didática, como um professor que quer que o aluno entenda o porquê de cada desconto."} Responda em português do Brasil.`;
+  document.getElementById("cOut").textContent=txt;
+}
+{const qp=new URLSearchParams(location.search);const t=qp.get("tema");if(t){cTema.value="free";cFree.value=t;}const g=qp.get("gen");if(g){const gi=GENRES.findIndex(x=>x.id===g);if(gi>=0)cGen.value=gi;}}
+[cTema,cGen,cNivel,cRees].forEach(el=>el.addEventListener("change",buildPrompt));cFree.addEventListener("input",buildPrompt);
+buildPrompt();
+document.getElementById("cCopy").addEventListener("click",async()=>{
+  const t=document.getElementById("cOut").textContent;const toast=document.getElementById("cToast");
+  try{await navigator.clipboard.writeText(t);toast.textContent="Copiado. Agora cole no Claude com a foto.";}
+  catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById("cOut"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast.textContent="Selecionei o texto: use Ctrl+C.";}
+  setTimeout(()=>toast.textContent="",4000);
+});
+
+/* folha para imprimir */
+document.getElementById("printSheet").addEventListener("click",()=>{
+  const t=cTema.value==="free"?(cFree.value||""):THEMES[+cTema.value].t;
+  const rows=Array.from({length:30},(_,i)=>`<div class="l"><span>${i+1}</span></div>`).join("");
+  const w=window.open("","_blank");if(!w){alert("Permita pop-ups para imprimir a folha.");return;}
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Folha de redação</title><style>
+   @page{size:A4;margin:14mm}body{font-family:Arial,sans-serif;color:#000;margin:0}
+   h1{font-size:15px;margin:0 0 4px}p{font-size:12px;margin:0 0 10px}
+   .l{height:8.2mm;border-bottom:1px solid #8aa;display:flex;align-items:flex-end}.l span{width:9mm;font-size:10px;color:#555;border-right:1.5px solid #d88;height:100%;display:flex;align-items:flex-end;padding-bottom:1mm}
+   .tit{height:9mm;border:1px solid #8aa;margin-bottom:4mm;font-size:10px;color:#777;padding:1mm 2mm}
+  </style></head><body><h1>Folha de redação · Vestibular UnB (treino)</h1><p>Tema: ${t||"_____________________________________________"}</p><div class="tit">Título (se o gênero pedir)</div>${rows}<script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+});
+
+/* cronômetro */
+let cT=60*60,cRun=null;const clock=document.getElementById("clock"),cBar=document.getElementById("clockBar"),cPhase=document.getElementById("cPhase"),cStart=document.getElementById("cStart");
+function cDraw(){const m=Math.floor(cT/60),s=cT%60;clock.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;const el=3600-cT;cBar.style.width=(el/3600*100)+"%";
+  const min=el/60;cPhase.textContent=cT===0?"Tempo esgotado.":min<15?"Planejamento: tese, recorte e esqueleto.":min<40?"Rascunho: escreva sem parar para polir.":min<45?"Revisão: tema, gênero, acentos, crases e vírgulas.":"Passe a limpo com letra legível.";}
+cStart.addEventListener("click",()=>{if(cRun){clearInterval(cRun);cRun=null;cStart.textContent="Continuar";return;}
+  cStart.textContent="Pausar";cRun=setInterval(()=>{if(cT<=0){clearInterval(cRun);cRun=null;cStart.textContent="Iniciar";return;}cT--;cDraw();},1000);});
+document.getElementById("cReset").addEventListener("click",()=>{clearInterval(cRun);cRun=null;cT=3600;cStart.textContent="Iniciar";cDraw();cPhase.textContent="Planejamento até 15:00, rascunho até 40:00, revisão até 45:00 e passar a limpo até 60:00.";});
+
+/* contador de linhas */
+const lc=document.getElementById("lcText");lc.value=load("red-draft","");
+function countLines(){const v=lc.value;const paras=v.split(/\n\s*\n|\n/).map(p=>p.trim().replace(/\s+/g," ")).filter(Boolean);
+  let n=0;paras.forEach(p=>n+=wrap(p,true).length);const words=v.trim()?v.trim().split(/\s+/).length:0;
+  const out=document.getElementById("lcOut");out.textContent=`${n} linha${n===1?"":"s"} · ${words} palavras${n>30?" · passou de 30 linhas":n&&n<20?" · curto: tente chegar perto de 30":""}`;
+  out.classList.toggle("bad",n>30);document.getElementById("lcBar").style.width=Math.min(100,n/30*100)+"%";save("red-draft",v);}
+lc.addEventListener("input",countLines);countLines();
+
+/* autoavaliação */
+const SELF=["Respondi ao recorte específico do tema, e não só ao assunto geral","Respeitei o gênero pedido (estrutura e marcas)","Minha tese ou o eixo da história aparece já no 1º parágrafo","Cada parágrafo de desenvolvimento tem uma ideia central","Usei pelo menos dois repertórios ligados à tese","A conclusão retoma a tese sem trazer argumento novo","Revisei acentos, crases e 'por que/porque'","Não pus vírgula entre sujeito e verbo","Conferi concordância e regência","Escrevi entre 25 e 30 linhas","Não me identifiquei em nenhuma parte do texto","A letra está legível e os parágrafos têm recuo"];
+let sst=load("red-self",{});
+function renderSelf(){document.getElementById("selfChk").innerHTML=SELF.map((s,i)=>`<label class="chk"><input type="checkbox" data-s="${i}" ${sst[i]?"checked":""}><span>${s}</span></label>`).join("");}
+document.getElementById("selfChk").addEventListener("change",e=>{const i=e.target.dataset.s;sst[i]=e.target.checked;save("red-self",sst);});
+document.getElementById("selfReset").addEventListener("click",()=>{sst={};save("red-self",sst);renderSelf();});
+renderSelf();
+
+/* abas com link direto (#generos etc.) */
+const V=["correcao","historico","generos","temas","claude"];
+function show(k){if(!V.includes(k))k="correcao";
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.tab===k));
+  V.forEach(v=>document.getElementById("v-"+v).hidden=v!==k);
+  if(location.hash!=="#"+k)history.replaceState(null,"","#"+k);window.scrollTo({top:0});}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.tab)));
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
