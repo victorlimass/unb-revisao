@@ -174,7 +174,9 @@ python3 -m http.server 8000
 ### Cartões
 `cartoes.html` junta quatro tipos: perguntas (`CARDS` em `cartoes-dados.js`), certo ou errado (itens de `REV_MAIS`), fórmulas (`FORMS`) e glossário (`SITE.GLOSS`). O progresso fica em `cards-ok` (ids `c-`, `ce-`, `f-`, `g-`).
 
-### Login e sincronização
+### Login e sincronização (desligado)
+Está desligado por enquanto: `const LOGIN=false` em `assets/site.js` esconde o botão da conta e não carrega o Firebase. O progresso fica só no aparelho. Para religar, troque para `true` e siga os passos abaixo.
+
 O progresso fica no `localStorage`. `assets/site.js` observa as gravações e, com uma conta conectada, copia tudo (menos `site-*` e `sync-*`) para o Firestore em `usuarios/<uid>`; ao abrir o site em outro aparelho, traz os dados de volta. Na primeira vez em um aparelho que já tem progresso, os dois lados são juntados. Sem configuração, a janela da conta oferece o **código de transferência** (copiar em um aparelho, colar no outro).
 
 **Para ativar (uma vez, cerca de 10 minutos, com uma conta Google):**

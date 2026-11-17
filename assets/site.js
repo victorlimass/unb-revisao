@@ -13,6 +13,8 @@ const PAGES=[
  ["revisao-final.html","Reta final",'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>']
 ];
 /* barra inferior do celular: 4 páginas + botão Menu */
+/* Login e sincronização: desligado por enquanto (o código continua abaixo). Para religar, troque para true. */
+const LOGIN=false;
 const TABS=["index.html","revisao-completa.html","simulados.html","cartoes.html"];
 const ICON={menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'};
 const svg=ic=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg>`;
@@ -26,7 +28,7 @@ function header(){
   h.innerHTML=`<div class="in"><a class="brand" href="index.html"><i>UnB</i><span>Vestibular 2027</span></a>
    <span class="page-name">${cur?cur[1]:""}</span>
    <nav class="site-nav" aria-label="Páginas do site">${PAGES.map(p=>link(p).replace("<a ",["raio-x.html","revisao-final.html"].includes(p[0])?'<a class="extra" ':"<a ")).join("")}</nav>
-   <div class="site-tools"><button type="button" class="acct-btn" data-acct aria-label="Conta e sincronização"></button>
+   <div class="site-tools">${LOGIN?`<button type="button" class="acct-btn" data-acct aria-label="Conta e sincronização"></button>`:""}
    <button type="button" class="menu-btn" data-menu aria-label="Abrir o menu" aria-expanded="false">${svg(ICON.menu)}</button></div></div>`;
   document.body.prepend(h);
   const c=h.querySelector('.site-nav [aria-current="page"]');if(c&&c.scrollIntoView)c.scrollIntoView({inline:"center",block:"nearest"});
@@ -41,7 +43,7 @@ function header(){
     <nav class="dr-grid" aria-label="Todas as páginas">${PAGES.map(link).join("")}</nav>
     <div class="dr-row"><span>Tamanho do texto</span><div class="seg"><button type="button" data-z="-1" aria-label="Diminuir o texto">A−</button><output id="zoomOut">100%</output><button type="button" data-z="1" aria-label="Aumentar o texto">A+</button></div></div>
     <div class="dr-row"><span>Tema</span><div class="seg" id="themeSeg"><button type="button" data-th="">Auto</button><button type="button" data-th="light">Claro</button><button type="button" data-th="dark">Escuro</button></div></div>
-    <button type="button" class="dr-acct" data-acct>${svg(ICON.user)}<span id="drAcct">Conta e sincronização</span></button>
+    ${LOGIN?`<button type="button" class="dr-acct" data-acct>${svg(ICON.user)}<span id="drAcct">Conta e sincronização</span></button>`:""}
   </div>`;
   document.body.appendChild(dr);
   const open=v=>{dr.hidden=!v;document.querySelectorAll("[data-menu]").forEach(b=>b.setAttribute("aria-expanded",v));document.documentElement.classList.toggle("no-scroll",v);if(v)dr.querySelector(".dr-x").focus();};
@@ -294,7 +296,7 @@ async function push(){if(!user||!fb)return;clearTimeout(pushT);const now=Date.no
   catch(e){setSync("Sem conexão: salvo neste aparelho, envio depois");}}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&user&&lsGet("sync-dirty")==="1")push();});
 window.addEventListener("online",()=>{if(user&&lsGet("sync-dirty")==="1")push();});
-if(lsGet("sync-user"))loadFb().catch(()=>{});
+if(LOGIN&&lsGet("sync-user"))loadFb().catch(()=>{});
 const EMAIL=n=>n.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9._-]/g,"")+"@vestibular-unb.app";
 const ERR={"auth/invalid-credential":"Nome ou senha incorretos.","auth/wrong-password":"Nome ou senha incorretos.","auth/invalid-login-credentials":"Nome ou senha incorretos.","auth/user-not-found":"Essa conta ainda não existe. Toque em “Criar conta”.","auth/email-already-in-use":"Essa conta já existe: toque em “Entrar”.","auth/weak-password":"A senha precisa ter pelo menos 6 caracteres.","auth/network-request-failed":"Sem internet. Tente de novo quando conectar.","auth/too-many-requests":"Muitas tentativas. Espere alguns minutos.","auth/operation-not-allowed":"O login por senha não está ativado no Firebase (veja PROJETO.md)."};
 function toCode(){return btoa(unescape(encodeURIComponent(JSON.stringify(snap()))));}

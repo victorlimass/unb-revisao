@@ -1,5 +1,5 @@
 /* Service worker: guarda o site para funcionar sem internet. Ao mudar arquivos, aumente VERSION. */
-const VERSION="unb-v3";
+const VERSION="unb-v4";
 const FILES=["./","index.html","comece.html","prova.html","simulados.html","revisao-completa.html","redacao.html","cartoes.html","raio-x.html","revisao-final.html",
  "assets/site.css","assets/site.js","assets/figs.js","assets/icon.svg","manifest.webmanifest",
  "prova1.js","prova2.js","simulados-dados.js","raiox-dados.js","rev-base.js","rev-linguagens.js","rev-humanas.js","rev-exatas.js","rev-comunicacao.js","rev-mais-linguagens.js","rev-mais-humanas.js","rev-mais-exatas.js","cartoes-dados.js","assets/sync-config.js"];
